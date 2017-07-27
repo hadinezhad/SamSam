@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}SAM-SAM{% endblock %}</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </head>
@@ -17,16 +18,26 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand active" href="{% url 'manageUser:home' %}">HomePage</a>
+      <a class="navbar-brand active" href="{% url 'building:building' %}">{% if building %} {{ building.name}} {% else %} Building List {% endif %} </a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="topNavBar">
-      <ul class="nav navbar-nav" style="display: block">
-        <li><a href="{% url 'manageUser:login' %}">Login <span class="sr-only">(current)</span></a></li>
-        <li><a href="{% url 'manageUser:signup' %}">Sign Up</a></li>
-          <li><a href="{% url 'manageUser:callus' %}">Call Us</a></li>
-          <li><a href="{% url 'manageUser:guide' %}">Guide</a></li>
+      <ul class="nav navbar-nav">
+          <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ request.user.first_name }} <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Edit Account</a></li>
+            <li><a href="#">Change Password</a></li>
+            <li><a href="#">Support</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#">Logout</a></li>
+          </ul>
+            </li>
+        <li><a href="{% url 'building:activities' %}">Activities <span class="sr-only">(current)</span></a></li>
+          <li><a href="{% url 'building:activities' %}">Send Message</a></li>
+          <li><a href="{% url 'building:inbox' %}">Inbox</a></li>
+
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
@@ -34,7 +45,5 @@
 
 {% block body %}
 {% endblock %}
-<p>d</p>
-<p>d</p><p>d</p><p>d</p><p>d</p><p>d</p><p>d</p><p>d</p><p>d</p><p>d</p><p>d</p><p>d</p><p>d</p><p>d</p><p>d</p><p>d</p><p>d</p><p>d</p><p>d</p><p>d</p><p>d</p><p>d</p><p>d</p><p>d</p><p>d</p><p>d</p><p>d</p><p>d</p><p>d</p><p>d</p><p>d</p><p>d</p><p>d</p><p>d</p><p>d</p><p>d</p><p>d</p><p>d</p><p>d</p><p>d</p><p>d</p><p>d</p><p>d</p><p>d</p><p>d</p><p>d</p><p>d</p><p>d</p><p>d</p><p>d</p>
 </body>
 </html>

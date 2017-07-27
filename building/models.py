@@ -52,10 +52,7 @@ class Poll(models.Model):
 class Vote(models.Model):
     poll = models.ForeignKey(Poll, on_delete=models.CASCADE)
     text = models.TextField()
-    id = models.IntegerField(primary_key=True)
-
-    class Meta:
-        unique_together = (("poll", "id"), )
+    number = models.IntegerField()
 
 
 class Participate(models.Model):
@@ -63,19 +60,13 @@ class Participate(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
     poll = models.ForeignKey(Poll, on_delete=models.CASCADE)
 
-    class Meta:
-        unique_together = (("poll", "vote"), )
-
 
 class Unit(models.Model):
     size = models.IntegerField()
     info = models.TextField()
-    id = models.IntegerField(primary_key=True)
+    number = models.IntegerField()
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
     building = models.ForeignKey(Building, on_delete=models.CASCADE)
-
-    class Meta:
-        unique_together = (("id", "building"),)
 
 
 class Role(models.Model):
@@ -84,10 +75,5 @@ class Role(models.Model):
     wage = models.IntegerField()
     info = models.TextField()
 
-    class Meta:
-        unique_together = (("role", "building"),)
-
-
 # TODO for plan reserved plan
-class Plan(models.Model):
-    pass
+
