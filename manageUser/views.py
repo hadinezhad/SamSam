@@ -6,3 +6,23 @@ from .models import Account
 def home(request):
     all_accounts = Account.objects.all()
     return render(request, 'manageUser/home.html', {'all_accounts': all_accounts})
+
+
+def signup(request):
+    all_accounts = Account.objects.all()
+    return render(request, 'manageUser/signup.html', {'all_accounts': all_accounts})
+
+
+def callus(request):
+    all_accounts = Account.objects.all()
+    return render(request, 'manageUser/callus.html', {'all_accounts': all_accounts})
+
+
+def login(request):
+    all_accounts = Account.objects.all()
+    return render(request, 'manageUser/login.html', {'all_accounts': all_accounts})
+
+
+def guide(request):
+    all_accounts = Account.objects.all()
+    return render(request, 'manageUser/guide.html', {'all_accounts': all_accounts})
