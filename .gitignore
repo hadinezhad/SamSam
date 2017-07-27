@@ -1,0 +1,12 @@
+.idea/
+*.pyc
+~*
+env/
+db.sqlite3
+local_settings.py
+/media
+dump/
+workspace.xml
+.idea/*
+/sample_template
+/prototypes
