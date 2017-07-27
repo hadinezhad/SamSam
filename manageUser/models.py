@@ -11,8 +11,12 @@ class UserType(IntEnum):
 
 
 class Account(models.Model):
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     type = models.IntegerField(default=UserType.MANAGER)
+    phoneNumber = models.IntegerField()
+    name = models.CharField(max_length=100)
+    family = models.CharField(max_length=100)
+
 
 
 
