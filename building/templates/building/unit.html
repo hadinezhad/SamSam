@@ -1,0 +1,39 @@
+{% extends 'building/UserNavBar.html' %}
+
+
+{% block navbar %}{% if accountType == 1 %} {% include 'building/managerNavBar.html' %} {% else %} {% include 'building/neighborNavBar.html' %}  {% endif %}{% endblock %}
+{% block title %}{{ building.name }}{% endblock %}
+{% block body %}
+<!-- TODO adding Search-->
+ <div class='row'>
+
+    <div class="col-sm-10 col-lg-offset-1">
+        {% for unit in all_units %}
+        <div class='col-sm-3'>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class='panel-title'>unit id :{{ unit.number }}</h4>
+          </div>
+          <div class="panel-body">
+            <p>
+                {{ unit.account.user.first_name }}{{ unit.account.user.last_name }}
+            </p>
+          </div>
+          <div class='panel-footer container-fluid'>
+              <a class='col-md-6 btn btn-default' href='#'><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+              <a class='col-md-6 btn btn-default' href='#'><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+              <a class='col-md-6 btn btn-default' href='#'><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
+              <a class='col-md-6 btn btn-default' href='#'><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
+          </div>
+        </div>
+            </div>
+            {% endfor %}
+        <div class="col-md-12"><!-- TODO adding create Unit link -->
+            <button class="col-md-12 btn btn-default">  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </button>
+        </div>
+    </div>
+    </div>
+
+
+
+{% endblock %}

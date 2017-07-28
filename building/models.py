@@ -35,6 +35,9 @@ class Building(models.Model):
     Address = models.CharField(max_length=300)
     info = models.TextField()
 
+    def __str__(self):
+        return self.name + self.manager.user.first_name + self.manager.user.last_name
+
 
 class News(models.Model):
     building = models.ForeignKey(Building, on_delete=models.CASCADE)
@@ -67,6 +70,9 @@ class Unit(models.Model):
     number = models.IntegerField()
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
     building = models.ForeignKey(Building, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.building.name + self.account.user.first_name + self.account.user.last_name
 
 
 class Role(models.Model):

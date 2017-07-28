@@ -1,0 +1,9 @@
+{% extends 'building/UserNavBar.html' %}
+
+
+{% block navbar %}{% if accountType == 1 %} {% include 'building/managerNavBar.html' %} {% else %} {% include 'building/neighborNavBar.html' %}  {% endif %}{% endblock %}
+{% block title %}{{ building.name }}{% endblock %}
+{% block body %}
+#TODO
+
+{% endblock %}
