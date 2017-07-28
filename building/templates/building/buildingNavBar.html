@@ -1,0 +1,62 @@
+<nav class="navbar navbar-inverse navbar-fixed-top" style="position: inherit">
+  <div class="container-fluid" >
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header ">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#topNavBar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand active" href="{% url 'building:showdash'  building.pk  %}">DashBoard</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="topNavBar">
+      <ul class="nav navbar-nav">
+          <li class="dropdown-header">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Managing Building <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Neighbor & Staff</a></li>
+            <li><a href="#">Editing Building Info</a></li>
+            <li><a href="#">Units</a></li>
+          </ul>
+            </li>
+
+          <li class="dropdown-header">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">News & Reports<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+                <li><a href="#">Create & Edit Reports</a></li>
+                <li><a href="#">Create & Edit Polls</a></li>
+                <li><a href="#">Create & Edit Notifications</a></li>
+            <li><a href="#">Failure Reports</a></li>
+            <li><a href="#">Polls</a></li>
+            <li><a href="#">Notifications</a></li>
+          </ul>
+            </li>
+
+          <li class="dropdown-header">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Financial<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+                <li><a href="#">Register Debt</a></li>
+                <li><a href="#">Manage Debt</a></li>
+                <li><a href="#">Debts & Payment Reports</a></li>
+            <li><a href="#">Financial Reports</a></li>
+            <li><a href="#">Income Reports</a></li>
+          </ul>
+            </li>
+
+          <li class="dropdown-header">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Building Features<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+                <li><a href="#">Manage Features</a></li>
+                <li><a href="#">Features</a></li>
+                <li><a href="#">Building Info</a></li>
+          </ul>
+            </li>
+
+
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>

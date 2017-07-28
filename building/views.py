@@ -5,11 +5,12 @@ from manageUser.models import Account
 
 
 def building(request):
-    return render(request, 'building/UserNavBar.html', )#{'building':Building.objects.get(pk=1)})
+    return render(request, 'building/buildingList.html', )#{'building':Building.objects.get(pk=1)})
 
 
 def showdash(request, building_id):
-    pass
+    context = {'building': Building.objects.get(pk=building_id)}
+    return render(request, 'building/buildingDashBoard.html', context)
 
 
 def activities(request):
