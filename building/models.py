@@ -68,7 +68,7 @@ class Unit(models.Model):
     size = models.IntegerField()
     info = models.TextField()
     number = models.IntegerField()
-    account = models.ForeignKey(Account, on_delete=models.CASCADE)
+    account = models.ForeignKey(Account, on_delete=models.CASCADE, null=True, blank=True)
     building = models.ForeignKey(Building, on_delete=models.CASCADE)
 
     def __str__(self):

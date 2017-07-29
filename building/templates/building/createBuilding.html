@@ -13,9 +13,16 @@
                     {% if error_message %}
                         <p><strong>{{ error_message }}</strong></p>
                     {% endif %}
-                    <form class="form-horizontal" role="form" action="" method="post" enctype="multipart/form-data">
+                    <form class="form-horizontal" role="form" action="" method="post" enctype="multipart/form-data" >
                         {% csrf_token %}
-                        {% include 'building/form_template.html' %}
+
+
+
+
+                        {% include 'building/modal_template.html'%}
+
+
+
                         <div class="form-group">
                             <div class="col-md-10 col-lg-offset-1">
                                 <br><button type="submit" class="btn btn-lg btn-primary btn-block">ارسال</button>

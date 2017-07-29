@@ -1,9 +1,25 @@
-body{
+.panel-default {
+    border-color: dodgerblue;
+}
+body > div.row > div{
     direction: rtl;
 }
 body > div.row > div > div{
     float: right;
 }
-body > div.row > div {
-    direction: rtl;
+.panel-default>.panel-heading {
+    background-color: dodgerblue;
+    border-color: #ddd;
+}
+.panel-default>.panel-footer{
+    background-color: #dde5f1;
+}
+a{
+    color: white;
+}
+.btn-default {
+    border-color: dodgerblue;
+}
+body{
+    font-family: SamSamFont;
 }

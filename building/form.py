@@ -1,6 +1,7 @@
 from django import forms
 from .models import Building, Unit
 from django.contrib.auth.models import User
+from manageUser.models import Account
 
 class CreateBuildingForm(forms.ModelForm):
 
@@ -27,7 +28,6 @@ class CreateUnitForm(forms.ModelForm):
 
 
 class CreateNeighborForm(forms.ModelForm):
-
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'email']

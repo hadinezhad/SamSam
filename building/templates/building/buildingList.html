@@ -1,31 +1,30 @@
 {% extends 'building/UserNavBar.html' %}
-{% load staticfiles %}
-<link rel="stylesheet" href="{% static 'building/BuildingListStyle.css' %}">
 
 {% block title %}Building List{% endblock %}
 {% block body %}
     <div class='row'>
-        <div class="container col-sm-10 col-lg-offset-1" style="direction: rtl;">
+        <div class="container col-sm-10 col-lg-offset-1">
             {% for building in all_building %}
-                <a href="{% url 'building:showdash' building.id %}">
-                    <div class='col-sm-3' style="float: right">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
+                <div class='col-sm-3'>
+                    <div class="panel panel-default">
+                        <div class="panel-heading container-fluid">
+                            <a href="{% url 'building:showdash' building.id %}">
                                 <h4 class='panel-title'>{{  building.name}}</h4>
-                            </div>
-                            <div class="panel-body">
-                                <p>manager name :{{    building.manager.user.first_name }}  {{  building.manager.user.last_name}}</p>
-                            </div>
-                            <div class='panel-footer container-fluid'>
-                                <a class='col-md-4 col-lg-offset-4 btn btn-default' href="{% url 'building:deleteBuilding' building.id %}"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> </a>
-                            </div>
+                            </a>
+                        </div>
+                        <div class="panel-body container-fluid">
+                            <p>manager name :{{    building.manager.user.first_name }}  {{  building.manager.user.last_name}}</p>
+                        </div>
+                        <div class='panel-footer container-fluid'>
+                            <a class='col-md-4 col-lg-offset-4 btn btn-default' href="{% url 'building:deleteBuilding' building.id %}"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> </a>
                         </div>
                     </div>
-                </a>
+                </div>
             {% endfor %}
         </div>
     </div>
     <div class="col-md-10 col-lg-offset-1" > <!-- link isn't working-->
-        <button class="col-md-12 btn btn-default"   href='{%  url 'building:createBuilding' %}'>  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </button>
+        <button class="col-md-12 btn btn-default"   href='{%  url 'building:createBuilding' %}'>  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> ایجاد ساختمان جدید </button>
     </div>
 {% endblock %}
+
