@@ -39,10 +39,19 @@ class Building(models.Model):
         return self.name + " " + self.manager.user.first_name + " " + self.manager.user.last_name
 
 
+class FailureReport(models.Model):
+    building = models.ForeignKey(Building, on_delete=models.CASCADE)
+    account = models.ForeignKey(Account, on_delete=models.CASCADE)
+    date = models.DateTimeField(auto_now=True)
+    text = models.TextField()
+    subject = models.CharField(max_length=100)
+
+
 class News(models.Model):
     building = models.ForeignKey(Building, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now=True)
     text = models.TextField()
+    subject = models.CharField(max_length=100)
 
 
 class Poll(models.Model):
@@ -50,6 +59,7 @@ class Poll(models.Model):
     startDate = models.DateTimeField()
     endDate = models.DateTimeField()
     text = models.TextField()
+    subject = models.CharField(max_length=100)
 
 
 class Vote(models.Model):
@@ -81,5 +91,18 @@ class Role(models.Model):
     wage = models.IntegerField()
     info = models.TextField()
 
-# TODO for plan reserved plan
+
+class Feature(models.Model):
+    building = models.ForeignKey(Building, on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
+    startDate = models.DateTimeField()
+    endDate = models.DateTimeField()
+    price = models.IntegerField()
+
+
+class ReservedFeature(models.Model):
+    feature = models.ForeignKey(Feature, on_delete=models.CASCADE)
+    reservedDate = models.DateTimeField()
+    account = models.ForeignKey(Account, on_delete=models.CASCADE)
+
 

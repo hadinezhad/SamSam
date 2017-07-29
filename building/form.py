@@ -40,6 +40,17 @@ class CreateNeighborForm(forms.ModelForm):
         }
 
 
+class UpdateUserProfile(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email', ]
+        labels = {
+            'first_name': 'نام',
+            'last_name': 'نام خانوادگی',
+            'email': 'ایمیل',
+        }
+
+
 class CreateMessageForm(forms.ModelForm):
 
     class Meta:
@@ -47,3 +58,13 @@ class CreateMessageForm(forms.ModelForm):
         fields = ['sender', 'receiver', 'text']
 
 
+class ChangePasswordForm(forms.ModelForm):
+
+    class Meta:
+        model = User
+        fields = ['password', 'password', 'password']
+        labels = {
+            'password': 'رمز عبور فعلی',
+            'password': 'رمز عبور جدید',
+            'password': 'تکرار رمز عبور',
+        }

@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="{% static 'building/BuildingNavBarStyle.css' %}">
 <link rel="stylesheet" href="{% static 'building/BuildingListStyle.css' %}">
 <link rel="stylesheet" href="{% static 'building/ModalStyle.css' %}">
+<link rel="stylesheet" href="{% static 'building/TableStyle.css' %}">
 
 <body>
 <nav class="navbar navbar-inverse navbar-fixed-top" style="position: inherit">
@@ -35,8 +36,8 @@
                       <li class="dropdown">
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ request.user.first_name }} <span class="caret"></span></a>
                           <ul class="dropdown-menu">
-                                <li><a href="#">مدیریت حساب کاربری</a></li>
-                                <li><a href="#">تغییر رمز عبور</a></li>
+                                <li><a href="{% url 'building:updateUserProfile' %}">ویرایش حساب کاربری</a></li>
+                                <li><a href="{% url 'building:changePassword' %}">تغییر رمز عبور</a></li>
                                 <li><a href="#">پشتیبانی</a></li>
                                 <li role="separator" class="divider"></li>
                                 <li><a href="#">خروج</a></li>

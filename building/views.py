@@ -4,13 +4,14 @@ from manageUser.models import Account
 from django.views import generic
 from django.views.generic import View
 from django.urls import reverse_lazy
-from .form import CreateBuildingForm, CreateUnitForm, CreateNeighborForm
+from . import form as myForm
+from django.contrib.auth.forms import PasswordChangeForm
 # Create your views here.
 
 
 def building(request):
     return render(request, 'building/buildingList.html', {'all_building': Building.objects.all(),
-                                                          'createBuildingForm': CreateBuildingForm})
+                                                          'createBuildingForm': myForm.CreateBuildingForm})
 
 
 def showdash(request, building_id):
@@ -24,7 +25,7 @@ class DeleteBuilding(generic.DeleteView):
 
 
 class CreateBuildingFormView(View):
-    form_class = CreateBuildingForm
+    form_class = myForm.CreateBuildingForm
     template_name = 'building/createBuilding.html'
     data = "ورود"
 
@@ -36,7 +37,7 @@ class CreateBuildingFormView(View):
 
 
 class UpdateBuildingFormView(View):
-    form_class = CreateBuildingForm
+    form_class = myForm.CreateBuildingForm
     template_name = 'building/updateBuilding.html'
     data = "ورود"
 
@@ -61,13 +62,13 @@ def neighbor(request, building_id):
     context = {'building': getbuilding,
                'accountType':  Account.objects.get(user=request.user).type,
                'neighbor_unit': neighbor_unit,
-               'createNeighborForm': CreateNeighborForm
+               'createNeighborForm': myForm.CreateNeighborForm
                }
     return render(request, 'building/neighbor&staff.html', context)
 
 
 class CreateNeighborFormView(View):
-    form_class = CreateNeighborForm
+    form_class = myForm.CreateNeighborForm
     template_name = 'building/createNeighbor.html'
     data = "ورود"
 
@@ -81,7 +82,7 @@ class CreateNeighborFormView(View):
 
 
 class CreateUnitFormView(View):
-    form_class = CreateUnitForm
+    form_class = myForm.CreateUnitForm
     template_name = 'building/createUnit.html'
     data = "ورود"
 
@@ -99,7 +100,7 @@ def unit(request, building_id):
     context = {'building': getbuilding,
                'accountType':  Account.objects.get(user=request.user).type,
                'all_units': Unit.objects.filter(building=getbuilding),
-               'createUnitForm': CreateUnitForm,
+               'createUnitForm': myForm.CreateUnitForm,
                     }
     return render(request, 'building/unit.html', context)
 
@@ -112,3 +113,27 @@ def inbox(request):
     context = {'receiveMessages': Message.objects.filter(receiver=Account.objects.get(user=request.user)),
                'sendMessages': Message.objects.filter(sender=Account.objects.get(user=request.user))}
     return render(request, 'building/inbox.html', context)
+
+
+class UpdateUserProfileFormView(View):
+    form_class = myForm.UpdateUserProfile
+    template_name = 'building/updateProfile.html'
+    data = "ورود"
+
+    def get(self, request):
+        form = self.form_class
+        return render(request, self.template_name, {'form': form,
+                                                    'data': self.data,
+                                                    })
+
+
+class ChangePasswordFormView(View):
+    form_class = myForm.ChangePasswordForm
+    template_name = 'building/changePassword.html'
+    data = "ورود"
+
+    def get(self, request):
+        form = self.form_class
+        return render(request, self.template_name, {'form': form,
+                                                    'data': self.data,
+                                                    })

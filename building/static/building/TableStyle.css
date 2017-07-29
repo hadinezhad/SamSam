@@ -1,0 +1,18 @@
+.table>thead>tr>th {
+    text-align: center;
+}
+.link {
+    direction: ltr;
+    text-align: left;
+}
+.table-hover>tbody>tr:hover {
+    background-color: dodgerblue;
+    color: white;
+    font-weight: bold;
+}
+.listTitle {
+    text-align: right;
+}
+.listContainer{
+    border: 2px solid dodgerblue;
+}

@@ -13,6 +13,9 @@ urlpatterns = [
 
     url(r'^activities/$', views.activities, name="activities"),
     url(r'^inbox/$', views.inbox, name="inbox"),
+    url(r'^updateProfile/$', views.UpdateUserProfileFormView.as_view(), name="updateUserProfile"),
+    url(r'^changePassword/$', views.ChangePasswordFormView.as_view(), name="changePassword"),
+
 
     url(r'^(?P<building_id>[0-9]+)/unit/$', views.unit, name="unit"),
     url(r'^(?P<building_id>[0-9]+)/unit/create/$', views.CreateUnitFormView.as_view(), name="createUnit"),
