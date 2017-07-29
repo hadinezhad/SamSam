@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </head>
+
 <body>
 <nav class="navbar navbar-inverse navbar-fixed-top" style="position: inherit">
   <div class="container-fluid" >
@@ -31,11 +32,39 @@
           <li><a href="{% url 'manageUser:signup' %}">عضویت</a></li>
           <li><a class="nav-link" href="{% url 'manageUser:login' %}">ورود <span class="sr-only">(current)</span></a></li>
       </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
+    </div>
+  </div>
 </nav>
 
 {% block body %}
 {% endblock %}
+
+<footer>
+    <div class="container col-lg-offset-1">
+        <div class="col-sm-12 row footer-content">
+            <div class="col-sm-6 footer-about-section container">
+                <h3>سم سم</h3>
+                <p>نرم افزار مدیریت ساختمان سم سم ، نرم افزاری اینترنتی جهت مدیریت ساختمان های مسکونی می باشد که از طریق آن می توان با روش های مختلف شارژ ساختمان را بین ساکنین و مالکین واحدها تقسیم نمود. همچنین ساکنین می توانند از طریق اینترنت شارژ خود را پرداخت نمایند.</p>
+            </div>
+
+            <div class="col-sm-3 hidden-xs col-md-push-1">
+                <ul class="footer-links-section">
+                    <li><a href="{% url 'manageUser:callus' %}">تماس با ما</a></li>
+                </ul>
+            </div>
+
+            <div class="col-sm-3 hidden-xs col-md-push-1">
+                <ul class="footer-links-section">
+                    <li><a href="{% url 'manageUser:home' %}">صفحه اصلی</a></li>
+                    <li><a href="{% url 'manageUser:guide' %}">راهنما</a></li>
+                    <li><a href="{% url 'manageUser:login' %}">ورود</a></li>
+                    <li><a href="{% url 'manageUser:signup' %}">عضویت</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
 </body>
 </html>

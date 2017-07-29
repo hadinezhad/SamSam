@@ -44,8 +44,8 @@
                   <li><a href="#">ایجاد و تغییر نظرسنجی</a></li>
                   <li><a href="#">ایجاد و تغییر اطلاعیه ها</a></li>
                   <li><a href="#">گزارش های خرابی</a></li>
-                  <li><a href="#">نظرسنجی ها</a></li>
-                  <li><a href="#">اطلاعیه ها</a></li>
+                  <li><a href="{% url 'building:poll' building.id %}">نظرسنجی ها</a></li>
+                  <li><a href="{% url 'building:news' building.id %}">اطلاعیه ها</a></li>
               </ul>
           </li>
 

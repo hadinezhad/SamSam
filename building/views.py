@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Building, Message, Unit, Activity, Transaction, Debt
+from .models import Building, Message, Unit, Activity, Transaction, Debt, News, Poll
 from manageUser.models import Account
 from django.views import generic
 from django.views.generic import View
@@ -54,11 +54,18 @@ class UpdateBuildingFormView(View):
 def neighbor(request, building_id):
     getbuilding = Building.objects.get(pk=building_id)
     neighbor_unit = {}
+    '''
     for unit in Unit.objects.all():
         if unit.account is not None:
             neighbor_unit[unit] = unit.account
         else:
             neighbor_unit[unit] = 'empty'
+      '''
+    for unit in Unit.objects.filter(building=getbuilding):
+        if unit.account is not None:
+            neighbor_unit[unit.account] = Unit.objects.filter(account=unit.account)
+
+
     context = {'building': getbuilding,
                'accountType':  Account.objects.get(user=request.user).type,
                'neighbor_unit': neighbor_unit,
@@ -120,7 +127,6 @@ def transaction(request, building_id):
     return render(request, 'building/transaction.html', context)
 
 
-
 def activities(request):
     context = {'all_activities': Activity.objects.filter(account=Account.objects.get(user=request.user)),
                'Listname': 'فعالیت ها',
@@ -128,6 +134,30 @@ def activities(request):
                'title2': 'تاریخ',
                }
     return render(request, 'building/activities.html', context)
+
+
+def news(request, building_id):
+    context = {'all_news': News.objects.filter(building=building_id),
+               'Listname': 'اخبار و اطلاعیه ها',
+               'title1': 'عنوان',
+               'title2': 'تاریخ',
+               'title3': 'متن',
+               'building': Building.objects.get(pk=building_id),
+               'accountType': Account.objects.get(user=request.user).type
+               }
+    return render(request, 'building/news.html', context)
+
+
+def poll(request, building_id):
+    context = {'all_polls': Poll.objects.filter(building=building_id),
+               'Listname': 'نظرسنجی ها',
+               'title1': 'عنوان',
+               'title2': 'تاریخ شروع',
+               'title3': 'تاریخ پایان',
+               'building': Building.objects.get(pk=building_id),
+               'accountType': Account.objects.get(user=request.user).type
+               }
+    return render(request, 'building/poll.html', context)
 
 
 def inbox(request):

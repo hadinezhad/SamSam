@@ -7,16 +7,18 @@
  <div class='row'>
 
     <div class="col-sm-10 col-lg-offset-1">
-        {% for unit,account in neighbor_unit.items %}
+        {% for account,units in neighbor_unit.items %}
         <div class='col-sm-3'>
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h4 class='panel-title'>{% if account == 'empty' %} empty {% else %} {{account.user.first_name}}{{account.user.last_name}}  {% endif %}</h4>
+            <h4 class='panel-title'>{{account.user.first_name}} &nbsp;{{account.user.last_name}}</h4>
           </div>
           <div class="panel-body">
-            <p>
-                unit id :{{unit.number }}
+            <p>شماره واحد:
             </p>
+                {% for unit in units %}
+                       <div style="border: 1px solid dodgerblue"> {{  unit.number }} </div>
+                    {% endfor %}
           </div>
           <div class='panel-footer container-fluid'>
               <a class='col-md-4 btn btn-default' href='#' data-toggle="tooltip" title="تغییر مشخصات ساکن"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>

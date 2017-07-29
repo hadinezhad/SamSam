@@ -12,6 +12,9 @@ h2{
     text-transform: lowercase;
     color: #000;
 }
+body > footer > div > div > div.col-sm-6.footer-about-section.container > p{
+    display: inline;
+}
 p{
     font-family: SamSamFont;
     width: 960px;
@@ -90,6 +93,13 @@ ul {
 }
 .container{
     font-family: SamSamFont;
+}
+.footer-content{
+        margin: 50px 0;
+}
+footer{
+    background-image: url("../images/Footer.jpg");
+    background-size: cover;
 }
 form{
     direction: rtl;

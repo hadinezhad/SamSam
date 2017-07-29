@@ -25,5 +25,7 @@ urlpatterns = [
 
 
     url(r'^(?P<building_id>[0-9]+)/transaction/$', views.transaction, name="transaction"),
+    url(r'^(?P<building_id>[0-9]+)/news/$', views.news, name="news"),
+    url(r'^(?P<building_id>[0-9]+)/poll/$', views.poll, name="poll"),
 ]
 

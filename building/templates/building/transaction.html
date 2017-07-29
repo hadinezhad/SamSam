@@ -1,6 +1,9 @@
 {% extends 'building/UserNavBar.html' %}
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'building/buildingStyle.css' %}">
 
-{% block title %}Activities{% endblock %}
+{% block navbar %}{% if accountType == 1 %} {% include 'building/managerNavBar.html' %} {% else %} {% include 'building/neighborNavBar.html' %}  {% endif %}{% endblock %}
+{% block title %}Transactions & Debt Reports{% endblock %}
 {% block body %}
  <div class="col-sm-12">
         <div class="listContainer col-sm-10 col-lg-offset-1">
