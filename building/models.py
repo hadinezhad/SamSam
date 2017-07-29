@@ -36,7 +36,7 @@ class Building(models.Model):
     info = models.TextField()
 
     def __str__(self):
-        return self.name + self.manager.user.first_name + self.manager.user.last_name
+        return self.name + " " + self.manager.user.first_name + " " + self.manager.user.last_name
 
 
 class News(models.Model):
@@ -72,7 +72,7 @@ class Unit(models.Model):
     building = models.ForeignKey(Building, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.building.name + self.account.user.first_name + self.account.user.last_name
+        return self.building.name + " " + self.account.user.first_name + " " + self.account.user.last_name
 
 
 class Role(models.Model):

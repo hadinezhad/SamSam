@@ -22,11 +22,15 @@ def unit(request, building_id):
 
 def neighbor(request, building_id):
     getbuilding = Building.objects.get(pk=building_id)
+    neighbor_unit = {}
+    for unit in Unit.objects.all():
+        if unit.account is not None:
+            neighbor_unit[unit] = unit.account
+        else:
+            neighbor_unit[unit] = 'empty'
     context = {'building': getbuilding,
                'accountType':  Account.objects.get(user=request.user).type,
-               'all_neighbor': Account.objects.filter(building=getbuilding, type=2),
-               'all_staff': Account.objects.filter(building=getbuilding, type=3),
-               'all_units': Unit.objects.filter(building=getbuilding),
+               'neighbor_unit': neighbor_unit,
                }
     return render(request, 'building/neighbor&staff.html', context)
 

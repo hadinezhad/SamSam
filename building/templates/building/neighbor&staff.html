@@ -8,20 +8,20 @@
  <div class='row'>
 
     <div class="col-sm-10 col-lg-offset-1">
-        {% for neighbor in all_neighbor %}
+        {% for unit,account in neighbor_unit.items %}
         <div class='col-sm-3'>
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h4 class='panel-title'>{{ neighbor.user.first_name}}{{ neighbor.user.last_name}}</h4>
+            <h4 class='panel-title'>{% if account == 'empty' %} empty {% else %} {{account.user.first_name}}{{account.user.last_name}}  {% endif %}</h4>
           </div>
           <div class="panel-body">
             <p>
-                {{ all_units.get }}
+                unit id :{{unit.number }}
             </p>
           </div>
           <div class='panel-footer container-fluid'>
-              <a class='col-md-4 btn btn-default' href='#'><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
               <a class='col-md-4 btn btn-default' href='#'><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+              <a class='col-md-4 btn btn-default' href='#'><span class="glyphicon glyphicon-m" aria-hidden="true"></span></a>
               <a class='col-md-4 btn btn-default' href='#'><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
               <a class='col-md-4 btn btn-default' href='#'><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
               <a class='col-md-4 btn btn-default' href='#'><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>

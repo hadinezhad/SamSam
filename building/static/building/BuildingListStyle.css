@@ -1,0 +1,9 @@
+body{
+    direction: rtl;
+}
+body > div.row > div > div{
+    float: right;
+}
+body > div.row > div {
+    direction: rtl;
+}

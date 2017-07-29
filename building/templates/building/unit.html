@@ -29,7 +29,9 @@
             </div>
             {% endfor %}
         <div class="col-md-12"><!-- TODO adding create Unit link -->
-            <button class="col-md-12 btn btn-default">  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </button>
+            <a href="{% url 'building:createUnit' building.id %}">
+            <button class="col-md-12 btn btn-default">  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+            </a>
         </div>
     </div>
     </div>
