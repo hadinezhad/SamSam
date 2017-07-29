@@ -1,7 +1,8 @@
 from django import forms
-from .models import Building, Unit
+from .models import Building, Unit, Message
 from django.contrib.auth.models import User
 from manageUser.models import Account
+
 
 class CreateBuildingForm(forms.ModelForm):
 
@@ -36,3 +37,12 @@ class CreateNeighborForm(forms.ModelForm):
             'last_name': 'نام خانوادگی',
             'email': 'ایمیل',
         }
+
+
+class CreateMessageForm(forms.ModelForm):
+    
+    class Meta:
+        model = Message
+        fields = ['sender', 'receiver', 'text']
+
+

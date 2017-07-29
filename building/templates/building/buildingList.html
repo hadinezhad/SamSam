@@ -16,15 +16,16 @@
                             <p>manager name :{{    building.manager.user.first_name }}  {{  building.manager.user.last_name}}</p>
                         </div>
                         <div class='panel-footer container-fluid'>
-                            <a class='col-md-4 col-lg-offset-4 btn btn-default' href="{% url 'building:deleteBuilding' building.id %}"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> </a>
+                            <a class='col-md-4 col-lg-offset-4 btn btn-default' href="{% url 'building:deleteBuilding' building.id %}" data-toggle="tooltip" title="حذف ساختمان"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> </a>
                         </div>
                     </div>
                 </div>
             {% endfor %}
         </div>
     </div>
-    <div class="col-md-10 col-lg-offset-1" > <!-- link isn't working-->
-        <button class="col-md-12 btn btn-default"   href='{%  url 'building:createBuilding' %}'>  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> ایجاد ساختمان جدید </button>
+    <div class="col-md-10 col-lg-offset-1" >
+        <button class="col-md-12 btn btn-default" data-toggle="modal" data-target="#myModal">  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> ایجاد ساختمان جدید </button>
+    {% include 'building/modal_template.html' with form=createBuildingForm %}
     </div>
 {% endblock %}
 

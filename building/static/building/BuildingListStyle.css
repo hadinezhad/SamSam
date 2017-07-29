@@ -23,3 +23,8 @@ a{
 body{
     font-family: SamSamFont;
 }
+.btn-default:hover{
+    background-color: dodgerblue;
+    color: white;
+    border-color: dodgerblue;
+}

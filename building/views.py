@@ -9,14 +9,16 @@ from .form import CreateBuildingForm, CreateUnitForm, CreateNeighborForm
 
 
 def building(request):
-    return render(request, 'building/buildingList.html', {'all_building': Building.objects.all()})
+    return render(request, 'building/buildingList.html', {'all_building': Building.objects.all(),
+                                                          'createBuildingForm': CreateBuildingForm})
 
 
 def unit(request, building_id):
     getbuilding = Building.objects.get(pk=building_id)
     context = {'building': getbuilding,
                'accountType':  Account.objects.get(user=request.user).type,
-               'all_units': Unit.objects.filter(building=getbuilding)}
+               'all_units': Unit.objects.filter(building=getbuilding),
+                    }
     return render(request, 'building/unit.html', context)
 
 
