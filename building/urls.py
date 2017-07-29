@@ -13,6 +13,7 @@ urlpatterns = [
     url(r'^(?P<building_id>[0-9]+)/unit/$', views.unit, name="unit"),
     url(r'^(?P<building_id>[0-9]+)/unit/create/$', views.CreateUnitFormView.as_view(), name="createUnit"),
     url(r'^(?P<building_id>[0-9]+)/neighbor/$', views.neighbor, name="neighbor"),
+    url(r'^(?P<building_id>[0-9]+)/neighbor/create/$', views.CreateNeighborFormView.as_view(), name="createNeighbor"),
 
 
 ]

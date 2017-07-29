@@ -4,7 +4,7 @@ from manageUser.models import Account
 from django.views import generic
 from django.views.generic import View
 from django.urls import reverse_lazy
-from .form import CreateBuildingForm, CreateUnitForm
+from .form import CreateBuildingForm, CreateUnitForm, CreateNeighborForm
 # Create your views here.
 
 
@@ -56,6 +56,20 @@ class CreateBuildingFormView(View):
 class CreateUnitFormView(View):
     form_class = CreateUnitForm
     template_name = 'building/createUnit.html'
+    data = "ورود"
+
+    def get(self, request, building_id):
+        form = self.form_class
+        return render(request, self.template_name, {'form': form,
+                                                    'data': self.data,
+                                                    'building': Building.objects.get(pk=building_id),
+                                                    'accountType': Account.objects.get(user=request.user).type
+                                                    })
+
+
+class CreateNeighborFormView(View):
+    form_class = CreateNeighborForm
+    template_name = 'building/createNeighbor.html'
     data = "ورود"
 
     def get(self, request, building_id):
