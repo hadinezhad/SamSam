@@ -17,6 +17,7 @@ class Message(models.Model):
 
 
 class Transaction(models.Model):
+    account = models.ForeignKey(Account, on_delete=models.CASCADE)
     trackingCode = models.CharField(max_length=200)
     amount = models.IntegerField()
     date = models.DateTimeField(auto_now_add=True)
@@ -25,7 +26,7 @@ class Transaction(models.Model):
 class Debt(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
     amount = models.IntegerField()
-    type = models.CharField(max_length=100)  # TODO
+    type = models.CharField(max_length=100)
     date = models.DateTimeField(auto_now=True)
 
 

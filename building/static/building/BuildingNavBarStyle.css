@@ -20,6 +20,7 @@ ul {
 body{
     direction: rtl;
     text-align: center;
+    background-image: url("../images/Background.jpg");
 }
 .nav li:hover{
     background-color: dodgerblue;

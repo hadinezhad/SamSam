@@ -22,5 +22,8 @@ urlpatterns = [
 
     url(r'^(?P<building_id>[0-9]+)/neighbor/$', views.neighbor, name="neighbor"),
     url(r'^(?P<building_id>[0-9]+)/neighbor/create/$', views.CreateNeighborFormView.as_view(), name="createNeighbor"),
+
+
+    url(r'^(?P<building_id>[0-9]+)/transaction/$', views.transaction, name="transaction"),
 ]
 

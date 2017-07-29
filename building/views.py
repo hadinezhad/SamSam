@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Building, Message, Unit
+from .models import Building, Message, Unit, Activity, Transaction, Debt
 from manageUser.models import Account
 from django.views import generic
 from django.views.generic import View
@@ -105,8 +105,29 @@ def unit(request, building_id):
     return render(request, 'building/unit.html', context)
 
 
+def transaction(request, building_id):
+    context = {'all_transaction': Transaction.objects.filter(account=Account.objects.get(user=request.user)),
+               'all_debt': Debt.objects.filter(account=Account.objects.get(user=request.user)),
+               'Listname': 'تراکنش ها',
+               'Listname2': 'بدهی ها',
+               'title1': 'مبلغ',
+               'title2': 'تاریخ',
+               'title3': 'کد رهگیری',
+               'title4': 'نوع بدهی',
+               'building': Building.objects.get(pk=building_id),
+               'accountType': Account.objects.get(user=request.user).type
+               }
+    return render(request, 'building/transaction.html', context)
+
+
+
 def activities(request):
-    pass
+    context = {'all_activities': Activity.objects.filter(account=Account.objects.get(user=request.user)),
+               'Listname': 'فعالیت ها',
+               'title1': 'نوع فعالیت',
+               'title2': 'تاریخ',
+               }
+    return render(request, 'building/activities.html', context)
 
 
 def inbox(request):
