@@ -13,32 +13,6 @@ def building(request):
                                                           'createBuildingForm': CreateBuildingForm})
 
 
-def unit(request, building_id):
-    getbuilding = Building.objects.get(pk=building_id)
-    context = {'building': getbuilding,
-               'accountType':  Account.objects.get(user=request.user).type,
-               'all_units': Unit.objects.filter(building=getbuilding),
-               'createUnitForm': CreateUnitForm,
-                    }
-    return render(request, 'building/unit.html', context)
-
-
-def neighbor(request, building_id):
-    getbuilding = Building.objects.get(pk=building_id)
-    neighbor_unit = {}
-    for unit in Unit.objects.all():
-        if unit.account is not None:
-            neighbor_unit[unit] = unit.account
-        else:
-            neighbor_unit[unit] = 'empty'
-    context = {'building': getbuilding,
-               'accountType':  Account.objects.get(user=request.user).type,
-               'neighbor_unit': neighbor_unit,
-               'createNeighborForm': CreateNeighborForm
-               }
-    return render(request, 'building/neighbor&staff.html', context)
-
-
 def showdash(request, building_id):
     context = {'building': Building.objects.get(pk=building_id), 'accountType':  Account.objects.get(user=request.user).type}
     return render(request, 'building/dashBoard.html', context)
@@ -61,18 +35,35 @@ class CreateBuildingFormView(View):
                                                     })
 
 
-class CreateUnitFormView(View):
-    form_class = CreateUnitForm
-    template_name = 'building/createUnit.html'
+class UpdateBuildingFormView(View):
+    form_class = CreateBuildingForm
+    template_name = 'building/updateBuilding.html'
     data = "ورود"
 
     def get(self, request, building_id):
+        getbuilding = Building.objects.get(pk=building_id)
         form = self.form_class
         return render(request, self.template_name, {'form': form,
                                                     'data': self.data,
-                                                    'building': Building.objects.get(pk=building_id),
-                                                    'accountType': Account.objects.get(user=request.user).type
+                                                    'building': getbuilding,
+                                                    'accountType': Account.objects.get(user=request.user).type,
                                                     })
+
+
+def neighbor(request, building_id):
+    getbuilding = Building.objects.get(pk=building_id)
+    neighbor_unit = {}
+    for unit in Unit.objects.all():
+        if unit.account is not None:
+            neighbor_unit[unit] = unit.account
+        else:
+            neighbor_unit[unit] = 'empty'
+    context = {'building': getbuilding,
+               'accountType':  Account.objects.get(user=request.user).type,
+               'neighbor_unit': neighbor_unit,
+               'createNeighborForm': CreateNeighborForm
+               }
+    return render(request, 'building/neighbor&staff.html', context)
 
 
 class CreateNeighborFormView(View):
@@ -89,11 +80,35 @@ class CreateNeighborFormView(View):
                                                     })
 
 
+class CreateUnitFormView(View):
+    form_class = CreateUnitForm
+    template_name = 'building/createUnit.html'
+    data = "ورود"
+
+    def get(self, request, building_id):
+        form = self.form_class
+        return render(request, self.template_name, {'form': form,
+                                                    'data': self.data,
+                                                    'building': Building.objects.get(pk=building_id),
+                                                    'accountType': Account.objects.get(user=request.user).type
+                                                    })
+
+
+def unit(request, building_id):
+    getbuilding = Building.objects.get(pk=building_id)
+    context = {'building': getbuilding,
+               'accountType':  Account.objects.get(user=request.user).type,
+               'all_units': Unit.objects.filter(building=getbuilding),
+               'createUnitForm': CreateUnitForm,
+                    }
+    return render(request, 'building/unit.html', context)
+
+
 def activities(request):
     pass
 
 
 def inbox(request):
     context = {'receiveMessages': Message.objects.filter(receiver=Account.objects.get(user=request.user)),
-                'sendMessages': Message.objects.filter(sender=Account.objects.get(user=request.user))}
+               'sendMessages': Message.objects.filter(sender=Account.objects.get(user=request.user))}
     return render(request, 'building/inbox.html', context)

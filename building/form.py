@@ -25,6 +25,7 @@ class CreateUnitForm(forms.ModelForm):
             'size': 'اندازه',
             'info': 'توضیحات',
             'number': 'تعداد',
+            'account': 'نام ساکن'
         }
 
 

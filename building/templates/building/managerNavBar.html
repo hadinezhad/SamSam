@@ -53,11 +53,7 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">مدیریت ساختمان&nbsp; <span class="caret"></span></a>
               <ul class="dropdown-menu">
                   <li><a href="{%  url 'building:neighbor' building.id %}">مدیریت همسایه ها و پرسنل</a></li>
-
-
-                  <li><a href="#">تغییر مشخصات ساختمان</a></li>
-
-
+                  <li><a href="{%  url 'building:updateBuilding' building.id %}">تغییر مشخصات ساختمان</a></li>
                   <li><a href="{%  url 'building:unit' building.id %}">مدیریت واحدها</a></li>
               </ul>
           </li>
