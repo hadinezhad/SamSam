@@ -1,3 +1,7 @@
+@font-face {
+    font-family: "SamSamFont";
+    src: url(../fonts/vazir.ttf);
+}
 body{
     font-size: 30px;
     text-align: center;
@@ -66,3 +70,11 @@ p{
     padding-bottom: 50px;
 }
 
+.nav li:hover {
+    background-color: dodgerblue;
+}
+.nav , .navbar-brand{
+    font-family: SamSamFont;
+    font-weight: bolder;
+    font-size: large;
+}
