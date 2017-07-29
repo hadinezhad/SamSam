@@ -1,0 +1,33 @@
+@font-face {
+    font-family: "SamSamFont";
+    src: url(../fonts/vazir.ttf);
+}
+.container{
+    font-family: SamSamFont;
+}
+form{
+    direction: rtl;
+}
+nav{
+    font-family: SamSamFont;
+    font-weight: bolder;
+    font-size: medium;
+}
+ul {
+    list-style: none;
+}
+
+body{
+    direction: rtl;
+    text-align: center;
+}
+.nav li:hover{
+    background-color: dodgerblue;
+}
+.navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:focus{
+    background-color: dodgerblue;
+    text-align: right;
+}
+.navbar-nav>li>.dropdown-menu{
+    text-align: right;
+}

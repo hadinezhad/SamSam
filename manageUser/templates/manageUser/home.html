@@ -1,34 +1,64 @@
 {% extends 'manageUser/homeNavBar.html' %}
 {% block title %}SAM-SAM{% endblock %}
+{% load staticfiles %}
+
 {% block body %}
     <div class="scrollblock block-title">
-        <h2>SamSam</h2>
-        <p>Best Software Ever!!</p>
-        <p><a class="btn btn-primary btn-lg" href="{% url 'manageUser:signup' %}" role="button">Sign Up</a></p>
+        <div class="content">
+            <h2>سم سم</h2>
+            <p>با استفاده از سامانه مدیریت ساختمان های مسکونی (سم سم):</p>
+            <ul>
+                <li >
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                مدیر ساختمان می تواند وضعیت مالی ساختمان را به راحتی بررسی کند.
+                </li>
+                <li>
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    همسایه ها می توانند به راحتی از امکانات ساختمان مطلع شوند.
+                </li>
+            </ul>
+            <a class="btn btn-primary btn-lg" href="{% url 'manageUser:signup' %}" role="button">عضویت</a>
+        </div>
     </div>
     <div class="scrollblock block00">
-        <h2 style="font-family: 'B Kourosh'; font-size: 50px">کیر تو دهن آقای پورسلیمانی</h2>
-        <p>text of text 00</p>
+        <div class="content">
+            <h2>سم سم چیست؟</h2>
+            <p>
+                <span class="glyphicon glyphicon-hand-left" aria-hidden="true"></span>
+                سم سم، نرم افزار مدیریت و حسابداری ساختمان و مجتمع از طریق اینترنت می باشد که کمک میکند مدیران بدون دارا بودن دانش حسابداری، به امور مالی رسیدگی کنند و در کوتاه ترین زمان ممکن اخبار و اطلاعیه ها را با ساکنان و مالکان به اشتراک بگذارند.
+                ساکنان و مالکان نیز قادر خواهند بود تا علاوه بر اطلاع از میزان بدهی به پرداخت در موعد مقرر اقدام نمایند.
+            </p>
+        </div>
     </div>
     <div class="scrollblock block0">
-        <h2>Sample Text 0</h2>
-        <p>text of text 0</p>
+        <div class="content">
+            <h2>تسویه حساب های مالی همسایه ها:</h2>
+            <p> توضیحات </p>
+        </div>
     </div>
     <div class="scrollblock block1">
-        <h2>Sample Text 1</h2>
-        <p>text of text 1</p>
+        <div class="content">
+            <h2>  رزرو امکانات ساختمان از طریق سامانه</h2>
+            <p> توضیحات </p>
+        </div>
     </div>
     <div class="scrollblock block2">
-        <h2>Sample Text 2</h2>
-        <p>text of text 2</p>
+        <div class="content">
+            <h2> ارتباط با سایر همسایه های ساختمان و همچنین مدیر ساختمان از طریق سامانه</h2>
+            <p> توضیحات </p>
+        </div>
     </div>
     <div class="scrollblock block3">
-        <h2>Sample Text 3</h2>
-        <p>text of text 3</p>
+        <div class="content">
+            <h2>مشاهده گزارش فعالیت ها و صورت حساب ها و بدهی ها از طریق سامانه</h2>
+            <p> توضیحات </p>
+        </div>
     </div>
     <div class="scrollblock block4">
-        <h2>Sample Text 2</h2>
-        <p>text of text 2</p>
+        <div class="content">
+            <h2>امکان مدیریت یک یا چند ساختمان به صورت همزمان</h2>
+            <p> توضیحات </p>
+        </div>
     </div>
 
 {% endblock %}

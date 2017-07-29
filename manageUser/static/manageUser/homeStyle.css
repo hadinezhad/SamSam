@@ -3,20 +3,40 @@
     src: url(../fonts/vazir.ttf);
 }
 body{
-    font-size: 30px;
+    direction: rtl;
     text-align: center;
 }
 h2{
-    font-size: 70px;
-    font-weight: normal;
+    font-family: SamSamFont;
     margin: 0;
     text-transform: lowercase;
     color: #000;
 }
 p{
+    font-family: SamSamFont;
     width: 960px;
     margin: 20px auto;
     line-height: 150%;
+    text-align: right;
+}
+*{
+    font-family: SamSamFont;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+ul {
+    list-style: none;
+    text-align: right;
+}
+
+.scrollblock {
+    display: block;
+    position: relative;
+    margin: 0;
+    width: 100%;
+    padding-top: 50px;
+    padding-bottom: 50px;
 }
 .block-title {
 
@@ -60,16 +80,6 @@ p{
 .block4 h2, .block4 p{
     color: #cc4037;
 }
-.scrollblock {
-    display: block;
-    position: relative;
-    margin: 0;
-    width: 100%;
-    color: white;
-    padding-top: 50px;
-    padding-bottom: 50px;
-}
-
 .nav li:hover {
     background-color: dodgerblue;
 }
@@ -78,11 +88,15 @@ p{
     font-weight: bolder;
     font-size: large;
 }
-
 .container{
     font-family: SamSamFont;
 }
-
 form{
     direction: rtl;
 }
+.content{
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
