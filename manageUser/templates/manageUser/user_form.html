@@ -1,14 +1,12 @@
 {% extends 'manageUser/homeNavBar.html' %}
 {% block title %}{{ data }}{% endblock %}
 {% block body %}
-<div class="container-fluid">
-
+<div class="container">
     <div class="row">
-
-        <div class="col-sm-12 col-md-7">
+        <div class="col-lg-offset-3 col-md-6">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <h3>{{ data }}</h3>
+                    <h3>{{ data }}</h3> <br><br>
                     {% if error_message %}
                         <p><strong>{{ error_message }}</strong></p>
                     {% endif %}
@@ -16,8 +14,8 @@
                         {% csrf_token %}
                         {% include 'manageUser/form_template.html' %}
                         <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-success">Submit</button>
+                            <div class="col-md-10 col-lg-offset-1">
+                                <br><button type="submit" class="btn btn-lg btn-primary btn-block">Submit</button>
                             </div>
                         </div>
                     </form>
@@ -25,7 +23,7 @@
             </div>
         </div>
     </div>
-
 </div>
+
 {% endblock%}
 

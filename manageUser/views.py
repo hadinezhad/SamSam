@@ -16,7 +16,7 @@ def home(request):
 class UserFormView(View):
     form_class = UserRegisterForm
     template_name = 'manageUser/user_form.html'
-    data = "Sign Up"
+    data = "عضویت"
 
     def get(self, request):
         form = self.form_class
@@ -44,7 +44,7 @@ class UserFormView(View):
 class UserLoginFormView(View):
     form_class = UserLoginForm
     template_name = 'manageUser/user_form.html'
-    data = "Login"
+    data = "ورود"
 
     def get(self, request):
         form = self.form_class

@@ -78,3 +78,11 @@ p{
     font-weight: bolder;
     font-size: large;
 }
+
+.container{
+    font-family: SamSamFont;
+}
+
+form{
+    direction: rtl;
+}
