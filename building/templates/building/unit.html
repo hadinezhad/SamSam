@@ -27,10 +27,9 @@
                 </div>
             </div>
         {% endfor %}
-        <div class="col-md-12"><!-- TODO adding create Unit link -->
-            <a href="{% url 'building:createUnit' building.id %}">
-                <button class="col-md-12 btn btn-default">  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> اضافه کردن واحد جدید </button>
-            </a>
+        <div class="col-md-12">
+                <button class="col-md-12 btn btn-default" data-toggle="modal" data-target="#myModal">  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> اضافه کردن واحد جدید </button>
+            {% include 'building/modal_template.html' with form=createUnitForm %}
         </div>
     </div>
  </div>

@@ -18,6 +18,7 @@ def unit(request, building_id):
     context = {'building': getbuilding,
                'accountType':  Account.objects.get(user=request.user).type,
                'all_units': Unit.objects.filter(building=getbuilding),
+               'createUnitForm': CreateUnitForm,
                     }
     return render(request, 'building/unit.html', context)
 
@@ -33,6 +34,7 @@ def neighbor(request, building_id):
     context = {'building': getbuilding,
                'accountType':  Account.objects.get(user=request.user).type,
                'neighbor_unit': neighbor_unit,
+               'createNeighborForm': CreateNeighborForm
                }
     return render(request, 'building/neighbor&staff.html', context)
 
