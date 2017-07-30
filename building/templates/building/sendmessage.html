@@ -1,0 +1,29 @@
+{% extends 'building/UserNavBar.html' %}
+
+{% block title %}Send Message{% endblock %}
+{% block body %}
+ <div class="container">
+    <div class="row">
+        <div class="col-lg-offset-3 col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h3>{{ data }}</h3> <br><br>
+                    {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+                    <form class="form-horizontal" role="form" action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% include 'building/form_template.html' %}
+                        <div class="form-group">
+                            <div class="col-md-10 col-lg-offset-1">
+                                <br><button type="submit" class="btn btn-lg btn-primary btn-block">ارسال</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

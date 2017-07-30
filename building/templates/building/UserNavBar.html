@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="{% static 'building/ModalStyle.css' %}">
 <link rel="stylesheet" href="{% static 'building/TableStyle.css' %}">
 <link rel="stylesheet" href="{% static 'building/dashboardStyle.css' %}">
+<link rel="stylesheet" href="{% static 'building/pollFormStyle.css' %}">
 
 <body>
 <nav class="navbar navbar-inverse navbar-fixed-top" style="position: inherit">
@@ -32,14 +33,14 @@
             <div class="collapse navbar-collapse" id="topNavBar">
                   <ul class="nav navbar-nav pull-right">
                       <li><a href="{% url 'building:inbox' %}">صندوق پیام</a></li>
-                      <li><a href="{% url 'building:activities' %}">ارسال پیام</a></li>
+                      <li><a href="{% url 'building:sendmessage' %}">ارسال پیام</a></li>
                       <li><a href="{% url 'building:activities' %}">فعالیت ها <span class="sr-only">(current)</span></a></li>
                       <li class="dropdown">
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ request.user.first_name }} <span class="caret"></span></a>
                           <ul class="dropdown-menu">
                                 <li><a href="{% url 'building:updateUserProfile' %}">ویرایش حساب کاربری</a></li>
                                 <li><a href="{% url 'building:changePassword' %}">تغییر رمز عبور</a></li>
-                                <li><a href="#">پشتیبانی</a></li>
+                                <li><a href="{% url 'building:support' %}">پشتیبانی</a></li>
                                 <li role="separator" class="divider"></li>
                                 <li><a href="#">خروج</a></li>
                           </ul>

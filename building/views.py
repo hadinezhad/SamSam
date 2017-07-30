@@ -5,6 +5,7 @@ from django.views import generic
 from django.views.generic import View
 from django.urls import reverse_lazy
 from . import form as myForm
+from django import forms
 from django.contrib.auth.forms import PasswordChangeForm
 # Create your views here.
 
@@ -14,8 +15,15 @@ def building(request):
                                                           'createBuildingForm': myForm.CreateBuildingForm})
 
 
+def info(request, building_id):
+    return render(request, 'building/info.html', {'building': Building.objects.get(pk=building_id),
+                                                  'accountType': Account.objects.get(user=request.user).type})
+
+
 def showdash(request, building_id):
-    context = {'building': Building.objects.get(pk=building_id), 'accountType':  Account.objects.get(user=request.user).type}
+    getBuilding = Building.objects.get(pk=building_id)
+    context = {'building': getBuilding,
+               'accountType':  Account.objects.get(user=request.user).type}
     return render(request, 'building/dashBoard.html', context)
 
 
@@ -39,7 +47,7 @@ class CreateBuildingFormView(View):
 class UpdateBuildingFormView(View):
     form_class = myForm.CreateBuildingForm
     template_name = 'building/updateBuilding.html'
-    data = "ورود"
+    data = "تغییر مشخصات ساختمان"
 
     def get(self, request, building_id):
         getbuilding = Building.objects.get(pk=building_id)
@@ -61,7 +69,8 @@ def neighbor(request, building_id):
     context = {'building': getbuilding,
                'accountType':  Account.objects.get(user=request.user).type,
                'neighbor_unit': neighbor_unit,
-               'createNeighborForm': myForm.CreateNeighborForm
+               'createNeighborForm': myForm.CreateNeighborForm,
+               'messageForm':myForm.CreateMessageForm
                }
     return render(request, 'building/neighbor&staff.html', context)
 
@@ -236,7 +245,8 @@ def poll(request, building_id):
                'title2': 'تاریخ شروع',
                'title3': 'تاریخ پایان',
                'building': Building.objects.get(pk=building_id),
-               'accountType': Account.objects.get(user=request.user).type
+               'accountType': Account.objects.get(user=request.user).type,
+               'form': myForm.CreatePollForm
                }
     return render(request, 'building/poll.html', context)
 
@@ -254,17 +264,40 @@ def cupoll(request, building_id):
     return render(request, 'building/cupoll.html', context)
 
 
-
 def inbox(request):
     context = {'receiveMessages': Message.objects.filter(receiver=Account.objects.get(user=request.user)),
-               'sendMessages': Message.objects.filter(sender=Account.objects.get(user=request.user))}
+               'sendMessages': Message.objects.filter(sender=Account.objects.get(user=request.user)),
+               'Listname1': 'صندوق دریافتی',
+               'Listname2': 'صندوق ارسالی',
+               'title1': 'گیرنده',
+               'title2': 'فرسنتده',
+               'title3': 'تاریخ دریافت',
+               'title4': 'تاریخ ارسال',
+               'title5': 'متن',
+               'title6': 'موضوع',
+               }
     return render(request, 'building/inbox.html', context)
+
+
+def sendmessage(request):
+    context = {'data': 'ارسال پیام جدید' ,
+               'form': myForm.CreateMessageForm,
+               }
+    return render(request, 'building/sendmessage.html', context)
+
+
+def support(request):
+    context = {'data': 'پشتیبانی',
+               'form': myForm.CreateMessageForm,
+               }
+
+    return render(request, 'building/sendmessage.html', context)
 
 
 class UpdateUserProfileFormView(View):
     form_class = myForm.UpdateUserProfile
     template_name = 'building/updateProfile.html'
-    data = "ورود"
+    data = "ویرایش حساب کاربری"
 
     def get(self, request):
         form = self.form_class
@@ -276,7 +309,7 @@ class UpdateUserProfileFormView(View):
 class ChangePasswordFormView(View):
     form_class = myForm.ChangePasswordForm
     template_name = 'building/changePassword.html'
-    data = "ورود"
+    data = "تغییر رمز عبور"
 
     def get(self, request):
         form = self.form_class

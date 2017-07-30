@@ -1,0 +1,42 @@
+body {
+    margin-top: 20px;
+}
+
+.poll .panel-body:not(.two-col) {
+    padding: 0px;
+}
+
+.poll .glyphicon {
+    margin-right: 5px;
+}
+
+.poll .glyphicon-new-window {
+    margin-left: 5px;
+}
+
+.poll .panel-body .radio,.poll .panel-body .checkbox {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.poll .panel-body .list-group {
+    margin-bottom: 0;
+}
+
+.poll .margin-bottom-none {
+    margin-bottom: 0;
+}
+
+.poll .panel-body .radio label,.poll .panel-body .checkbox label {
+    display: block;
+}
+.list-group {
+    direction: rtl;
+}
+.list-group-item{
+    text-align: right;
+    border: none;
+}
+.vote{
+
+}

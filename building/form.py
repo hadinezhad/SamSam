@@ -55,7 +55,12 @@ class CreateMessageForm(forms.ModelForm):
 
     class Meta:
         model = Message
-        fields = ['sender', 'receiver', 'text']
+        fields = ['receiver', 'subject', 'text']
+        labels = {
+            'subject': 'عنوان',
+            'text': 'متن',
+            'receiver': 'گیرنده',
+        }
 
 
 class ChangePasswordForm(forms.ModelForm):
@@ -127,4 +132,5 @@ class CreateFeatureForm(forms.ModelForm):
             'endDate': 'تاریخ پایان',
             'price': 'هزینه',
         }
+
 

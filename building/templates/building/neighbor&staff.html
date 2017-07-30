@@ -22,8 +22,10 @@
           </div>
           <div class='panel-footer container-fluid'>
               <a class='col-md-4 btn btn-default' href='#' data-toggle="tooltip" title="تغییر مشخصات ساکن"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-              <a class='col-md-4 btn btn-default' href='#' data-toggle="tooltip" title="ارسال پیام"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
-              <a class='col-md-4 btn btn-default' href='#' data-toggle="tooltip" title="ایجاد نقش"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
+
+              <a class='col-md-4 btn btn-default' href='#' data-toggle="modal" data-toggle="tooltip" data-target="#myModal" title="ارسال پیام"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
+              {% include 'building/modal_template.html' with form=messageForm %}
+              <a class='col-md-4 btn btn-default' href='#' data-toggle="tooltip"  title="ایجاد نقش"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
               <a class='col-md-4 btn btn-default' href='#' data-toggle="tooltip" title="ارسال نام کاربری و رمز عبور"><span class="glyphicon glyphicon-send" aria-hidden="true"></span></a>
               <a class='col-md-4 btn btn-default' href='#' data-toggle="tooltip" title="مشخصات ساکن"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
               <a class='col-md-4 btn btn-default' href='#' data-toggle="tooltip" title="حذف همسایه"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>

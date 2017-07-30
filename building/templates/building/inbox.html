@@ -1,5 +1,78 @@
 {% extends 'building/UserNavBar.html' %}
 {% block title %}Inbox{% endblock %}
 {% block body %}
-#TODO
+
+<div class="col-sm-12">
+        <div class="listContainer col-sm-10 col-lg-offset-1">
+            <div class="listTitle pull-right col-sm-12">
+                <h3> {{ Listname1 }} </h3>
+            </div>
+        </div>
+        <div class="col-sm-10 col-lg-offset-1">
+            <br>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>{{ title2 }}</th>
+                        <th>{{ title6 }}</th>
+                        <th>{{ title3 }}</th>
+                        <th>{{ title5 }}</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for m in receiveMessages %}
+                    <tr>
+                        <td>{{ m.sender.user.first_name }} &nbsp; {{ m.sender.user.last_name }}</td>
+                        <td>{{ m.subject }}</td>
+                        <td>{{ m.date }}</td>
+                        <td>{{ m.text|slice:"0:30" }}</td>
+                    <td class="link">
+                           <button type="button" class="btn btn-danger">حذف</button>
+                            <button type="button" class="btn btn-success">مشاهده کامل پیام</button>
+                       </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <br>
+    <div class="col-sm-12">
+        <div class="listContainer col-sm-10 col-lg-offset-1">
+            <div class="listTitle pull-right col-sm-12">
+                <h3> {{ Listname2 }} </h3>
+            </div>
+        </div>
+        <div class="col-sm-10 col-lg-offset-1">
+            <br>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>{{ title1 }}</th>
+                        <th>{{ title6 }}</th>
+                        <th>{{ title4 }}</th>
+                        <th>{{ title5 }}</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for m in sendMessages %}
+                    <tr>
+                         <td>{{ m.receiver.user.first_name }} &nbsp; {{ m.receiver.user.last_name }}</td>
+                        <td>{{ m.subject }}</td>
+                        <td>{{ m.date }}</td>
+                        <td>{{ m.text|slice:"0:30" }}</td>
+                    <td class="link">
+                           <button type="button" class="btn btn-danger">حذف</button>
+                            <button type="button" class="btn btn-success">مشاهده کامل پیام</button>
+                       </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock %}

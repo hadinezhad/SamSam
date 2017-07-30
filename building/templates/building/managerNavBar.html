@@ -22,7 +22,7 @@
               <ul class="dropdown-menu">
                   <li><a href="{% url 'building:cufeature' building.id %} ">مدیریت امکانات</a></li>
                   <li><a href="{% url 'building:feature' building.id %} ">امکانات</a></li>
-                  <li><a href="#">اطلاعات ساختمان</a></li>
+                  <li><a href="{% url 'building:info' building.id %}">اطلاعات ساختمان</a></li>
               </ul>
           </li>
 

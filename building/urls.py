@@ -6,6 +6,7 @@ urlpatterns = [
     url(r'^$', views.building, name="building"),
 
     url(r'^(?P<building_id>[0-9]+)/$', views.showdash, name="showdash"),
+    url(r'^(?P<building_id>[0-9]+)/info/$', views.info, name="info"),
 
     url(r'^create/$', views.CreateBuildingFormView.as_view(), name="createBuilding"),
     url(r'^(?P<building_id>[0-9]+)/update/$', views.UpdateBuildingFormView.as_view(), name="updateBuilding"),
@@ -13,6 +14,8 @@ urlpatterns = [
 
     url(r'^activities/$', views.activities, name="activities"),
     url(r'^inbox/$', views.inbox, name="inbox"),
+    url(r'^sendmessage/$', views.sendmessage, name="sendmessage"),
+    url(r'^support/$', views.support, name="support"),
     url(r'^updateProfile/$', views.UpdateUserProfileFormView.as_view(), name="updateUserProfile"),
     url(r'^changePassword/$', views.ChangePasswordFormView.as_view(), name="changePassword"),
 
