@@ -119,6 +119,19 @@ def transaction(request, building_id):
     return render(request, 'building/transaction.html', context)
 
 
+def cudebt(request, building_id):
+    context = {'all_debt': Debt.objects.filter(account=Account.objects.filter(building=building_id)),
+               'Listname2': 'بدهی ها',
+               'title1': 'مبلغ',
+               'title2': 'تاریخ',
+               'title4': 'نوع بدهی',
+               'building': Building.objects.get(pk=building_id),
+               'accountType': Account.objects.get(user=request.user).type,
+               'form': myForm.CreateDebtForm
+               }
+    return render(request, 'building/cudebt.html', context)
+
+
 def activities(request):
     context = {'all_activities': Activity.objects.filter(account=Account.objects.get(user=request.user)),
                'Listname': 'فعالیت ها',
@@ -199,6 +212,21 @@ def feature(request, building_id):
                'accountType': Account.objects.get(user=request.user).type
                }
     return render(request, 'building/feature.html', context)
+
+
+def cufeature(request, building_id):
+    all_feature = Feature.objects.filter(building=building_id)
+
+    context = {'all_feature': all_feature,
+               'Listname': 'امکانات',
+               'title3': 'مبلغ',
+               'title2': 'تاریخ شروع/پایان',
+               'title1': 'عنوان',
+               'building': Building.objects.get(pk=building_id),
+               'accountType': Account.objects.get(user=request.user).type,
+               'form': myForm.CreateFeatureForm
+               }
+    return render(request, 'building/cufeature.html', context)
 
 
 def poll(request, building_id):

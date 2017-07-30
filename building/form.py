@@ -1,5 +1,5 @@
 from django import forms
-from .models import Building, Unit, Message, FailureReport, News, Poll
+from .models import Building, Unit, Message, FailureReport, News, Poll, Debt, Feature
 from django.contrib.auth.models import User
 from manageUser.models import Account
 
@@ -103,3 +103,28 @@ class CreateNewsForm(forms.ModelForm):
             'subject': 'عنوان',
             'text': 'متن',
         }
+
+class CreateDebtForm(forms.ModelForm):
+
+    class Meta:
+        model = Debt
+        fields = ['account', 'amount', 'type']
+        labels = {
+            'amount': 'مبلغ',
+               'account': 'بدهکار',
+               'type': 'نوع بدهی',
+        }
+
+
+class CreateFeatureForm(forms.ModelForm):
+
+    class Meta:
+        model = Feature
+        fields = ['title', 'startDate', 'endDate', 'price']
+        labels = {
+            'title': 'عنوان',
+            'startDate': 'تاریخ شروع',
+            'endDate': 'تاریخ پایان',
+            'price': 'هزینه',
+        }
+

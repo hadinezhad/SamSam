@@ -20,7 +20,7 @@
           <li class="dropdown-header">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">مشخصات ساختمان&nbsp;<span class="caret"></span></a>
               <ul class="dropdown-menu">
-                  <li><a href="#">مدیریت امکانات</a></li>
+                  <li><a href="{% url 'building:cufeature' building.id %} ">مدیریت امکانات</a></li>
                   <li><a href="{% url 'building:feature' building.id %} ">امکانات</a></li>
                   <li><a href="#">اطلاعات ساختمان</a></li>
               </ul>
@@ -29,8 +29,7 @@
           <li class="dropdown-header">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">امور مالی&nbsp;<span class="caret"></span></a>
               <ul class="dropdown-menu">
-                  <li><a href="#">ثبت بدهی</a></li>
-                  <li><a href="#">مدیریت بدهی</a></li>
+                  <li><a href="{% url 'building:cudebt' building.id %}">مدیریت بدهی</a></li>
                   <li><a href="{% url 'building:transaction' building.id %}">بدهی ها و گزارش پرداختی ها</a></li>
                   <li><a href="#">گزارش های مالی</a></li>
                   <li><a href="#">گزارش درآمدها</a></li>

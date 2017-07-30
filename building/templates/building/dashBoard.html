@@ -4,6 +4,83 @@
 {% block navbar %}{% if accountType == 1 %} {% include 'building/managerNavBar.html' %} {% else %} {% include 'building/neighborNavBar.html' %}  {% endif %}{% endblock %}
 {% block title %}{{ building.name }}{% endblock %}
 {% block body %}
-#TODO
+    <div class='col-sm-3 pull-right'>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class='panel-title'>دسترسی سریع</h4>
+            </div>
+            <div class="panel-body container-fluid">
+                <a class='col-md-10 col-rg-offset-1 btn btn-default' href="{%  url 'building:unit' building.id %}">مدیریت واحد ها</a>
+                <a class='col-md-10 col-lg-offset-1 btn btn-default' href="{%  url 'building:neighbor' building.id %}">مدیریت ساکنین</a>
+                <a class='col-md-10 col-lg-offset-1 btn btn-default' href='#'>مدیریت امکانات</a>
+                <a class='col-md-10 col-lg-offset-1 btn btn-default' href='#'>مدیریت اطلاعیه ها</a>
+                <a class='col-md-10 col-lg-offset-1 btn btn-default' href='#'>مدیریت بدهی ها</a>
+                <a class='col-md-10 col-lg-offset-1 btn btn-default' href='#'>مدیریت نظرسنجی ها</a>
+                <a class='col-md-10 col-lg-offset-1 btn btn-default' href='#'>گزارش های مالی</a>
+            </div>
+        </div>
+    </div>
 
+    <div class='col-sm-3 pull-right'>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class='panel-title'>وضعیت مالی</h4>
+            </div>
+            <div class="panel-body container-fluid">
+                <div class="col-sm-12">
+                    <br>
+                    <table class="table table-hover">
+                        <tbody>
+                            <tr>
+                                <td>مجموع بدهی ها</td>
+                                <td><button type="button" class="btn btn-default"> عدد </button></td>
+                            </tr>
+                            <tr>
+                                <td>مجموع پرداختی</td>
+                                <td><button type="button" class="btn btn-default"> عدد </button></td>
+                            </tr>
+                            <tr>
+                                <td>سود خالص</td>
+                                <td><button type="button" class="btn btn-default"> عدد </button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div class='col-sm-3 pull-right'>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class='panel-title'>اطلاعات ساختمان</h4>
+            </div>
+            <div class="panel-body container-fluid">
+                <div class="col-sm-12">
+                    <br>
+                    <table class="table table-hover">
+                        <tbody>
+                            <tr>
+                                <td>تعداد واحد ها</td>
+                                <td><button type="button" class="btn btn-default"> عدد </button></td>
+                            </tr>
+                            <tr>
+                                <td>تعداد برنامه ها</td>
+                                <td><button type="button" class="btn btn-default"> عدد </button></td>
+                            </tr>
+                            <tr>
+                                <td>تعداد اطلاعیه ها</td>
+                                <td><button type="button" class="btn btn-default"> عدد </button></td>
+                            </tr>
+                            <tr>
+                                <td>تعداد نظرسنجی ها</td>
+                                <td><button type="button" class="btn btn-default"> عدد </button></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

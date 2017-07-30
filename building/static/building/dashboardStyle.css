@@ -1,0 +1,11 @@
+.panel-title{
+    color: white;
+    text-align: right;
+}
+.panel-body a{
+    margin: 5px;
+}
+.btn-default:hover {
+    background-color: white;
+    color: black;
+}
