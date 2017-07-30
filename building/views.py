@@ -10,6 +10,41 @@ from django.contrib.auth.forms import PasswordChangeForm
 # Create your views here.
 
 
+def all_debts(building_id):
+    building = Building.objects.get(pk=building_id)
+    all_units = Unit.objects.filter(building=building)
+    all_debt = 0
+    for unit in all_units:
+        if unit.account is not None:
+            for debt in Debt.objects.filter(account=unit.account):
+                all_debt += debt.amount
+
+    return all_debt
+
+
+def all_transactions(building_id):
+    all_units = Unit.objects.filter(building=building_id)
+    all_trans = 0
+    for unit in all_units:
+        if unit.account is not None:
+            for t in Transaction.objects.filter(account=unit.account):
+                all_trans += t.amount
+
+    return all_trans
+
+
+def all_units(building_id):
+    return Unit.objects.filter(building=building_id).count()
+
+
+def all_polls(building_id):
+    return Poll.objects.filter(building=building_id).count()
+
+
+def all_features(building_id):
+    return Feature.objects.filter(building=building_id).count()
+
+
 def building(request):
     return render(request, 'building/buildingList.html', {'all_building': Building.objects.all(),
                                                           'createBuildingForm': myForm.CreateBuildingForm})
@@ -22,8 +57,18 @@ def info(request, building_id):
 
 def showdash(request, building_id):
     getBuilding = Building.objects.get(pk=building_id)
+    all_debt = all_debts(building_id)
+    all_trans = all_transactions(building_id)
+    chart = all_trans/all_debt*100
+    print(all_debt)
+    print(all_trans)
+    print(chart)
     context = {'building': getBuilding,
-               'accountType':  Account.objects.get(user=request.user).type}
+               'accountType':  Account.objects.get(user=request.user).type,
+               'all_debt': all_debt,
+               'all_trans': all_trans,
+               'chart': chart
+               }
     return render(request, 'building/dashBoard.html', context)
 
 
