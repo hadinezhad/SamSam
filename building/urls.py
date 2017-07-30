@@ -12,7 +12,6 @@ urlpatterns = [
     url(r'^inbox/$', views.inbox, name="inbox"),
     url(r'^(?P<building_id>[0-9]+)/unit/$', views.unit, name="unit"),
     url(r'^(?P<building_id>[0-9]+)/unit/create/$', views.CreateUnitFormView.as_view(), name="createUnit"),
-    url(r'^(?P<building_id>[0-9]+)/neighbor/$', views., name="neighbor"),
-
+    # url(r'^(?P<building_id>[0-9]+)/neighbor/$', views., name="neighbor"),
 
 ]

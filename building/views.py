@@ -25,7 +25,7 @@ def neighbor(request, building_id):
     context = {'building': getbuilding,
                'accountType':  Account.objects.get(user=request.user).type,
                'all_neighbor': Account.objects.filter(building=getbuilding, type=2),
-               'all_staff': Account.objects.filter(building=getbuilding, type=3)
+               'all_staff': Account.objects.filter(building=getbuilding, type=3),
                'all_units': Unit.objects.filter(building=getbuilding)}
     return render(request, 'building/neighbor&staff.html', context)
 
