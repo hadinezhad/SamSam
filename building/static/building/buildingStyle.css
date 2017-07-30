@@ -1,0 +1,24 @@
+@font-face {
+    font-family: "SamSamFont";
+    src: url(../fonts/vazir.ttf);
+}
+.container{
+    font-family: SamSamFont;
+}
+form{
+    direction: rtl;
+}
+.nav , .navbar-brand{
+    font-family: SamSamFont;
+    font-weight: bolder;
+    font-size: large;
+}
+ul {
+    list-style: none;
+    text-align: right;
+}
+body{
+    direction: rtl;
+    font-size: 30px;
+    text-align: center;
+}
