@@ -8,17 +8,26 @@
 form{
     direction: rtl;
 }
-.nav , .navbar-brand{
+nav{
     font-family: SamSamFont;
     font-weight: bolder;
-    font-size: large;
+    font-size: medium;
 }
 ul {
     list-style: none;
-    text-align: right;
 }
+
 body{
     direction: rtl;
-    font-size: 30px;
     text-align: center;
+}
+.nav li:hover{
+    background-color: dodgerblue;
+}
+.navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:focus{
+    background-color: dodgerblue;
+    text-align: right;
+}
+.navbar-nav>li>.dropdown-menu{
+    text-align: right;
 }
