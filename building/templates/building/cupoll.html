@@ -31,14 +31,19 @@
                         <td>{{ p.startDate }}</td>
                         <td>{{ p.endDate }}</td>
                     <td class="link">
-                            <button type="button" class="btn btn-success">شرکت در نظرسنجی</button>
-                        </td>
+                           <button type="button" class="btn btn-danger">حذف</button>
+                            <button type="button" class="btn btn-info">تغییر</button>
+                            <button type="button" class="btn btn-success">مشاهده</button>
+                         </td>
                     </tr>
                 {% endfor %}
                 </tbody>
             </table>
         </div>
     </div>
-
+    <div class="col-md-10 col-lg-offset-1" >
+        <button class="col-md-12 btn btn-default" data-toggle="modal" data-target="#myModal">  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> ایجاد نظرسنجی جدید </button>
+    {% include 'building/modal_template.html' with form=form %}
+    </div>
 {% endblock %}
 

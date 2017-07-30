@@ -100,6 +100,9 @@ class Feature(models.Model):
     endDate = models.DateTimeField()
     price = models.IntegerField()
 
+    def __str__(self):
+        return self.title + " " + self.startDate.__str__()
+
 
 class ReservedFeature(models.Model):
     feature = models.ForeignKey(Feature, on_delete=models.CASCADE)

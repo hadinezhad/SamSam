@@ -25,13 +25,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                {% for p in all_polls %}
+                {% for n in all_news %}
                     <tr>
-                        <td>{{ p.subject }}</td>
-                        <td>{{ p.startDate }}</td>
-                        <td>{{ p.endDate }}</td>
+                        <td>{{ n.subject }}</td>
+                        <td>{{ n.date }}</td>
+                        <td>{{ n.text|slice:"0:30" }}...</td>
                     <td class="link">
-                            <button type="button" class="btn btn-success">شرکت در نظرسنجی</button>
+                          <button type="button" class="btn btn-danger">حذف</button>
+                            <button type="button" class="btn btn-info">تغییر</button>
+                            <button type="button" class="btn btn-success">مشاهده</button>
                         </td>
                     </tr>
                 {% endfor %}
@@ -39,6 +41,9 @@
             </table>
         </div>
     </div>
-
+    <div class="col-md-10 col-lg-offset-1" >
+        <button class="col-md-12 btn btn-default" data-toggle="modal" data-target="#myModal">  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> ایجاد اطلاعیه جدید </button>
+    {% include 'building/modal_template.html' with form=form %}
+    </div>
 {% endblock %}
 

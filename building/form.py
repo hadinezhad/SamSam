@@ -1,5 +1,5 @@
 from django import forms
-from .models import Building, Unit, Message
+from .models import Building, Unit, Message, FailureReport, News, Poll
 from django.contrib.auth.models import User
 from manageUser.models import Account
 
@@ -67,4 +67,39 @@ class ChangePasswordForm(forms.ModelForm):
             'password': 'رمز عبور فعلی',
             'password': 'رمز عبور جدید',
             'password': 'تکرار رمز عبور',
+        }
+
+
+class CreateFailureReportForm(forms.ModelForm):
+
+    class Meta:
+        model = FailureReport
+        fields = ['subject', 'text']
+        labels = {
+            'subject': 'عنوان',
+               'text': 'متن',
+        }
+
+
+class CreatePollForm(forms.ModelForm):
+
+    class Meta:
+        model = Poll
+        fields = ['subject', 'startDate', 'endDate', 'text']
+        labels = {
+            'subject': 'عنوان',
+               'startDate': 'تاریخ شروع',
+               'endDate': 'تاریخ پایان',
+            'text': 'متن',
+        }
+
+
+class CreateNewsForm(forms.ModelForm):
+
+    class Meta:
+        model = News
+        fields = ['subject', 'text']
+        labels = {
+            'subject': 'عنوان',
+            'text': 'متن',
         }

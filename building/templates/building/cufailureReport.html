@@ -25,13 +25,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                {% for p in all_polls %}
+                {% for f in all_failureReport %}
                     <tr>
-                        <td>{{ p.subject }}</td>
-                        <td>{{ p.startDate }}</td>
-                        <td>{{ p.endDate }}</td>
+                        <td>{{ f.subject }}</td>
+                        <td>{{ f.date }}</td>
+                        <td>{{ f.text|slice:"0:30" }}</td>
                     <td class="link">
-                            <button type="button" class="btn btn-success">شرکت در نظرسنجی</button>
+                           <button type="button" class="btn btn-danger">حذف</button>
+                            <button type="button" class="btn btn-info">تغییر</button>
+                            <button type="button" class="btn btn-success">مشاهده</button>
                         </td>
                     </tr>
                 {% endfor %}
@@ -40,5 +42,9 @@
         </div>
     </div>
 
+    <div class="col-md-10 col-lg-offset-1" >
+        <button class="col-md-12 btn btn-default" data-toggle="modal" data-target="#myModal">  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> ایجاد گزارش خرابی جدید </button>
+    {% include 'building/modal_template.html' with form=form %}
+    </div>
 {% endblock %}
 

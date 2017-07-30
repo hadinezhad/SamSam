@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Building, Message, Unit, Activity, Transaction, Debt, News, Poll
+from .models import Building, Message, Unit, Activity, Transaction, Debt, News, Poll, FailureReport, Feature, ReservedFeature
 from manageUser.models import Account
 from django.views import generic
 from django.views.generic import View
@@ -54,17 +54,9 @@ class UpdateBuildingFormView(View):
 def neighbor(request, building_id):
     getbuilding = Building.objects.get(pk=building_id)
     neighbor_unit = {}
-    '''
-    for unit in Unit.objects.all():
-        if unit.account is not None:
-            neighbor_unit[unit] = unit.account
-        else:
-            neighbor_unit[unit] = 'empty'
-      '''
     for unit in Unit.objects.filter(building=getbuilding):
         if unit.account is not None:
             neighbor_unit[unit.account] = Unit.objects.filter(account=unit.account)
-
 
     context = {'building': getbuilding,
                'accountType':  Account.objects.get(user=request.user).type,
@@ -148,6 +140,67 @@ def news(request, building_id):
     return render(request, 'building/news.html', context)
 
 
+def cunews(request, building_id):
+    context = {'all_news': News.objects.filter(building=building_id),
+               'Listname': 'اخبار و اطلاعیه ها',
+               'title1': 'عنوان',
+               'title2': 'تاریخ',
+               'title3': 'متن',
+               'building': Building.objects.get(pk=building_id),
+               'accountType': Account.objects.get(user=request.user).type,
+               'form' : myForm.CreateNewsForm
+               }
+    return render(request, 'building/cunews.html', context)
+
+
+def failureReport(request, building_id):
+    context = {'all_failureReport':FailureReport.objects.filter(building=building_id),
+               'Listname': 'گزارش های خرابی',
+               'title1': 'عنوان',
+               'title2': 'تاریخ',
+               'title3': 'ایجاد کننده',
+               'building': Building.objects.get(pk=building_id),
+               'accountType': Account.objects.get(user=request.user).type
+               }
+    return render(request, 'building/failureReport.html', context)
+
+
+def cufailureReport(request, building_id):
+    context = {'all_failureReport': FailureReport.objects.filter(building=building_id, account=Account.objects.get(user=request.user)),
+               'Listname': 'گزارش های خرابی',
+               'title1': 'عنوان',
+               'title2': 'تاریخ',
+               'title3': 'متن',
+               'building': Building.objects.get(pk=building_id),
+               'accountType': Account.objects.get(user=request.user).type,
+               'form': myForm.CreateFailureReportForm,
+               }
+    return render(request, 'building/cufailureReport.html', context)
+
+
+def feature(request, building_id):
+    all_feature = Feature.objects.filter(building=building_id)
+    all_reservedfeature = []
+    all_emptyfeature = []
+    for f in all_feature:
+        if ReservedFeature.objects.filter(feature=f).count() == 0:
+            all_emptyfeature.append(f)
+        else:
+            all_reservedfeature.append(f)
+
+    context = {'all_emptyfeature': all_emptyfeature,
+               'all_reservedfeature': all_reservedfeature,
+               'Listname': 'امکانات رزرو شده',
+               'Listname2': 'سایر امکانات',
+               'title3': 'مبلغ',
+               'title2': 'تاریخ شروع/پایان',
+               'title1': 'عنوان',
+               'building': Building.objects.get(pk=building_id),
+               'accountType': Account.objects.get(user=request.user).type
+               }
+    return render(request, 'building/feature.html', context)
+
+
 def poll(request, building_id):
     context = {'all_polls': Poll.objects.filter(building=building_id),
                'Listname': 'نظرسنجی ها',
@@ -158,6 +211,20 @@ def poll(request, building_id):
                'accountType': Account.objects.get(user=request.user).type
                }
     return render(request, 'building/poll.html', context)
+
+
+def cupoll(request, building_id):
+    context = {'all_polls': Poll.objects.filter(building=building_id),
+               'Listname': 'نظرسنجی ها',
+               'title1': 'عنوان',
+               'title2': 'تاریخ شروع',
+               'title3': 'تاریخ پایان',
+               'building': Building.objects.get(pk=building_id),
+               'accountType': Account.objects.get(user=request.user).type,
+               'form': myForm.CreatePollForm
+               }
+    return render(request, 'building/cupoll.html', context)
+
 
 
 def inbox(request):

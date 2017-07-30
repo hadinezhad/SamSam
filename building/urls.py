@@ -25,7 +25,17 @@ urlpatterns = [
 
 
     url(r'^(?P<building_id>[0-9]+)/transaction/$', views.transaction, name="transaction"),
-    url(r'^(?P<building_id>[0-9]+)/news/$', views.news, name="news"),
-    url(r'^(?P<building_id>[0-9]+)/poll/$', views.poll, name="poll"),
-]
 
+    url(r'^(?P<building_id>[0-9]+)/news/$', views.news, name="news"),
+    url(r'^(?P<building_id>[0-9]+)/cunews/$', views.cunews, name="cunews"),
+
+    url(r'^(?P<building_id>[0-9]+)/feature/$', views.feature, name="feature"),
+
+    url(r'^(?P<building_id>[0-9]+)/failureReport/$', views.failureReport, name="failureReport"),
+    url(r'^(?P<building_id>[0-9]+)/cufailureReport/$', views.cufailureReport, name="cufailureReport"),
+
+    url(r'^(?P<building_id>[0-9]+)/poll/$', views.poll, name="poll"),
+    url(r'^(?P<building_id>[0-9]+)/cupoll/$', views.cupoll, name="cupoll"),
+
+
+]

@@ -1,0 +1,77 @@
+{% extends 'building/UserNavBar.html' %}
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'building/buildingStyle.css' %}">
+
+{% block navbar %}{% if accountType == 1 %} {% include 'building/managerNavBar.html' %} {% else %} {% include 'building/neighborNavBar.html' %}  {% endif %}{% endblock %}
+
+{% block title %}News{% endblock %}
+{% block body %}
+ <div class="col-sm-12">
+        <div class="listContainer col-sm-10 col-lg-offset-1">
+            <div class="listTitle pull-right col-sm-12">
+                <h3> {{ Listname }} </h3>
+            </div>
+        </div>
+        <div class="col-sm-10 col-lg-offset-1">
+            <br>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>{{ title1 }}</th>
+                        <th>{{ title2 }}</th>
+                        <th>{{ title3 }}</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for f in all_reservedfeature %}
+                    <tr>
+                        <td>{{ f.title }}</td>
+                        <td><div>{{ f.startDate }}</div><div>{{ f.endDate }}</div></td>
+                        <td>{{ f.price }}</td>
+                    <td class="link">
+                            <button type="button" class="btn btn-danger">حذف</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+     <div class="col-sm-12">
+        <div class="listContainer col-sm-10 col-lg-offset-1">
+            <div class="listTitle pull-right col-sm-12">
+                <h3> {{ Listname2 }} </h3>
+            </div>
+        </div>
+        <div class="col-sm-10 col-lg-offset-1">
+            <br>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>{{ title1 }}</th>
+                        <th>{{ title2 }}</th>
+                        <th>{{ title3 }}</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for f in all_emptyfeature %}
+                    <tr>
+                        <td>{{ f.title }}</td>
+                        <td><div>{{ f.startDate }}</div><div>{{ f.endDate }}</div></td>
+                        <td>{{ f.price }}</td>
+                    <td class="link">
+                            <button type="button" class="btn btn-success">رزرو</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+

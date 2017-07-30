@@ -21,7 +21,7 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">مشخصات ساختمان&nbsp;<span class="caret"></span></a>
               <ul class="dropdown-menu">
                   <li><a href="#">مدیریت امکانات</a></li>
-                  <li><a href="#">امکانات</a></li>
+                  <li><a href="{% url 'building:feature' building.id %} ">امکانات</a></li>
                   <li><a href="#">اطلاعات ساختمان</a></li>
               </ul>
           </li>
@@ -40,10 +40,10 @@
           <li class="dropdown-header">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">اخبار و اطلاع رسانی&nbsp;<span class="caret"></span></a>
               <ul class="dropdown-menu">
-                  <li><a href="#">ایجاد و تغییر گزارش</a></li>
-                  <li><a href="#">ایجاد و تغییر نظرسنجی</a></li>
-                  <li><a href="#">ایجاد و تغییر اطلاعیه ها</a></li>
-                  <li><a href="#">گزارش های خرابی</a></li>
+                  <li><a href="{% url 'building:cufailureReport' building.id %}">ایجاد و تغییر گزارش خرابی</a></li>
+                  <li><a href="{% url 'building:cupoll' building.id %}">ایجاد و تغییر نظرسنجی</a></li>
+                  <li><a href="{% url 'building:cunews' building.id %}">ایجاد و تغییر اطلاعیه ها</a></li>
+                  <li><a href="{% url 'building:failureReport' building.id %}">گزارش های خرابی</a></li>
                   <li><a href="{% url 'building:poll' building.id %}">نظرسنجی ها</a></li>
                   <li><a href="{% url 'building:news' building.id %}">اطلاعیه ها</a></li>
               </ul>
