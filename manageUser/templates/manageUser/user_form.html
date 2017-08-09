@@ -10,8 +10,12 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <h3>{{ data }}</h3> <br><br>
-                    {% if error_message %}
-                        <p><strong>{{ error_message }}</strong></p>
+                    {% if messages %}
+                        <ul class="messages">
+                        {% for message in messages %}
+                            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                        {% endfor %}
+                        </ul>
                     {% endif %}
                     <form class="form-horizontal" role="form" action="" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
@@ -27,6 +31,7 @@
         </div>
     </div>
 </div>
+
 
 {% endblock%}
 

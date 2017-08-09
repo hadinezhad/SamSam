@@ -24,9 +24,10 @@ class Account(models.Model):
 @receiver(post_save, sender=User) #TODO for other users
 def update_user_profile(sender, instance, created, **kwargs):
     if created:
+        instance.email = instance.username
+        instance.save()
         Account.objects.create(user=instance, type=UserType.MANAGER)
-
-    instance.account.save()
+        instance.account.save()
 
 
 

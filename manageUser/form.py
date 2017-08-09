@@ -4,8 +4,11 @@ from django.contrib.auth.forms import UserCreationForm
 
 
 class UserRegisterForm(UserCreationForm):
-    username = forms.EmailField(label="Username", error_messages={
+    username = forms.EmailField(label="ایمیل", error_messages={
         'invalid': "This value may contain only letters, numbers and _ characters."})
+    password1 = forms.CharField(widget=forms.PasswordInput, label="رمز عبور")
+    password2 = forms.CharField(widget=forms.PasswordInput, label="تکرار رمز عبور")
+
 
     class Meta:
         model = User
@@ -18,15 +21,25 @@ class UserRegisterForm(UserCreationForm):
             'password2': 'تکرار رمز عبور',
         }
 
-'''forms.RegexField(label=_("Email"), max_length=30, regex=r'^[\w.@+-]+$',
-        help_text = _("Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only."),
-        error_messages = {'invalid': _("This value may contain only letters, numbers and @/./+/-/_ characters.")})'''
+    def clean(self):
+        cleaned_data = super(UserRegisterForm, self).clean()
+        password1 = cleaned_data.get('password1')
+        password2 = cleaned_data.get('password2')
+        username = cleaned_data.get('username')
+
+        if password1 and password1 != password2:
+            raise forms.ValidationError('password kiri')#TODO
+
+        if User.objects.filter(username=username).exists():
+            raise forms.ValidationError('email mojode')#TODO
+
+        return self.cleaned_data
 
 
 class UserLoginForm(forms.ModelForm):
-    username = forms.EmailField(label="Username", error_messages={
+    username = forms.EmailField(label="ایمیل", error_messages={
         'invalid': "This value may contain only letters, numbers and _ characters."})
-    password = forms.CharField(widget=forms.PasswordInput)
+    password = forms.CharField(widget=forms.PasswordInput, label="رمز عبور")
 
     class Meta:
         model = User
