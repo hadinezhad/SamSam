@@ -9,8 +9,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 
 def home(request):
-    all_accounts = Account.objects.all()
-    return render(request, 'manageUser/home.html', {'all_accounts': all_accounts})
+    return render(request, 'manageUser/home.html')
 
 
 class UserFormView(View):
@@ -23,23 +22,21 @@ class UserFormView(View):
         return render(request, self.template_name, {'form': form, 'data': self.data})
 
     def post(self, request):
-        '''
+
         form = self.form_class(request.POST)
 
         if form.is_valid():
-            user = form.save(commit=False)
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            user.set_password(password)
-            user.save()
+            form = UserRegisterForm(request.POST)
+            if form.is_valid():
+                user = form.save()
+                user.refresh_from_db()  # load the profile instance created by the signal
+                user.save()
+                raw_password = form.cleaned_data.get('password1')
+                user = authenticate(username=user.username, password=raw_password)
+                login(request, user)
+                return render(request, 'manageUser/home.html') #Todo redirect to vulding lisr
+        return render(request, self.template_name, {'form': form, 'data': self.data})
 
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                if user.is_active:
-                    login(request, user)
-                    return redirect("")
-        return render(request, self.template_name, {'form': form})
-        '''
 
 class UserLoginFormView(View):
     form_class = UserLoginForm
@@ -50,15 +47,27 @@ class UserLoginFormView(View):
         form = self.form_class
         return render(request, self.template_name, {'form': form, 'data': self.data})
 
+    def post(self, request):
+        username = request.POST['username']
+        password = request.POST['password']
+
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                return render(request, 'manageUser/home.html') #Todo redirect to vulding lisr
+
+        return render(request, self.template_name, {'form': self.form_class, 'data': self.data})
+
 
 def callus(request):
     all_accounts = Account.objects.all()
     return render(request, 'manageUser/callus.html', {'all_accounts': all_accounts})
 
 
-def login(request):
-    all_accounts = Account.objects.all()
-    return render(request, 'manageUser/login.html', {'all_accounts': all_accounts})
+# def login(request):
+#     all_accounts = Account.objects.all()
+#     return render(request, 'manageUser/login.html', {'all_accounts': all_accounts})
 
 
 def guide(request):
