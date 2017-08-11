@@ -2,11 +2,17 @@ from django.shortcuts import render
 from .models import Building, Message, Unit, Activity, Transaction, Debt, News, Poll, FailureReport, Feature, ReservedFeature
 from manageUser.models import Account
 from django.views import generic
-from django.views.generic import View
+from django.views.generic import View, UpdateView, DeleteView, CreateView
 from django.urls import reverse_lazy
 from . import form as myForm
+from django.contrib.auth.models import User
+from django.db.models import Q
 from django import forms
 from django.contrib.auth.forms import PasswordChangeForm
+from django.urls import reverse
+from django.http import HttpResponseRedirect
+from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
 # Create your views here.
 
 
@@ -45,10 +51,25 @@ def all_features(building_id):
     return Feature.objects.filter(building=building_id).count()
 
 
-def building(request):
-    return render(request, 'building/buildingList.html', {'all_building': Building.objects.all(),
-                                                          'createBuildingForm': myForm.CreateBuildingForm})
+class Buildinglist(View):
 
+    def get(self, request):
+        all_manager = []
+        all_manager.append(request.user.account)
+        for u in Unit.objects.filter(account=request.user.account):
+            all_manager.append(u.building.manager)
+        return render(request, 'building/buildingList.html', {'all_building': Building.objects.filter(manager__in=all_manager),
+                                                              'createBuildingForm': myForm.CreateBuildingForm})
+    def post(self,request):
+        form = myForm.CreateBuildingForm(request.POST)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.manager = request.user.account
+            obj.save()
+            return HttpResponseRedirect(reverse('building:building'))
+        for m in form.non_field_errors():
+            messages.info(request, m)
+        return HttpResponseRedirect(reverse('building:building'))
 
 def info(request, building_id):
     return render(request, 'building/info.html', {'building': Building.objects.get(pk=building_id),
@@ -59,7 +80,10 @@ def showdash(request, building_id):
     getBuilding = Building.objects.get(pk=building_id)
     all_debt = all_debts(building_id)
     all_trans = all_transactions(building_id)
-    chart = all_trans/all_debt*100
+    if all_debt == 0:
+        chart = 0
+    else:
+        chart = all_trans/all_debt*100
     print(all_debt)
     print(all_trans)
     print(chart)
@@ -187,7 +211,7 @@ def cudebt(request, building_id):
 
 
 def activities(request):
-    context = {'all_activities': Activity.objects.filter(account=Account.objects.get(user=request.user)),
+    context = {'all_activities': Activity.objects.filter(account=request.user.account),
                'Listname': 'فعالیت ها',
                'title1': 'نوع فعالیت',
                'title2': 'تاریخ',
@@ -324,11 +348,26 @@ def inbox(request):
     return render(request, 'building/inbox.html', context)
 
 
-def sendmessage(request):
-    context = {'data': 'ارسال پیام جدید' ,
-               'form': myForm.CreateMessageForm,
-               }
-    return render(request, 'building/sendmessage.html', context)
+class Sendmessage(View):
+    form_class = myForm.CreateMessageForm
+    template_name = 'building/sendmessage.html'
+    data = 'ارسال پیام جدید'
+
+    def get(self, request):
+        form = self.form_class
+        #todo form.fields["receiver"].queryset = afwfhawi
+        return render(request, self.template_name, {'form': form, 'data': self.data})
+
+    def post(self, request):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.sender = request.user.account
+            obj.save()
+            return HttpResponseRedirect(reverse('building:inbox'))
+        for m in form.non_field_errors():
+            messages.info(request, m)
+        return HttpResponseRedirect(reverse('manageUser:sendmessage'))
 
 
 def support(request):
@@ -350,6 +389,16 @@ class UpdateUserProfileFormView(View):
                                                     'data': self.data,
                                                     })
 
+    def post(self, request):
+        instance = request.user
+        form = self.form_class(request.POST, instance=instance)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('building:building'))
+        for m in form.non_field_errors():
+            messages.info(request, m)
+        return HttpResponseRedirect(reverse('building:updateUserProfile'))
+
 
 class ChangePasswordFormView(View):
     form_class = myForm.ChangePasswordForm
@@ -357,7 +406,21 @@ class ChangePasswordFormView(View):
     data = "تغییر رمز عبور"
 
     def get(self, request):
-        form = self.form_class
+        form = self.form_class(request.user)
         return render(request, self.template_name, {'form': form,
                                                     'data': self.data,
                                                     })
+
+    def post(self, request):
+        form = self.form_class(request.user, request.POST)
+        if request.user.is_authenticated():
+            if form.is_valid():
+                user = form.save()
+                update_session_auth_hash(request, user)  # Important!
+                messages.success(request, 'Your password was successfully updated!')#todo
+                return HttpResponseRedirect(reverse('building:building'))
+
+        messages.error(request, 'Please correct the error below.')#todo
+        return HttpResponseRedirect(reverse('building:changePassword'))
+
+

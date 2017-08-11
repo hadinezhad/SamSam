@@ -1,7 +1,10 @@
 from django import forms
 from .models import Building, Unit, Message, FailureReport, News, Poll, Debt, Feature
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 from manageUser.models import Account
+from django.contrib.auth.forms import PasswordChangeForm
+
 
 
 class CreateBuildingForm(forms.ModelForm):
@@ -41,14 +44,26 @@ class CreateNeighborForm(forms.ModelForm):
 
 
 class UpdateUserProfile(forms.ModelForm):
+    username = forms.EmailField(label="ایمیل", error_messages={
+        'invalid': "This value may contain only letters, numbers and _ characters."})
+
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'email', ]
+        fields = ['first_name', 'last_name', 'username', ]
         labels = {
             'first_name': 'نام',
             'last_name': 'نام خانوادگی',
-            'email': 'ایمیل',
+            'username': 'ایمیل',
         }
+
+    def clean(self):
+        cleaned_data = super(UpdateUserProfile, self).clean()
+        username = cleaned_data.get('username')
+
+        if User.objects.filter(username=username).exists():
+            raise forms.ValidationError('email mojode')  # TODO
+
+        return self.cleaned_data
 
 
 class CreateMessageForm(forms.ModelForm):
@@ -63,15 +78,17 @@ class CreateMessageForm(forms.ModelForm):
         }
 
 
-class ChangePasswordForm(forms.ModelForm):
+class ChangePasswordForm(PasswordChangeForm):
+    old_password = forms.CharField(widget=forms.PasswordInput, label="رمز عبور")
+    new_password1 = forms.CharField(widget=forms.PasswordInput, label="تکرار رمز عبور")
+    new_password2 = forms.CharField(widget=forms.PasswordInput, label="تکرار رمز عبور")
 
     class Meta:
-        model = User
-        fields = ['password', 'password', 'password']
+        fields = ['old_password', 'new_password1', 'new_password2']
         labels = {
             'password': 'رمز عبور فعلی',
-            'password': 'رمز عبور جدید',
-            'password': 'تکرار رمز عبور',
+            'new_password1': 'نیرشسلرحخاشصل',
+            'new_password2': ' ادصعثع',
         }
 
 

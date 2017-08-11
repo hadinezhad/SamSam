@@ -5,13 +5,16 @@
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
               <h4 class="modal-title">{{ data }}</h4>
           </div>
+          <form method="post" action="" role="form">
+              {% csrf_token %}
           <div class="modal-body">
               {% include 'building/form_template.html' %}
           </div>
           <div class="modal-footer">
-              <button type="button" class="btn btn-primary">ذخیره تغییرات</button>
+              <button type="submit"  class="btn btn-primary">ذخیره تغییرات</button>
               <button type="button" class="btn btn-default" data-dismiss="modal">انصراف</button>
           </div>
+              </form>
       </div>
   </div>
 </div>

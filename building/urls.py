@@ -3,18 +3,18 @@ from . import views
 # building/
 app_name = 'building'
 urlpatterns = [
-    url(r'^$', views.building, name="building"),
+    url(r'^$', views.Buildinglist.as_view(), name="building"),
 
     url(r'^(?P<building_id>[0-9]+)/$', views.showdash, name="showdash"),
     url(r'^(?P<building_id>[0-9]+)/info/$', views.info, name="info"),
 
     url(r'^create/$', views.CreateBuildingFormView.as_view(), name="createBuilding"),
     url(r'^(?P<building_id>[0-9]+)/update/$', views.UpdateBuildingFormView.as_view(), name="updateBuilding"),
-    url(r'^delete/(?P<pk>[0-9]+)/$', views.DeleteBuilding.as_view(), name="deleteBuilding"),
+    url(r'^(?P<pk>[0-9]+)/delete/$', views.DeleteBuilding.as_view(), name="deleteBuilding"),
 
     url(r'^activities/$', views.activities, name="activities"),
     url(r'^inbox/$', views.inbox, name="inbox"),
-    url(r'^sendmessage/$', views.sendmessage, name="sendmessage"),
+    url(r'^sendmessage/$', views.Sendmessage.as_view(), name="sendmessage"),
     url(r'^support/$', views.support, name="support"),
     url(r'^updateProfile/$', views.UpdateUserProfileFormView.as_view(), name="updateUserProfile"),
     url(r'^changePassword/$', views.ChangePasswordFormView.as_view(), name="changePassword"),
