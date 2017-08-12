@@ -15,7 +15,7 @@ urlpatterns = [
     url(r'^activities/$', views.activities, name="activities"),
     url(r'^inbox/$', views.inbox, name="inbox"),
     url(r'^sendmessage/$', views.Sendmessage.as_view(), name="sendmessage"),
-    url(r'^support/$', views.support, name="support"),
+    url(r'^support/$', views.Support.as_view(), name="support"),
     url(r'^updateProfile/$', views.UpdateUserProfileFormView.as_view(), name="updateUserProfile"),
     url(r'^changePassword/$', views.ChangePasswordFormView.as_view(), name="changePassword"),
 
@@ -34,7 +34,7 @@ urlpatterns = [
     url(r'^(?P<building_id>[0-9]+)/cunews/$', views.cunews, name="cunews"),
 
     url(r'^(?P<building_id>[0-9]+)/feature/$', views.feature, name="feature"),
-    url(r'^(?P<building_id>[0-9]+)/cufeature/$', views.cufeature, name="cufeature"),
+    url(r'^(?P<building_id>[0-9]+)/cfeature/$', views.Cfeature.as_view(), name="cfeature"),
 
     url(r'^(?P<building_id>[0-9]+)/failureReport/$', views.failureReport, name="failureReport"),
     url(r'^(?P<building_id>[0-9]+)/cufailureReport/$', views.cufailureReport, name="cufailureReport"),

@@ -1,7 +1,6 @@
 {% extends 'building/UserNavBar.html' %}
 {% load staticfiles %}
 <link rel="stylesheet" href="{% static 'building/buildingStyle.css' %}">
-
 {% block navbar %}{% if accountType == 1 %} {% include 'building/managerNavBar.html' %} {% else %} {% include 'building/neighborNavBar.html' %}  {% endif %}{% endblock %}
 
 {% block title %}Feature{% endblock %}

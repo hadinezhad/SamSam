@@ -292,19 +292,34 @@ def feature(request, building_id):
     return render(request, 'building/feature.html', context)
 
 
-def cufeature(request, building_id):
-    all_feature = Feature.objects.filter(building=building_id)
+class Cfeature(View):
+    form_class = myForm.CreateFeatureForm
+    template_name = 'building/cfeature.html'
 
-    context = {'all_feature': all_feature,
-               'Listname': 'امکانات',
-               'title3': 'مبلغ',
-               'title2': 'تاریخ شروع/پایان',
-               'title1': 'عنوان',
-               'building': Building.objects.get(pk=building_id),
-               'accountType': Account.objects.get(user=request.user).type,
-               'form': myForm.CreateFeatureForm
-               }
-    return render(request, 'building/cufeature.html', context)
+    def get(self, request, building_id):
+        all_feature = Feature.objects.filter(building=building_id)
+
+        context = {'all_feature': all_feature,
+        'Listname': 'امکانات',
+        'title3': 'مبلغ',
+        'title2': 'تاریخ شروع/پایان',
+        'title1': 'عنوان',
+        'building': Building.objects.get(pk=building_id),
+        'accountType': Account.objects.get(user=request.user).type,
+        'form': myForm.CreateFeatureForm,
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request, building_id):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.building = Building.objects.get(pk=building_id)
+            obj.save()
+            return HttpResponseRedirect(reverse('building:cfeature', kwargs={'building_id': building_id}))
+        for m in form.non_field_errors():
+            messages.info(request, m)
+        return HttpResponseRedirect(reverse('building:cfeature', kwargs={'building_id': building_id}))
 
 
 def poll(request, building_id):
@@ -370,12 +385,26 @@ class Sendmessage(View):
         return HttpResponseRedirect(reverse('manageUser:sendmessage'))
 
 
-def support(request):
-    context = {'data': 'پشتیبانی',
-               'form': myForm.CreateMessageForm,
-               }
+class Support(View):
+    form_class = myForm.CreateMessageSupportForm
+    template_name = 'building/sendmessage.html'
+    data = 'پشتیبانی'
 
-    return render(request, 'building/sendmessage.html', context)
+    def get(self, request):
+        form = self.form_class
+        return render(request, self.template_name, {'form': form, 'data': self.data})
+
+    def post(self, request):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.sender = request.user.account
+            obj.receiver = Account.objects.get(user__is_staff=True)#bayad yeki bashad
+            obj.save()
+            return HttpResponseRedirect(reverse('building:inbox'))
+        for m in form.non_field_errors():
+            messages.info(request, m)
+        return HttpResponseRedirect(reverse('manageUser:support'))
 
 
 class UpdateUserProfileFormView(View):

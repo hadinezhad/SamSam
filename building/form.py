@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from manageUser.models import Account
 from django.contrib.auth.forms import PasswordChangeForm
-
+from django.contrib.admin.widgets import AdminSplitDateTime
 
 
 class CreateBuildingForm(forms.ModelForm):
@@ -78,6 +78,17 @@ class CreateMessageForm(forms.ModelForm):
         }
 
 
+class CreateMessageSupportForm(forms.ModelForm):
+
+    class Meta:
+        model = Message
+        fields = ['subject', 'text']
+        labels = {
+            'subject': 'عنوان',
+            'text': 'متن',
+        }
+
+
 class ChangePasswordForm(PasswordChangeForm):
     old_password = forms.CharField(widget=forms.PasswordInput, label="رمز عبور")
     new_password1 = forms.CharField(widget=forms.PasswordInput, label="تکرار رمز عبور")
@@ -126,6 +137,7 @@ class CreateNewsForm(forms.ModelForm):
             'text': 'متن',
         }
 
+
 class CreateDebtForm(forms.ModelForm):
 
     class Meta:
@@ -139,6 +151,8 @@ class CreateDebtForm(forms.ModelForm):
 
 
 class CreateFeatureForm(forms.ModelForm):
+    startDate = forms.DateTimeField(widget=forms.SplitDateTimeWidget(), label='تاریخ شروع')
+    endDate = forms.DateTimeField(widget=forms.SplitDateTimeWidget(), label='تاریخ پایان')
 
     class Meta:
         model = Feature
