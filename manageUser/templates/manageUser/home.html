@@ -3,62 +3,133 @@
 {% load staticfiles %}
 
 {% block body %}
-    <div class="scrollblock block-title">
-        <div class="content">
-            <h2>سم سم</h2>
-            <p>با استفاده از سامانه مدیریت ساختمان های مسکونی (سم سم):</p>
-            <ul>
-                <li >
-                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                                مدیر ساختمان می تواند وضعیت مالی ساختمان را به راحتی بررسی کند.
-                </li>
-                <li>
-                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                    همسایه ها می توانند به راحتی از امکانات ساختمان مطلع شوند.
-                </li>
-            </ul>
-            <a class="btn btn-primary btn-lg" href="{% url 'manageUser:signup' %}" role="button">عضویت</a>
+
+<!-- First Parallax Image with Logo Text -->
+<div class="bgimg-1 w3-display-container w3-opacity-min" id="home">
+    <div class="w3-display-middle" style="white-space:nowrap;">
+        <span class="w3-center w3-padding-large w3-blue w3-xlarge w3-wide w3-animate-opacity" style="letter-spacing: 0">سامانه مدیریت ساختمان های مسکونی: سم سم</span>
+    </div>
+</div>
+
+<!-- Container (About Section) -->
+<div class="w3-content w3-container w3-padding-64" id="about">
+    <div class="col-sm-4 about_us">
+    </div>
+    <div class="col-sm-8">
+        <h3 class="w3-center">درباره ما</h3>
+        <p class="w3-center"><em>پروژه درس تحلیل و طراحی سیستم ها</em></p>
+        <p>
+            این سامانه جهت انجام پروژه ی درس تحلیل و طراحی سیستم ها تهیه و تنظیم گردیده است.<br>
+            هدف از انجام این پروژه آشنایی با نحوه ی تولید یک سیستم نرم افزاری در تمامی مراحل می باشد.<br>
+            سامانه مدیریت ساختمان های مسکونی برای تسهیل عملیات های مدیریت ساختمان های مسکونی تهیه شده است. در این سامانه مدیران می توانند ساختمان های خود
+            را ایجاد نموده و امکانات مد نظر خود را برای همسایه های ساختمان ایجاد کنند، سپس همسایه های ساختمان می توانند با مراجعه به سامانه عملیات های خود را صورت دهند.
+        </p>
+        <p>
+            تیم سازنده این سامانه متشکل از دو دانشجوری مهندسی نرم افزار دانشگاه صنعتی شریف می باشد.
+        </p>
+        <br><br>
+    </div>
+    <p class="w3-large w3-center w3-padding-16">درصد ساختمان های ثبت نامی در سامانه بر اساس شهر :</p>
+    <p class="w3-wide"><i class="fa fa-building"></i> تهران</p>
+    <div class="w3-light-grey">
+        <div class="w3-container w3-padding-small w3-light-blue w3-center" style="width:60%">50%</div>
+    </div> <br>
+    <p class="w3-wide"><i class="fa fa-building-o"></i> اصفهان</p>
+    <div class="w3-light-grey">
+        <div class="w3-container w3-padding-small w3-light-blue w3-center" style="width:30%">30%</div>
+    </div> <br>
+    <p class="w3-wide"><i class="fa fa-building"></i> شیراز</p>
+    <div class="w3-light-grey">
+        <div class="w3-container w3-padding-small w3-light-blue w3-center" style="width:20%">20%</div>
+    </div>
+</div>
+
+<div class="w3-row w3-center w3-dark-grey w3-padding-16">
+    <div class="w3-quarter w3-section">
+        <span class="w3-xlarge">150</span><br>
+        تعداد ساختمان ها
+    </div>
+    <div class="w3-quarter w3-section">
+        <span class="w3-xlarge">900</span><br>
+تعداد ساکنین    </div>
+    <div class="w3-quarter w3-section">
+        <span class="w3-xlarge">50</span><br>
+        تعداد آنلاینی ها
+    </div>
+    <div class="w3-quarter w3-section">
+        <span class="w3-xlarge">2000000</span><br>
+        مقدار تراکنش ها
+    </div>
+</div>
+
+<!-- Second Parallax Image with Portfolio Text -->
+<div class="bgimg-2 w3-display-container w3-opacity-min">
+  <div class="w3-display-middle">
+    <span class="w3-xxlarge w3-text-white w3-wide">سریع و آسان </span>
+  </div>
+</div>
+
+<!-- Container (Portfolio Section) -->
+<div class="w3-content w3-container w3-padding-64" id="portfolio">
+    <!-- Responsive Grid. Four columns on tablets, laptops and desktops. Will stack on mobile devices/small screens (100% width) -->
+    <div class="col-sm-8">
+        <h3 class="w3-center">امکانات سامانه :</h3><br>
+        <div class="w3-row-padding w3-center">
+            <div class="w3-col m4">
+                <p>ایجاد امکانات برای ساختمان توسط مدیر</p>
+            </div>
+
+            <div class="w3-col m4">
+                <p>صدور قبض برای ساکنین توسط مدیر</p>
+            </div>
+
+            <div class="w3-col m4">
+                <p>مدیریت مشخصات واحدها توسط مدیر</p>
+            </div>
+        </div>
+
+        <div class="w3-row-padding w3-center w3-section">
+            <div class="w3-col m3">
+                <p>پرداخت بدهی ها توسط ساکنین</p>
+            </div>
+
+            <div class="w3-col m3">
+                <p>مشاهده گزارش تراکنش ها</p>
+            </div>
+
+            <div class="w3-col m3">
+                <p>رزرو امکانات توسط ساکنین</p>
+            </div>
+
+            <div class="w3-col m3">
+                <p>ثبت خرابی توسط ساکنین</p>
+            </div>
         </div>
     </div>
-    <div class="scrollblock block00">
-        <div class="content">
-            <h2>سم سم چیست؟</h2>
-            <p>
-                <span class="glyphicon glyphicon-hand-left" aria-hidden="true"></span>
-                سم سم، نرم افزار مدیریت و حسابداری ساختمان و مجتمع از طریق اینترنت می باشد که کمک میکند مدیران بدون دارا بودن دانش حسابداری، به امور مالی رسیدگی کنند و در کوتاه ترین زمان ممکن اخبار و اطلاعیه ها را با ساکنان و مالکان به اشتراک بگذارند.
-                ساکنان و مالکان نیز قادر خواهند بود تا علاوه بر اطلاع از میزان بدهی به پرداخت در موعد مقرر اقدام نمایند.
-            </p>
+    <div class="features col-sm-4">
+
+    </div>
+</div>
+
+<!-- Modal for full size images on click-->
+<div id="modal01" class="w3-modal w3-black" onclick="this.style.display='none'">
+    <span class="w3-button w3-large w3-black w3-display-topright" title="Close Modal Image"><i class="fa fa-remove"></i></span>
+    <div class="w3-modal-content w3-animate-zoom w3-center w3-transparent w3-padding-64">
+        <img id="img01" class="w3-image">
+        <p id="caption" class="w3-opacity w3-large"></p>
+    </div>
+</div>
+
+<!-- Third Parallax Image with Portfolio Text -->
+<div class="bgimg-3 w3-display-container w3-opacity-min">
+    <div class="w3-display-middle">
+        <span class="w3-xxlarge w3-text-white w3-wide" style="letter-spacing: 0">تماس با ما</span>
+        <div class="w3-large w3-margin-bottom" style="color: white">
+            <i class="fa fa-map-marker fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> ایران، تهران<br>
+            <i class="fa fa-phone fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> تلفن تماس: 0935.550.9895<br>
+            <i class="fa fa-envelope fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> ایمیل: hadiroohi@gmail.com<br>
         </div>
     </div>
-    <div class="scrollblock block0">
-        <div class="content">
-            <h2>تسویه حساب های مالی همسایه ها:</h2>
-            <p> توضیحات </p>
-        </div>
-    </div>
-    <div class="scrollblock block1">
-        <div class="content">
-            <h2>  رزرو امکانات ساختمان از طریق سامانه</h2>
-            <p> توضیحات </p>
-        </div>
-    </div>
-    <div class="scrollblock block2">
-        <div class="content">
-            <h2> ارتباط با سایر همسایه های ساختمان و همچنین مدیر ساختمان از طریق سامانه</h2>
-            <p> توضیحات </p>
-        </div>
-    </div>
-    <div class="scrollblock block3">
-        <div class="content">
-            <h2>مشاهده گزارش فعالیت ها و صورت حساب ها و بدهی ها از طریق سامانه</h2>
-            <p> توضیحات </p>
-        </div>
-    </div>
-    <div class="scrollblock block4">
-        <div class="content">
-            <h2>امکان مدیریت یک یا چند ساختمان به صورت همزمان</h2>
-            <p> توضیحات </p>
-        </div>
-    </div>
+</div>
 
 {% endblock %}

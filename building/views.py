@@ -96,7 +96,7 @@ def showdash(request, building_id):
     return render(request, 'building/dashBoard.html', context)
 
 
-class DeleteBuilding(generic.DeleteView):
+class DeleteBuilding(DeleteView):
     model = Building
     success_url = reverse_lazy('building:building')
 
@@ -269,59 +269,6 @@ def cufailureReport(request, building_id):
     return render(request, 'building/cufailureReport.html', context)
 
 
-def feature(request, building_id):
-    all_feature = Feature.objects.filter(building=building_id)
-    all_reservedfeature = []
-    all_emptyfeature = []
-    for f in all_feature:
-        if ReservedFeature.objects.filter(feature=f).count() == 0:
-            all_emptyfeature.append(f)
-        else:
-            all_reservedfeature.append(f)
-
-    context = {'all_emptyfeature': all_emptyfeature,
-               'all_reservedfeature': all_reservedfeature,
-               'Listname': 'امکانات رزرو شده',
-               'Listname2': 'سایر امکانات',
-               'title3': 'مبلغ',
-               'title2': 'تاریخ شروع/پایان',
-               'title1': 'عنوان',
-               'building': Building.objects.get(pk=building_id),
-               'accountType': Account.objects.get(user=request.user).type
-               }
-    return render(request, 'building/feature.html', context)
-
-
-class Cfeature(View):
-    form_class = myForm.CreateFeatureForm
-    template_name = 'building/cfeature.html'
-
-    def get(self, request, building_id):
-        all_feature = Feature.objects.filter(building=building_id)
-
-        context = {'all_feature': all_feature,
-        'Listname': 'امکانات',
-        'title3': 'مبلغ',
-        'title2': 'تاریخ شروع/پایان',
-        'title1': 'عنوان',
-        'building': Building.objects.get(pk=building_id),
-        'accountType': Account.objects.get(user=request.user).type,
-        'form': myForm.CreateFeatureForm,
-        }
-        return render(request, self.template_name, context)
-
-    def post(self, request, building_id):
-        form = self.form_class(request.POST)
-        if form.is_valid():
-            obj = form.save(commit=False)
-            obj.building = Building.objects.get(pk=building_id)
-            obj.save()
-            return HttpResponseRedirect(reverse('building:cfeature', kwargs={'building_id': building_id}))
-        for m in form.non_field_errors():
-            messages.info(request, m)
-        return HttpResponseRedirect(reverse('building:cfeature', kwargs={'building_id': building_id}))
-
-
 def poll(request, building_id):
     context = {'all_polls': Poll.objects.filter(building=building_id),
                'Listname': 'نظرسنجی ها',
@@ -453,3 +400,130 @@ class ChangePasswordFormView(View):
         return HttpResponseRedirect(reverse('building:changePassword'))
 
 
+def feature(request, building_id):
+    all_feature = Feature.objects.filter(building=building_id)
+    all_reservedfeature = []
+    all_emptyfeature = []
+    for f in all_feature:
+        if ReservedFeature.objects.filter(feature=f).count() == 0:
+            all_emptyfeature.append(f)
+        else:
+            all_reservedfeature.append(f)
+
+    context = {'all_emptyfeature': all_emptyfeature,
+               'all_reservedfeature': all_reservedfeature,
+               'Listname': 'امکانات رزرو شده',
+               'Listname2': 'سایر امکانات',
+               'title3': 'مبلغ',
+               'title2': 'تاریخ شروع/پایان',
+               'title1': 'عنوان',
+               'building': Building.objects.get(pk=building_id),
+               'accountType': Account.objects.get(user=request.user).type
+               }
+    return render(request, 'building/feature.html', context)
+
+
+def changereservefeature(request, building_id, pk):
+    if ReservedFeature.objects.filter(feature=Feature.objects.get(pk=pk)).count() == 0:
+        ReservedFeature.objects.create(feature=Feature.objects.get(pk=pk), account=Account.objects.get(user=request.user))
+    else:
+        ReservedFeature.objects.get(feature=Feature.objects.get(pk=pk)).delete()
+
+    return HttpResponseRedirect(reverse('building:feature', kwargs={'building_id': building_id}))
+
+
+class Cfeature(View):
+    form_class = myForm.CreateFeatureForm
+    template_name = 'building/cfeature.html'
+    bool = "yes"
+
+    def get(self, request, building_id):
+        all_feature = Feature.objects.filter(building=building_id)
+
+        context = {'all_feature': all_feature,
+        'Listname': 'امکانات',
+        'title3': 'مبلغ',
+        'title2': 'تاریخ شروع/پایان',
+        'title1': 'عنوان',
+        'building': Building.objects.get(pk=building_id),
+        'accountType': Account.objects.get(user=request.user).type,
+        'form': myForm.CreateFeatureForm,
+        'bool': self.bool,
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request, building_id):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.building = Building.objects.get(pk=building_id)
+            obj.save()
+            return HttpResponseRedirect(reverse('building:cfeature', kwargs={'building_id': building_id}))
+        #TODO agar form valid nashod che kone ... payini javab nist
+        for m in form.non_field_errors():
+            messages.info(request, m)
+        return HttpResponseRedirect(reverse('building:cfeature', kwargs={'building_id': building_id}))
+
+
+class Ufeature(View):
+    form_class = myForm.CreateFeatureForm
+    data = "تغییر امکانات"
+    template_name = 'building/ufeature.html'
+    bool = "no"
+
+    def post(self, request, pk, building_id):
+        instance = Feature.objects.get(pk=pk)
+        form = self.form_class(request.POST, instance=instance)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('building:cfeature', kwargs={'building_id': building_id}))
+        for m in form.non_field_errors():
+            messages.info(request, m)
+        return HttpResponseRedirect(reverse('building:ufeature', kwargs={'building_id': building_id, 'pk': pk}))
+
+    def get(self, request, pk, building_id):
+        feature = Feature.objects.get(pk=pk)
+        context = {'feature': feature,
+                   'building': Building.objects.get(pk=building_id),
+                   'accountType': Account.objects.get(user=request.user).type,
+                   'form': myForm.CreateFeatureForm,
+                   'bool': self.bool,
+                   'pk': pk,
+                   'data': self.data,
+                   }
+        return render(request, self.template_name, context)
+
+
+def dfeature(request, building_id, pk):
+    Feature.objects.get(pk=pk).delete()
+    return HttpResponseRedirect(reverse('building:cfeature', kwargs={'building_id': building_id}))
+
+
+def rfeature(request, building_id, pk):
+    template_name = 'building/rfeature.html'
+    data = 'مشاهده امکان'
+    feature = Feature.objects.get(pk=pk)
+    context = {
+               'building': Building.objects.get(pk=building_id),
+               'accountType': Account.objects.get(user=request.user).type,
+               'form': myForm.CreateFeatureForm(instance=feature),
+               'data': data,
+               }
+    return render(request, template_name, context)
+
+
+def dmessage(request, pk):
+    Message.objects.get(pk=pk).delete()
+    return HttpResponseRedirect(reverse('building:inbox'))
+
+
+def rmessage(request, pk):
+    template_name = 'building/rmessage.html'
+    data = 'مشاهده پیام'
+    message = Message.objects.get(pk=pk)
+    context = {
+               'accountType': Account.objects.get(user=request.user).type,
+               'form': myForm.ShowMessageForm(instance=message),
+               'data': data,
+               }
+    return render(request, template_name, context)

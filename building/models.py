@@ -1,5 +1,6 @@
 from django.db import models
 from manageUser.models import Account
+from django.utils import timezone
 # Create your models here.
 
 
@@ -14,7 +15,7 @@ class Message(models.Model):
     receiver = models.ForeignKey(Account, related_name='receiver')
     subject = models.CharField(max_length=100)
     text = models.TextField()
-    date = models.DateTimeField(auto_now_add=True)
+    date = models.DateTimeField(default=timezone.now())
 
 
 class Debt(models.Model):
@@ -107,7 +108,7 @@ class Feature(models.Model):
 
 class ReservedFeature(models.Model):
     feature = models.ForeignKey(Feature, on_delete=models.CASCADE)
-    reservedDate = models.DateTimeField()
+    reservedDate = models.DateTimeField(auto_now=True)
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
 
 

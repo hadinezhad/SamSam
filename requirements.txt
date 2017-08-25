@@ -1,1 +1,2 @@
 drfdocs
+django-simple-email-confirmation

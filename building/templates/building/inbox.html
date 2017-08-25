@@ -29,8 +29,8 @@
                         <td>{{ m.date }}</td>
                         <td>{{ m.text|slice:"0:30" }}</td>
                     <td class="link">
-                           <button type="button" class="btn btn-danger">حذف</button>
-                            <button type="button" class="btn btn-success">مشاهده کامل پیام</button>
+                        <a href="{% url 'building:dmessage'  pk=m.id %}"><button type="button" class="btn btn-danger">حذف</button></a>
+                               <a href="{% url 'building:rmessage'  pk=m.id %}"> <button type="button" class="btn btn-success">مشاهده کامل پیام</button></a>
                        </td>
                     </tr>
                 {% endfor %}
@@ -66,9 +66,9 @@
                         <td>{{ m.date }}</td>
                         <td>{{ m.text|slice:"0:30" }}</td>
                     <td class="link">
-                           <button type="button" class="btn btn-danger">حذف</button>
-                            <button type="button" class="btn btn-success">مشاهده کامل پیام</button>
-                       </td>
+                          <a href="{% url 'building:dmessage'  pk=m.id %}"><button type="button" class="btn btn-danger">حذف</button></a>
+                               <a href="{% url 'building:rmessage'  pk=m.id %}"> <button type="button" class="btn btn-success">مشاهده کامل پیام</button></a>
+                      </td>
                     </tr>
                 {% endfor %}
                 </tbody>

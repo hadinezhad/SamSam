@@ -10,7 +10,8 @@ urlpatterns = [
     url(r'^logout/$', views.UserLogoutFormView.as_view(), name="logout"),
     url(r'^guide/$', views.guide, name="guide"),
     url(r'^callus/$', views.callus, name="callus"),
-
+    url(r'^confirm/(?P<activation_key>[0-9A-Za-z_\-]+)/$',
+        views.confirm, name='confirm'),
 
 
 ]

@@ -78,6 +78,25 @@ class CreateMessageForm(forms.ModelForm):
         }
 
 
+class ShowMessageForm(forms.ModelForm):
+
+    class Meta:
+        model = Message
+        fields = ['sender', 'receiver', 'date', 'subject', 'text']
+        labels = {
+            'subject': 'عنوان',
+            'text': 'متن',
+            'receiver': 'گیرنده',
+            'sender': 'فرستنده',
+            'date': 'تاریخ',
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(ShowMessageForm, self).__init__(*args, **kwargs)
+        self.fields['sender'].label_from_instance = lambda obj: "%s %s" % (obj.user.last_name, obj.user.first_name)
+        self.fields['receiver'].label_from_instance = lambda obj: "%s %s" % (obj.user.last_name, obj.user.first_name)
+        self.fields['sender'].initial = self.instance.sender.user.first_name
+
 class CreateMessageSupportForm(forms.ModelForm):
 
     class Meta:
@@ -151,9 +170,8 @@ class CreateDebtForm(forms.ModelForm):
 
 
 class CreateFeatureForm(forms.ModelForm):
-    startDate = forms.DateTimeField(widget=forms.SplitDateTimeWidget(), label='تاریخ شروع')
-    endDate = forms.DateTimeField(widget=forms.SplitDateTimeWidget(), label='تاریخ پایان')
-
+    startDate = forms.SplitDateTimeField(widget=forms.SplitDateTimeWidget(), label='تاریخ شروع')
+    endDate = forms.SplitDateTimeField(widget=forms.SplitDateTimeWidget(), label='تاریخ پایان')
     class Meta:
         model = Feature
         fields = ['title', 'startDate', 'endDate', 'price']
@@ -164,4 +182,7 @@ class CreateFeatureForm(forms.ModelForm):
             'price': 'هزینه',
         }
 
-
+    def __init__(self, *args, **kwargs):
+        super(CreateFeatureForm, self).__init__(*args, **kwargs)
+        self.fields['startDate'].widget = AdminSplitDateTime()
+        self.fields['endDate'].widget = AdminSplitDateTime()

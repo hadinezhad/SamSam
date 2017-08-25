@@ -31,7 +31,7 @@
                         <td><div>{{ f.startDate }}</div><div>{{ f.endDate }}</div></td>
                         <td>{{ f.price }}</td>
                     <td class="link">
-                            <button type="button" class="btn btn-danger">حذف</button>
+                        <a href="{% url 'building:crfeature' building_id=building.id pk=f.id %}"> <button type="button" class="btn btn-danger">حذف</button></a>
                         </td>
                     </tr>
                 {% endfor %}
@@ -65,7 +65,7 @@
                         <td><div>{{ f.startDate }}</div><div>{{ f.endDate }}</div></td>
                         <td>{{ f.price }}</td>
                     <td class="link">
-                            <button type="button" class="btn btn-success">رزرو</button>
+                        <a href="{% url 'building:crfeature' building_id=building.id pk=f.id %}"> <button type="button" class="btn btn-success">رزرو</button></a>
                         </td>
                     </tr>
                 {% endfor %}

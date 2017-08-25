@@ -2,12 +2,18 @@
 <html lang="en">
 {% load staticfiles %}
 <link rel="stylesheet" href="{% static 'manageUser/homeStyle.css' %}">
+<link rel="stylesheet" href="{% static 'manageUser/additional_css.css' %}">
+<script src="{% static 'manageUser/home.js' %}"></script>
 
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}SAM-SAM{% endblock %}</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -30,44 +36,27 @@
           <li><a href="{% url 'manageUser:callus' %}">تماس با ما</a></li>
           <li><a href="{% url 'manageUser:guide' %}">راهنما</a></li>
           <li><a href="{% url 'manageUser:signup' %}">عضویت</a></li>
-          <li><a class="nav-link" href="{% url 'manageUser:login' %}">ورود <span class="sr-only">(current)</span></a></li>
+          <li><a class="scroll nav-link" href="{% url 'manageUser:login' %}">ورود <span class="sr-only">(current)</span></a></li>
       </ul>
     </div>
   </div>
 </nav>
-<div style="height: 60px">
-
-</div>
-
-
+<br><br>
 {% block body %}
+
 {% endblock %}
 
-<footer>
-    <div class="container col-lg-offset-1">
-        <div class="col-sm-12 row footer-content">
-            <div class="col-sm-6 footer-about-section container">
-                <h3>سم سم</h3>
-                <p>نرم افزار مدیریت ساختمان سم سم ، نرم افزاری اینترنتی جهت مدیریت ساختمان های مسکونی می باشد که از طریق آن می توان با روش های مختلف شارژ ساختمان را بین ساکنین و مالکین واحدها تقسیم نمود. همچنین ساکنین می توانند از طریق اینترنت شارژ خود را پرداخت نمایند.</p>
-            </div>
-
-            <div class="col-sm-3 hidden-xs col-md-push-1">
-                <ul class="footer-links-section">
-                    <li><a href="{% url 'manageUser:callus' %}">تماس با ما</a></li>
-                </ul>
-            </div>
-
-            <div class="col-sm-3 hidden-xs col-md-push-1">
-                <ul class="footer-links-section">
-                    <li><a href="{% url 'manageUser:home' %}">صفحه اصلی</a></li>
-                    <li><a href="{% url 'manageUser:guide' %}">راهنما</a></li>
-                    <li><a href="{% url 'manageUser:login' %}">ورود</a></li>
-                    <li><a href="{% url 'manageUser:signup' %}">عضویت</a></li>
-                </ul>
-            </div>
-        </div>
+<!-- Footer -->
+<footer class="w3-center w3-black w3-padding-64 w3-opacity w3-hover-opacity-off">
+    <a href="#home" class="w3-button w3-light-grey"><i class="fa fa-arrow-up w3-margin-right"></i>ابتدای صفحه</a>
+    <div class="w3-xlarge w3-section">
+        <i class="fa fa-facebook-official w3-hover-opacity"></i>
+        <i class="fa fa-instagram w3-hover-opacity"></i>
+        <i class="fa fa-snapchat w3-hover-opacity"></i>
+        <i class="fa fa-pinterest-p w3-hover-opacity"></i>
+        <i class="fa fa-twitter w3-hover-opacity"></i>
+        <i class="fa fa-linkedin w3-hover-opacity"></i>
     </div>
-
 </footer>
 
 </body>

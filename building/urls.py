@@ -15,6 +15,8 @@ urlpatterns = [
     url(r'^activities/$', views.activities, name="activities"),
     url(r'^inbox/$', views.inbox, name="inbox"),
     url(r'^sendmessage/$', views.Sendmessage.as_view(), name="sendmessage"),
+    url(r'^deletemessage/(?P<pk>[0-9]+)/$', views.dmessage, name="dmessage"),
+    url(r'^retrivemessage/(?P<pk>[0-9]+)/$', views.rmessage, name="rmessage"),
     url(r'^support/$', views.Support.as_view(), name="support"),
     url(r'^updateProfile/$', views.UpdateUserProfileFormView.as_view(), name="updateUserProfile"),
     url(r'^changePassword/$', views.ChangePasswordFormView.as_view(), name="changePassword"),
@@ -34,7 +36,12 @@ urlpatterns = [
     url(r'^(?P<building_id>[0-9]+)/cunews/$', views.cunews, name="cunews"),
 
     url(r'^(?P<building_id>[0-9]+)/feature/$', views.feature, name="feature"),
+    url(r'^(?P<building_id>[0-9]+)/feature/(?P<pk>[0-9]+)/$', views.changereservefeature, name="crfeature"),
+
     url(r'^(?P<building_id>[0-9]+)/cfeature/$', views.Cfeature.as_view(), name="cfeature"),
+    url(r'^(?P<building_id>[0-9]+)/ufeature/(?P<pk>[0-9]+)/$', views.Ufeature.as_view(), name="ufeature"),
+    url(r'^(?P<building_id>[0-9]+)/dfeature/(?P<pk>[0-9]+)/$', views.dfeature, name="dfeature"),
+    url(r'^(?P<building_id>[0-9]+)/rfeature/(?P<pk>[0-9]+)/$', views.rfeature, name="rfeature"),
 
     url(r'^(?P<building_id>[0-9]+)/failureReport/$', views.failureReport, name="failureReport"),
     url(r'^(?P<building_id>[0-9]+)/cufailureReport/$', views.cufailureReport, name="cufailureReport"),
