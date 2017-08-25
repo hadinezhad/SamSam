@@ -29,11 +29,11 @@
                     <tr>
                         <td>{{ n.subject }}</td>
                         <td>{{ n.date }}</td>
-                        <td>{{ n.text|slice:"0:30" }}...</td>
+                        <td>{{ n.text|slice:"0:30" }}</td>
                     <td class="link">
-                          <button type="button" class="btn btn-danger">حذف</button>
-                            <button type="button" class="btn btn-info">تغییر</button>
-                            <button type="button" class="btn btn-success">مشاهده</button>
+                        <a href="{% url 'building:dnews' building_id=building.id pk=n.id %}"><button type="button" class="btn btn-danger">حذف</button></a>
+                        <a href="{% url 'building:unews' building_id=building.id pk=n.id %}"><button type="button" class="btn btn-info">تغییر</button></a>
+                        <a href="{% url 'building:rnews' building_id=building.id pk=n.id %}"><button type="button" class="btn btn-success">مشاهده</button></a>
                         </td>
                     </tr>
                 {% endfor %}

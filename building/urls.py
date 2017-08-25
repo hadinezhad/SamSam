@@ -33,7 +33,12 @@ urlpatterns = [
     url(r'^(?P<building_id>[0-9]+)/cudebt/$', views.cudebt, name="cudebt"),
 
     url(r'^(?P<building_id>[0-9]+)/news/$', views.news, name="news"),
-    url(r'^(?P<building_id>[0-9]+)/cunews/$', views.cunews, name="cunews"),
+
+    url(r'^(?P<building_id>[0-9]+)/cnews/$', views.Cnews.as_view(), name="cnews"),
+    url(r'^(?P<building_id>[0-9]+)/unews/(?P<pk>[0-9]+)/$', views.Unews.as_view(), name="unews"),
+    url(r'^(?P<building_id>[0-9]+)/dnews/(?P<pk>[0-9]+)/$', views.dnews, name="dnews"),
+    url(r'^(?P<building_id>[0-9]+)/rnews/(?P<pk>[0-9]+)/$', views.rnews, name="rnews"),
+    url(r'^(?P<building_id>[0-9]+)/rnewsm/(?P<pk>[0-9]+)/$', views.rnewsm, name="rnewsm"),
 
     url(r'^(?P<building_id>[0-9]+)/feature/$', views.feature, name="feature"),
     url(r'^(?P<building_id>[0-9]+)/feature/(?P<pk>[0-9]+)/$', views.changereservefeature, name="crfeature"),

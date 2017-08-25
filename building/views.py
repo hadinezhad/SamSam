@@ -243,18 +243,6 @@ def news(request, building_id):
     return render(request, 'building/news.html', context)
 
 
-def cunews(request, building_id):
-    context = {'all_news': News.objects.filter(building=building_id),
-               'Listname': 'اخبار و اطلاعیه ها',
-               'title1': 'عنوان',
-               'title2': 'تاریخ',
-               'title3': 'متن',
-               'building': Building.objects.get(pk=building_id),
-               'accountType': Account.objects.get(user=request.user).type,
-               'form' : myForm.CreateNewsForm
-               }
-    return render(request, 'building/cunews.html', context)
-
 
 def failureReport(request, building_id):
     context = {'all_failureReport':FailureReport.objects.filter(building=building_id),
@@ -608,6 +596,7 @@ def rfailureReport(request, building_id, pk):
                }
     return render(request, template_name, context)
 
+
 def rfailureReportm(request, building_id, pk):
     template_name = 'building/rfailureReportm.html'
     data = 'مشاهده گزارش خرابی'
@@ -617,6 +606,98 @@ def rfailureReportm(request, building_id, pk):
                'building': Building.objects.get(pk=building_id),
                'accountType': Account.objects.get(user=request.user).type,
                'form': form_class(instance=instance),
+               'data': data,
+               }
+    return render(request, template_name, context)
+
+
+class Cnews(View):
+    form_class = myForm.CreateNewsForm
+    template_name = 'building/cnews.html'
+
+    def get(self, request, building_id):
+        context = {'all_news': News.objects.filter(building=building_id),
+               'Listname': 'اخبار و اطلاعیه ها',
+               'title1': 'عنوان',
+               'title2': 'تاریخ',
+               'title3': 'متن',
+               'building': Building.objects.get(pk=building_id),
+               'accountType': Account.objects.get(user=request.user).type,
+               'form' : self.form_class
+               }
+        return render(request, self.template_name, context)
+
+    def post(self, request, building_id):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.building = Building.objects.get(pk=building_id)
+            obj.date = timezone.now()
+            obj.save()
+            return HttpResponseRedirect(reverse('building:cnews', kwargs={'building_id': building_id}))
+        # TODO agar form valid nashod che kone ... payini javab nist
+        for m in form.non_field_errors():
+            messages.info(request, m)
+        return HttpResponseRedirect(reverse('building:cnews', kwargs={'building_id': building_id}))
+
+
+class Unews(View):
+    form_class = myForm.CreateNewsForm
+    data = "تغییر اطلاعیه"
+    template_name = 'building/unews.html'
+
+    def post(self, request, pk, building_id):
+        instance = News.objects.get(pk=pk)
+        form = self.form_class(request.POST, instance=instance)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.date = timezone.now()
+            obj.save()
+            return HttpResponseRedirect(reverse('building:cnews', kwargs={'building_id': building_id}))
+        for m in form.non_field_errors():
+            messages.info(request, m)
+        return HttpResponseRedirect(reverse('building:unews', kwargs={'building_id': building_id, 'pk': pk}))
+
+    def get(self, request, pk, building_id):
+        news = News.objects.get(pk=pk)
+        context = {'news': news,
+                   'building': Building.objects.get(pk=building_id),
+                   'accountType': Account.objects.get(user=request.user).type,
+                   'form': self.form_class,
+                   'pk': pk,
+                   'data': self.data,
+                   }
+        return render(request, self.template_name, context)
+
+
+def dnews(request, building_id, pk):
+    News.objects.get(pk=pk).delete()
+    return HttpResponseRedirect(reverse('building:cnews', kwargs={'building_id': building_id}))
+
+
+def rnews(request, building_id, pk):
+    template_name = 'building/rnews.html'
+    data = 'مشاهده اطلاعیه'
+    news = News.objects.get(pk=pk)
+    form_class = myForm.ShowNewsForm
+    context = {
+               'building': Building.objects.get(pk=building_id),
+               'accountType': Account.objects.get(user=request.user).type,
+               'form': form_class(instance=news),
+               'data': data,
+               }
+    return render(request, template_name, context)
+
+
+def rnewsm(request, building_id, pk):
+    template_name = 'building/rnewsm.html'
+    data = 'مشاهده اطلاعیه'
+    news = News.objects.get(pk=pk)
+    form_class = myForm.ShowNewsForm
+    context = {
+               'building': Building.objects.get(pk=building_id),
+               'accountType': Account.objects.get(user=request.user).type,
+               'form': form_class(instance=news),
                'data': data,
                }
     return render(request, template_name, context)

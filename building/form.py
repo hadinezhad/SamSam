@@ -159,6 +159,18 @@ class CreatePollForm(forms.ModelForm):
         }
 
 
+class ShowNewsForm(forms.ModelForm):
+
+    class Meta:
+        model = News
+        fields = ['subject', 'date', 'text']
+        labels = {
+            'subject': 'عنوان',
+            'text': 'متن',
+            'date': 'تاریخ',
+        }
+
+
 class CreateNewsForm(forms.ModelForm):
 
     class Meta:
@@ -168,7 +180,6 @@ class CreateNewsForm(forms.ModelForm):
             'subject': 'عنوان',
             'text': 'متن',
         }
-
 
 class CreateDebtForm(forms.ModelForm):
 

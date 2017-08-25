@@ -1,0 +1,33 @@
+{% extends 'building/UserNavBar.html' %}
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'building/buildingStyle.css' %}">
+{% block navbar %}{% if accountType == 1 %} {% include 'building/managerNavBar.html' %} {% else %} {% include 'building/neighborNavBar.html' %}  {% endif %}{% endblock %}
+
+{% block title %}News{% endblock %}
+{% block body %}
+
+        <div class="container">
+    <div class="row">
+        <div class="col-lg-offset-3 col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h3>{{ data }}</h3> <br><br>
+                    <form class="form-horizontal" role="form" action="{% url 'building:news' building_id=building.id  %}" method="get" enctype="multipart/form-data">
+
+                        {% include 'building/form_template_show.html' %}
+                        <div class="form-group">
+                            <div class="col-md-10 col-lg-offset-1">
+                                <br>
+                                <button type="submit" class="btn btn-lg btn-primary btn-block">بازگشت</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

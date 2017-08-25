@@ -31,7 +31,7 @@
                         <td>{{ n.date }}</td>
                         <td>{{ n.text|slice:"0:30" }}...</td>
                     <td class="link">
-                            <button type="button" class="btn btn-success">مشاهده متن کامل</button>
+                        <a href="{% url 'building:rnewsm' building_id=building.id pk=n.id %}"><button type="button" class="btn btn-success">مشاهده متن کامل</button></a>
                         </td>
                     </tr>
                 {% endfor %}

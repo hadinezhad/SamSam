@@ -53,7 +53,7 @@ class FailureReport(models.Model):
 
 class News(models.Model):
     building = models.ForeignKey(Building, on_delete=models.CASCADE)
-    date = models.DateTimeField(auto_now=True)
+    date = models.DateTimeField()
     text = models.TextField()
     subject = models.CharField(max_length=100)
 
