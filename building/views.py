@@ -127,6 +127,17 @@ class UpdateBuildingFormView(View):
                                                     'accountType': Account.objects.get(user=request.user).type,
                                                     })
 
+    def post(self, request, building_id):
+        instance = Building.objects.get(pk=building_id)
+        form = self.form_class(request.POST, instance=instance)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('building:showdash', kwargs={'building_id': building_id}))#todo
+        for m in form.non_field_errors():
+            messages.info(request, m)
+        return HttpResponseRedirect(reverse('building:updateBuilding', kwargs={'building_id': building_id}))
+
+
 
 def neighbor(request, building_id):
     getbuilding = Building.objects.get(pk=building_id)
