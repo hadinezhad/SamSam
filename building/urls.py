@@ -38,7 +38,7 @@ urlpatterns = [
     url(r'^(?P<building_id>[0-9]+)/unews/(?P<pk>[0-9]+)/$', views.Unews.as_view(), name="unews"),
     url(r'^(?P<building_id>[0-9]+)/dnews/(?P<pk>[0-9]+)/$', views.dnews, name="dnews"),
     url(r'^(?P<building_id>[0-9]+)/rnews/(?P<pk>[0-9]+)/$', views.rnews, name="rnews"),
-    url(r'^(?P<building_id>[0-9]+)/rnewsm/(?P<pk>[0-9]+)/$', views.rnewsm, name="rnewsm"),
+    url(r'^(?P<building_id>[0-9]+)/rnewsm/(?P<pk>[0-9]+)/$', views.rnewsm, name="rnewsm"),#todo age beshe ba balayi yeki shan
 
     url(r'^(?P<building_id>[0-9]+)/feature/$', views.feature, name="feature"),
     url(r'^(?P<building_id>[0-9]+)/feature/(?P<pk>[0-9]+)/$', views.changereservefeature, name="crfeature"),
@@ -58,7 +58,12 @@ urlpatterns = [
 
 
     url(r'^(?P<building_id>[0-9]+)/poll/$', views.poll, name="poll"),
-    url(r'^(?P<building_id>[0-9]+)/cupoll/$', views.cupoll, name="cupoll"),
+
+    url(r'^(?P<building_id>[0-9]+)/cpoll/$', views.Cpoll.as_view(), name="cpoll"),
+    url(r'^(?P<building_id>[0-9]+)/upoll/(?P<pk>[0-9]+)/$', views.Upoll.as_view(), name="upoll"),
+    url(r'^(?P<building_id>[0-9]+)/dpoll/(?P<pk>[0-9]+)/$', views.dpoll, name="dpoll"),
+    url(r'^(?P<building_id>[0-9]+)/rpoll/(?P<pk>[0-9]+)/$', views.rpoll, name="rpoll"),
+    url(r'^(?P<building_id>[0-9]+)/rpollm/(?P<pk>[0-9]+)/$', views.rpollm, name="rpollm"),
 
 
 ]

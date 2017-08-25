@@ -147,6 +147,25 @@ class ShowFailureReportForm(forms.ModelForm):
 
 
 class CreatePollForm(forms.ModelForm):
+    startDate = forms.SplitDateTimeField(widget=forms.SplitDateTimeWidget(), label='تاریخ شروع')
+    endDate = forms.SplitDateTimeField(widget=forms.SplitDateTimeWidget(), label='تاریخ پایان')
+    class Meta:
+        model = Poll
+        fields = ['subject', 'startDate', 'endDate', 'text']
+        labels = {
+            'subject': 'عنوان',
+               'startDate': 'تاریخ شروع',
+               'endDate': 'تاریخ پایان',
+            'text': 'متن',
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(CreatePollForm, self).__init__(*args, **kwargs)
+        self.fields['startDate'].widget = AdminSplitDateTime()
+        self.fields['endDate'].widget = AdminSplitDateTime()
+
+
+class ShowPollForm(forms.ModelForm):
 
     class Meta:
         model = Poll

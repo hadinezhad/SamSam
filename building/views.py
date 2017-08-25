@@ -271,19 +271,6 @@ def poll(request, building_id):
     return render(request, 'building/poll.html', context)
 
 
-def cupoll(request, building_id):
-    context = {'all_polls': Poll.objects.filter(building=building_id),
-               'Listname': 'نظرسنجی ها',
-               'title1': 'عنوان',
-               'title2': 'تاریخ شروع',
-               'title3': 'تاریخ پایان',
-               'building': Building.objects.get(pk=building_id),
-               'accountType': Account.objects.get(user=request.user).type,
-               'form': myForm.CreatePollForm
-               }
-    return render(request, 'building/cupoll.html', context)
-
-
 def inbox(request):
     context = {'receiveMessages': Message.objects.filter(receiver=Account.objects.get(user=request.user)),
                'sendMessages': Message.objects.filter(sender=Account.objects.get(user=request.user)),
@@ -701,3 +688,95 @@ def rnewsm(request, building_id, pk):
                'data': data,
                }
     return render(request, template_name, context)
+
+
+class Cpoll(View):
+    form_class = myForm.CreatePollForm
+    template_name = 'building/cpoll.html'
+
+    def get(self, request, building_id):
+        context = {'all_polls': Poll.objects.filter(building=building_id),
+                   'Listname': 'نظرسنجی ها',
+                   'title1': 'عنوان',
+                   'title2': 'تاریخ شروع',
+                   'title3': 'تاریخ پایان',
+                   'building': Building.objects.get(pk=building_id),
+                   'accountType': Account.objects.get(user=request.user).type,
+                   'form': self.form_class
+                   }
+        return render(request, self.template_name, context)
+
+    def post(self, request, building_id):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.building = Building.objects.get(pk=building_id)
+            obj.save()
+            return HttpResponseRedirect(reverse('building:cpoll', kwargs={'building_id': building_id}))
+        # TODO agar form valid nashod che kone ... payini javab nist
+        for m in form.non_field_errors():
+            messages.info(request, m)
+        return HttpResponseRedirect(reverse('building:cpoll', kwargs={'building_id': building_id}))
+
+
+class Upoll(View):
+    form_class = myForm.CreatePollForm
+    data = "تغییر نظرسنجی"
+    template_name = 'building/upoll.html'
+
+    def post(self, request, pk, building_id):
+        instance = Poll.objects.get(pk=pk)
+        form = self.form_class(request.POST, instance=instance)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.save()
+            return HttpResponseRedirect(reverse('building:cpoll', kwargs={'building_id': building_id}))
+        for m in form.non_field_errors():
+            messages.info(request, m)
+        return HttpResponseRedirect(reverse('building:upoll', kwargs={'building_id': building_id, 'pk': pk}))
+
+    def get(self, request, pk, building_id):
+        poll = Poll.objects.get(pk=pk)
+        context = {'poll': poll,
+                   'building': Building.objects.get(pk=building_id),
+                   'accountType': Account.objects.get(user=request.user).type,
+                   'form': self.form_class,
+                   'pk': pk,
+                   'data': self.data,
+                   }
+        return render(request, self.template_name, context)
+
+
+def dpoll(request, building_id, pk):
+    Poll.objects.get(pk=pk).delete()
+    return HttpResponseRedirect(reverse('building:cpoll', kwargs={'building_id': building_id}))
+
+
+def rpoll(request, building_id, pk):
+    template_name = 'building/rpoll.html'
+    data = 'مشاهده نظرسنجی'
+    poll = Poll.objects.get(pk=pk)
+    form_class = myForm.ShowPollForm
+    context = {
+               'building': Building.objects.get(pk=building_id),
+               'accountType': Account.objects.get(user=request.user).type,
+               'form': form_class(instance=poll),
+               'data': data,
+               }
+    return render(request, template_name, context)
+
+
+def rpollm(request, building_id, pk):
+    template_name = 'building/rpollm.html'
+    data = 'مشاهده نظرسنجی'
+    poll = Poll.objects.get(pk=pk)
+    form_class = myForm.ShowPollForm
+    context = {
+        'building': Building.objects.get(pk=building_id),
+        'accountType': Account.objects.get(user=request.user).type,
+        'form': form_class(instance=poll),
+        'data': data,
+    }
+    return render(request, template_name, context)
+
+

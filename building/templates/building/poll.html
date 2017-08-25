@@ -31,7 +31,7 @@
                         <td>{{ p.startDate }}</td>
                         <td>{{ p.endDate }}</td>
                     <td class="link">
-                            <button type="button" class="btn btn-success">شرکت در نظرسنجی</button>
+                        <a href="{% url 'building:rpollm' building_id=building.id pk=p.id %}"><button type="button" class="btn btn-success">شرکت در نظرسنجی</button></a>
                         </td>
                     </tr>
                 {% endfor %}
