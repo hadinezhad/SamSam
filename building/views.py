@@ -13,6 +13,7 @@ from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
+from django.utils import timezone
 # Create your views here.
 
 
@@ -260,24 +261,13 @@ def failureReport(request, building_id):
                'Listname': 'گزارش های خرابی',
                'title1': 'عنوان',
                'title2': 'تاریخ',
-               'title3': 'ایجاد کننده',
+               'title3': 'گزارش دهنده',
                'building': Building.objects.get(pk=building_id),
                'accountType': Account.objects.get(user=request.user).type
                }
     return render(request, 'building/failureReport.html', context)
 
 
-def cufailureReport(request, building_id):
-    context = {'all_failureReport': FailureReport.objects.filter(building=building_id, account=Account.objects.get(user=request.user)),
-               'Listname': 'گزارش های خرابی',
-               'title1': 'عنوان',
-               'title2': 'تاریخ',
-               'title3': 'متن',
-               'building': Building.objects.get(pk=building_id),
-               'accountType': Account.objects.get(user=request.user).type,
-               'form': myForm.CreateFailureReportForm,
-               }
-    return render(request, 'building/cufailureReport.html', context)
 
 
 def poll(request, building_id):
@@ -535,6 +525,98 @@ def rmessage(request, pk):
     context = {
                'accountType': Account.objects.get(user=request.user).type,
                'form': myForm.ShowMessageForm(instance=message),
+               'data': data,
+               }
+    return render(request, template_name, context)
+
+
+class CfailureReport(View):
+    form_class = myForm.CreateFailureReportForm
+    template_name = 'building/cfailureReport.html'
+
+    def get(self, request, building_id):
+        context = {'all_failureReport': FailureReport.objects.filter(building=building_id, account=Account.objects.get(user=request.user)),
+               'Listname': 'گزارش های خرابی',
+               'title1': 'عنوان',
+               'title2': 'تاریخ',
+               'title3': 'متن',
+               'building': Building.objects.get(pk=building_id),
+               'accountType': Account.objects.get(user=request.user).type,
+               'form': self.form_class,
+               }
+        return render(request, self.template_name, context)
+
+    def post(self, request, building_id):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.building = Building.objects.get(pk=building_id)
+            obj.account = request.user.account
+            obj.date = timezone.now()
+            obj.save()
+            return HttpResponseRedirect(reverse('building:cfailureReport', kwargs={'building_id': building_id}))
+        # TODO agar form valid nashod che kone ... payini javab nist
+        for m in form.non_field_errors():
+            messages.info(request, m)
+        return HttpResponseRedirect(reverse('building:cfailureReport', kwargs={'building_id': building_id}))
+
+
+class UfailureReport(View):
+    form_class = myForm.CreateFailureReportForm
+    data = "تغییر گزارش خرابی"
+    template_name = 'building/ufeature.html'
+
+    def post(self, request, pk, building_id):
+        instance = FailureReport.objects.get(pk=pk)
+        form = self.form_class(request.POST, instance=instance)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.date = timezone.now()
+            obj.save()
+            return HttpResponseRedirect(reverse('building:cfailureReport', kwargs={'building_id': building_id}))
+        for m in form.non_field_errors():
+            messages.info(request, m)
+        return HttpResponseRedirect(reverse('building:ufailureReport', kwargs={'building_id': building_id, 'pk': pk}))
+
+    def get(self, request, pk, building_id):
+        failureReport = FailureReport.objects.get(pk=pk)
+        context = {'failureReport': failureReport,
+                   'building': Building.objects.get(pk=building_id),
+                   'accountType': Account.objects.get(user=request.user).type,
+                   'form': self.form_class,
+                   'pk': pk,
+                   'data': self.data,
+                   }
+        return render(request, self.template_name, context)
+
+
+def dfailureReport(request, building_id, pk):
+    FailureReport.objects.get(pk=pk).delete()
+    return HttpResponseRedirect(reverse('building:cfailureReport', kwargs={'building_id': building_id}))
+
+
+def rfailureReport(request, building_id, pk):
+    template_name = 'building/rfailureReport.html'
+    data = 'مشاهده گزارش خرابی'
+    instance = FailureReport.objects.get(pk=pk)
+    form_class = myForm.ShowFailureReportForm
+    context = {
+               'building': Building.objects.get(pk=building_id),
+               'accountType': Account.objects.get(user=request.user).type,
+               'form': form_class(instance=instance),
+               'data': data,
+               }
+    return render(request, template_name, context)
+
+def rfailureReportm(request, building_id, pk):
+    template_name = 'building/rfailureReportm.html'
+    data = 'مشاهده گزارش خرابی'
+    instance = FailureReport.objects.get(pk=pk)
+    form_class = myForm.ShowFailureReportForm
+    context = {
+               'building': Building.objects.get(pk=building_id),
+               'accountType': Account.objects.get(user=request.user).type,
+               'form': form_class(instance=instance),
                'data': data,
                }
     return render(request, template_name, context)

@@ -31,7 +31,7 @@
                         <td>{{ f.date }}</td>
                         <td>{{ f.account.user.first_name }}&nbsp; {{ f.account.user.last_name }}</td>
                     <td class="link">
-                            <button type="button" class="btn btn-success">مشاهده</button>
+                        <a href="{% url 'building:rfailureReportm' building_id=building.id pk=f.id %}"><button type="button" class="btn btn-success">مشاهده</button></a>
                         </td>
                     </tr>
                 {% endfor %}

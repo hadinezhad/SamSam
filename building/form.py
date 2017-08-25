@@ -133,6 +133,19 @@ class CreateFailureReportForm(forms.ModelForm):
         }
 
 
+class ShowFailureReportForm(forms.ModelForm):
+
+    class Meta:
+        model = FailureReport
+        fields = ['account', 'subject', 'date', 'text']
+        labels = {
+            'subject': 'عنوان',
+            'text': 'متن',
+            'account': 'گزارش دهنده',
+            'date': 'تاریخ',
+        }
+
+
 class CreatePollForm(forms.ModelForm):
 
     class Meta:

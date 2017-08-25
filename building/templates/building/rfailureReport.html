@@ -1,0 +1,47 @@
+{% extends 'building/UserNavBar.html' %}
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'building/buildingStyle.css' %}">
+{% block navbar %}{% if accountType == 1 %} {% include 'building/managerNavBar.html' %} {% else %} {% include 'building/neighborNavBar.html' %}  {% endif %}{% endblock %}
+
+{% block title %}Failure Report{% endblock %}
+{% block body %}
+
+        <div class="container">
+    <div class="row">
+        <div class="col-lg-offset-3 col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h3>{{ data }}</h3> <br><br>
+                    <form class="form-horizontal" role="form" action="{% url 'building:cfailureReport' building_id=building.id  %}" method="get" enctype="multipart/form-data">
+
+                        {% for field in form %}
+                            <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                              <span class="text-danger small">{{ field.errors }}</span>
+                            </div>
+                                {% if field.name == 'account' %}
+                                    <div class="col-sm-8 col-lg-7">{{ form.instance.account.user.first_name}} {{ form.instance.account.user.last_name}}</div>
+                                {% else %}
+                                    <div class="col-sm-8 col-lg-7">{{ field.value|default_if_none:""}}</div>
+                                {% endif %}
+
+                            <label class="control-label col-sm-4 col-lg-4" for="song_title">{{ field.label_tag }}</label>
+                            </div>
+
+                        {% endfor %}
+                        <div class="form-group">
+                            <div class="col-md-10 col-lg-offset-1">
+                                <br>
+                                <button type="submit" class="btn btn-lg btn-primary btn-block">بازگشت</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

@@ -6,7 +6,7 @@ from django.utils import timezone
 
 class Activity(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
-    date = models.DateTimeField(auto_now_add=True)
+    date = models.DateTimeField(default=timezone.now)
     type = models.CharField(max_length=100)
 
 
@@ -15,7 +15,7 @@ class Message(models.Model):
     receiver = models.ForeignKey(Account, related_name='receiver')
     subject = models.CharField(max_length=100)
     text = models.TextField()
-    date = models.DateTimeField(default=timezone.now())
+    date = models.DateTimeField(default=timezone.now)
 
 
 class Debt(models.Model):
@@ -40,12 +40,13 @@ class Transaction(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
     trackingCode = models.CharField(max_length=200)
     amount = models.IntegerField()
-    date = models.DateTimeField(auto_now_add=True)
+    date = models.DateTimeField(default=timezone.now)
+
 
 class FailureReport(models.Model):
     building = models.ForeignKey(Building, on_delete=models.CASCADE)
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
-    date = models.DateTimeField(auto_now=True)
+    date = models.DateTimeField()
     text = models.TextField()
     subject = models.CharField(max_length=100)
 
@@ -108,7 +109,7 @@ class Feature(models.Model):
 
 class ReservedFeature(models.Model):
     feature = models.ForeignKey(Feature, on_delete=models.CASCADE)
-    reservedDate = models.DateTimeField(auto_now=True)
+    reservedDate = models.DateTimeField(default=timezone.now)
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
 
 
