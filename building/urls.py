@@ -28,8 +28,11 @@ urlpatterns = [
     url(r'^(?P<building_id>[0-9]+)/dunit/(?P<pk>[0-9]+)/$', views.dunit, name="dunit"),
     url(r'^(?P<building_id>[0-9]+)/runit/(?P<pk>[0-9]+)/$', views.runit, name="runit"),
 
-    url(r'^(?P<building_id>[0-9]+)/neighbor/$', views.neighbor, name="neighbor"),
-    url(r'^(?P<building_id>[0-9]+)/neighbor/create/$', views.CreateNeighborFormView.as_view(), name="createNeighbor"),
+    url(r'^(?P<building_id>[0-9]+)/cneighbor/$', views.Cneighbor.as_view(), name="cneighbor"),
+    url(r'^(?P<building_id>[0-9]+)/uneighbor/(?P<pk>[0-9]+)/$', views.Uneighbor.as_view(), name="uneighbor"),
+    url(r'^(?P<building_id>[0-9]+)/dneighbor/(?P<pk>[0-9]+)/$', views.dneighbor, name="dneighbor"),
+    url(r'^(?P<building_id>[0-9]+)/rneighbor/(?P<pk>[0-9]+)/$', views.rneighbor, name="rneighbor"),
+
 
 
     url(r'^(?P<building_id>[0-9]+)/transaction/$', views.transaction, name="transaction"),

@@ -9,7 +9,6 @@ class UserRegisterForm(UserCreationForm):
     password1 = forms.CharField(widget=forms.PasswordInput, label="رمز عبور")
     password2 = forms.CharField(widget=forms.PasswordInput, label="تکرار رمز عبور")
 
-
     class Meta:
         model = User
         fields = ['username', 'first_name', 'last_name',  'password1', 'password2']

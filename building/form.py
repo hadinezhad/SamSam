@@ -32,15 +32,48 @@ class CreateUnitForm(forms.ModelForm):
         }
 
 
-class CreateNeighborForm(forms.ModelForm):
+class CreateNeighborForm(UserCreationForm):
+    username = forms.EmailField(label="ایمیل", error_messages={
+        'invalid': "This value may contain only letters, numbers and _ characters."})
+
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'email', ]
+        fields = ['first_name', 'last_name', 'username', ]
         labels = {
             'first_name': 'نام',
             'last_name': 'نام خانوادگی',
-            'email': 'ایمیل',
+            'username': 'ایمیل',
         }
+
+    def __init__(self, *args, **kwargs):
+        super(UserCreationForm, self).__init__(*args, **kwargs)
+        self.fields['password1'].required = False
+        self.fields['password2'].required = False
+        # If one field gets autocompleted but not the other, our 'neither
+        # password or both password' validation will be triggered.
+        self.fields['password1'].widget.attrs['autocomplete'] = 'off'
+        self.fields['password2'].widget.attrs['autocomplete'] = 'off'
+
+    def save(self, commit=True):
+        # Save the provided password in hashed format
+        user = super(CreateNeighborForm, self).save(commit=False)
+
+        #default_password = somefuntion()  # Generate the default password
+
+        user.set_password( 'passwrod123')  # Set de default password
+        if commit:
+            user.save()
+        return user
+
+    def clean(self):
+        cleaned_data = super(CreateNeighborForm, self).clean()
+        username = cleaned_data.get('username')
+
+        if User.objects.filter(username=username).exists():
+            raise forms.ValidationError('email mojode')#TODO
+
+        return self.cleaned_data
+
 
 
 class UpdateUserProfile(forms.ModelForm):

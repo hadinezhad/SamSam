@@ -14,6 +14,9 @@ from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.utils import timezone
+import hashlib
+import random
+from manageUser.models import UserType
 # Create your views here.
 
 
@@ -139,34 +142,6 @@ class UpdateBuildingFormView(View):
         return HttpResponseRedirect(reverse('building:updateBuilding', kwargs={'building_id': building_id}))
 
 
-def neighbor(request, building_id):
-    getbuilding = Building.objects.get(pk=building_id)
-    neighbor_unit = {}
-    for unit in Unit.objects.filter(building=getbuilding):
-        if unit.account is not None:
-            neighbor_unit[unit.account] = Unit.objects.filter(account=unit.account)
-
-    context = {'building': getbuilding,
-               'accountType':  Account.objects.get(user=request.user).type,
-               'neighbor_unit': neighbor_unit,
-               'createNeighborForm': myForm.CreateNeighborForm,
-               'messageForm':myForm.CreateMessageForm
-               }
-    return render(request, 'building/neighbor&staff.html', context)
-
-
-class CreateNeighborFormView(View):
-    form_class = myForm.CreateNeighborForm
-    template_name = 'building/createNeighbor.html'
-    data = "ورود"
-
-    def get(self, request, building_id):
-        form = self.form_class
-        return render(request, self.template_name, {'form': form,
-                                                    'data': self.data,
-                                                    'building': Building.objects.get(pk=building_id),
-                                                    'accountType': Account.objects.get(user=request.user).type
-                                                    })
 
 
 def transaction(request, building_id):
@@ -880,6 +855,91 @@ def runit(request, building_id, pk):
     data = 'مشاهده واحد'
     unit = Unit.objects.get(pk=pk)
     form_class = myForm.CreateUnitForm
+    context = {
+               'building': Building.objects.get(pk=building_id),
+               'accountType': Account.objects.get(user=request.user).type,
+               'form': form_class(instance=unit),
+               'data': data,
+               }
+    return render(request, template_name, context)
+
+
+class Cneighbor(View):
+    form_class = myForm.CreateNeighborForm
+    template_name = 'building/cneighbor.html'
+
+    def get(self, request, building_id):
+        getbuilding = Building.objects.get(pk=building_id)
+        neighbor_unit = {}
+        for unit in Unit.objects.filter(building=getbuilding):
+            if unit.account is not None:
+                neighbor_unit[unit.account] = Unit.objects.filter(account=unit.account)
+
+        context = {'building': getbuilding,
+                    'accountType':  Account.objects.get(user=request.user).type,
+                    'neighbor_unit': neighbor_unit,
+                    'createNeighborForm': self.form_class,
+                    }
+        return render(request, self.template_name, context)
+
+    def post(self, request, building_id):
+        form = self.form_class(request.POST)
+        if form.is_valid():#todo
+            user = form.save()
+            password = hashlib.sha256(str(random.random()).encode('utf-8')).hexdigest()[:8]
+            print(password)
+            user.is_active = False
+           # user.set_password('kirkirkir')
+            user.save()
+            activation_key = hashlib.sha256(str(random.random()).encode('utf-8')).hexdigest()[:5]
+
+            Account.objects.create(user=user, type=UserType.NEIGHBOR, activation_key=activation_key)
+            user.account.save()
+            return HttpResponseRedirect(reverse('building:cneighbor', kwargs={'building_id': building_id}))
+        # TODO agar form valid nashod che kone ... payini javab nist
+        for m in form.non_field_errors():
+            messages.info(request, m)
+        return HttpResponseRedirect(reverse('building:cneighbor', kwargs={'building_id': building_id}))
+
+
+class Uneighbor(View):
+    form_class = myForm.CreateNeighborForm
+    data = "ویرایش همسایه"
+    template_name = 'building/uneighbor.html'
+
+    def post(self, request, pk, building_id):
+        instance = Unit.objects.get(pk=pk)#todo
+        form = self.form_class(request.POST, instance=instance)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.save()
+            return HttpResponseRedirect(reverse('building:cneighbor', kwargs={'building_id': building_id}))
+        for m in form.non_field_errors():
+            messages.info(request, m)
+        return HttpResponseRedirect(reverse('building:uneighbor', kwargs={'building_id': building_id, 'pk': pk}))
+
+    def get(self, request, pk, building_id):
+        unit = Unit.objects.get(pk=pk)#todo
+        context = {'unit': unit,
+                   'building': Building.objects.get(pk=building_id),
+                   'accountType': Account.objects.get(user=request.user).type,
+                   'form': self.form_class,
+                   'pk': pk,
+                   'data': self.data,
+                   }
+        return render(request, self.template_name, context)
+
+
+def dneighbor(request, building_id, pk):
+    Unit.objects.get(pk=pk).delete()#todo
+    return HttpResponseRedirect(reverse('building:cneighbor', kwargs={'building_id': building_id}))
+
+
+def rneighbor(request, building_id, pk):
+    template_name = 'building/rneighbor.html'
+    data = 'مشاهده همسایه'
+    unit = Unit.objects.get(pk=pk)#todo
+    form_class = myForm.CreateNeighborForm
     context = {
                'building': Building.objects.get(pk=building_id),
                'accountType': Account.objects.get(user=request.user).type,
