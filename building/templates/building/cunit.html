@@ -1,0 +1,43 @@
+{% extends 'building/UserNavBar.html' %}
+
+
+{% block navbar %}{% if accountType == 1 %} {% include 'building/managerNavBar.html' %} {% else %} {% include 'building/neighborNavBar.html' %}  {% endif %}{% endblock %}
+{% block title %}{{ building.name }}{% endblock %}
+{% block body %}
+<!-- TODO adding Search-->
+ <div class='row'>
+    <div class="col-sm-10 col-lg-offset-1">
+        {% for unit in all_units %}
+            <div class='col-sm-3'>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class='panel-title'>شماره واحد :{{ unit.number }}</h4>
+                    </div>
+                    <div class="panel-body">
+
+                            {% if unit.account %}
+                            <p>{{ unit.account.user.first_name }}  &nbsp;{{ unit.account.user.last_name }}</p>
+                            {% else %}
+                            <p>خالی</p>
+                            {% endif %}
+
+                    </div>
+                    <div class='panel-footer container-fluid'>
+                        <a class='col-md-6 btn btn-default' href='{% url 'building:dunit' building_id=building.id pk=unit.id %}' data-toggle="tooltip" title="حذف واحد"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                        <a class='col-md-6 btn btn-default' href='{% url 'building:uunit' building_id=building.id pk=unit.id %}' data-toggle="tooltip" title="تغییر مشخصات واحد"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                        <a class='col-md-6 btn btn-default' href='{% url 'building:runit' building_id=building.id pk=unit.id %}' data-toggle="tooltip" title="مشخصات واحد"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
+                        <a class='col-md-6 btn btn-default' href='{% url 'building:uunit' building_id=building.id pk=unit.id %}' data-toggle="tooltip" title="تغییر ساکن"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        <div class="col-md-12">
+                <button class="col-md-12 btn btn-default" data-toggle="modal" data-target="#myModal">  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> اضافه کردن واحد جدید </button>
+            {% include 'building/modal_template.html' with form=createUnitForm %}
+        </div>
+    </div>
+ </div>
+
+
+
+{% endblock %}

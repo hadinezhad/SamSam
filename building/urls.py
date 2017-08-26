@@ -22,8 +22,11 @@ urlpatterns = [
     url(r'^changePassword/$', views.ChangePasswordFormView.as_view(), name="changePassword"),
 
 
-    url(r'^(?P<building_id>[0-9]+)/unit/$', views.unit, name="unit"),
-    url(r'^(?P<building_id>[0-9]+)/unit/create/$', views.CreateUnitFormView.as_view(), name="createUnit"),
+
+    url(r'^(?P<building_id>[0-9]+)/cunit/$', views.Cunit.as_view(), name="cunit"),
+    url(r'^(?P<building_id>[0-9]+)/uunit/(?P<pk>[0-9]+)/$', views.Uunit.as_view(), name="uunit"),
+    url(r'^(?P<building_id>[0-9]+)/dunit/(?P<pk>[0-9]+)/$', views.dunit, name="dunit"),
+    url(r'^(?P<building_id>[0-9]+)/runit/(?P<pk>[0-9]+)/$', views.runit, name="runit"),
 
     url(r'^(?P<building_id>[0-9]+)/neighbor/$', views.neighbor, name="neighbor"),
     url(r'^(?P<building_id>[0-9]+)/neighbor/create/$', views.CreateNeighborFormView.as_view(), name="createNeighbor"),

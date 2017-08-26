@@ -23,11 +23,11 @@ class CreateUnitForm(forms.ModelForm):
 
     class Meta:
         model = Unit
-        fields = ['size', 'info', 'number', 'account']
+        fields = ['account', 'number', 'size', 'info']
         labels = {
             'size': 'اندازه',
             'info': 'توضیحات',
-            'number': 'تعداد',
+            'number': 'شماره واحد',
             'account': 'نام ساکن'
         }
 
@@ -96,6 +96,7 @@ class ShowMessageForm(forms.ModelForm):
         self.fields['sender'].label_from_instance = lambda obj: "%s %s" % (obj.user.last_name, obj.user.first_name)
         self.fields['receiver'].label_from_instance = lambda obj: "%s %s" % (obj.user.last_name, obj.user.first_name)
         self.fields['sender'].initial = self.instance.sender.user.first_name
+
 
 class CreateMessageSupportForm(forms.ModelForm):
 

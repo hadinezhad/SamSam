@@ -139,7 +139,6 @@ class UpdateBuildingFormView(View):
         return HttpResponseRedirect(reverse('building:updateBuilding', kwargs={'building_id': building_id}))
 
 
-
 def neighbor(request, building_id):
     getbuilding = Building.objects.get(pk=building_id)
     neighbor_unit = {}
@@ -168,30 +167,6 @@ class CreateNeighborFormView(View):
                                                     'building': Building.objects.get(pk=building_id),
                                                     'accountType': Account.objects.get(user=request.user).type
                                                     })
-
-
-class CreateUnitFormView(View):
-    form_class = myForm.CreateUnitForm
-    template_name = 'building/createUnit.html'
-    data = "ورود"
-
-    def get(self, request, building_id):
-        form = self.form_class
-        return render(request, self.template_name, {'form': form,
-                                                    'data': self.data,
-                                                    'building': Building.objects.get(pk=building_id),
-                                                    'accountType': Account.objects.get(user=request.user).type
-                                                    })
-
-
-def unit(request, building_id):
-    getbuilding = Building.objects.get(pk=building_id)
-    context = {'building': getbuilding,
-               'accountType':  Account.objects.get(user=request.user).type,
-               'all_units': Unit.objects.filter(building=getbuilding),
-               'createUnitForm': myForm.CreateUnitForm,
-                    }
-    return render(request, 'building/unit.html', context)
 
 
 def transaction(request, building_id):
@@ -840,3 +815,75 @@ def rdebt(request, building_id, pk):
                }
     return render(request, template_name, context)
 
+
+class Cunit(View):
+    form_class = myForm.CreateUnitForm
+    template_name = 'building/cunit.html'
+
+    def get(self, request, building_id):
+        getbuilding = Building.objects.get(pk=building_id)
+        context = {'building': getbuilding,
+                   'accountType': Account.objects.get(user=request.user).type,
+                   'all_units': Unit.objects.filter(building=getbuilding),
+                   'createUnitForm': myForm.CreateUnitForm,
+                   }
+        return render(request, self.template_name, context)
+
+    def post(self, request, building_id):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.building = Building.objects.get(pk=building_id)
+            obj.save()
+            return HttpResponseRedirect(reverse('building:cunit', kwargs={'building_id': building_id}))
+        # TODO agar form valid nashod che kone ... payini javab nist
+        for m in form.non_field_errors():
+            messages.info(request, m)
+        return HttpResponseRedirect(reverse('building:cunit', kwargs={'building_id': building_id}))
+
+
+class Uunit(View):
+    form_class = myForm.CreateUnitForm
+    data = "ویرایش واحد"
+    template_name = 'building/uunit.html'
+
+    def post(self, request, pk, building_id):
+        instance = Unit.objects.get(pk=pk)
+        form = self.form_class(request.POST, instance=instance)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.save()
+            return HttpResponseRedirect(reverse('building:cunit', kwargs={'building_id': building_id}))
+        for m in form.non_field_errors():
+            messages.info(request, m)
+        return HttpResponseRedirect(reverse('building:uunit', kwargs={'building_id': building_id, 'pk': pk}))
+
+    def get(self, request, pk, building_id):
+        unit = Unit.objects.get(pk=pk)
+        context = {'unit': unit,
+                   'building': Building.objects.get(pk=building_id),
+                   'accountType': Account.objects.get(user=request.user).type,
+                   'form': self.form_class,
+                   'pk': pk,
+                   'data': self.data,
+                   }
+        return render(request, self.template_name, context)
+
+
+def dunit(request, building_id, pk):
+    Unit.objects.get(pk=pk).delete()
+    return HttpResponseRedirect(reverse('building:cunit', kwargs={'building_id': building_id}))
+
+
+def runit(request, building_id, pk):
+    template_name = 'building/runit.html'
+    data = 'مشاهده واحد'
+    unit = Unit.objects.get(pk=pk)
+    form_class = myForm.CreateUnitForm
+    context = {
+               'building': Building.objects.get(pk=building_id),
+               'accountType': Account.objects.get(user=request.user).type,
+               'form': form_class(instance=unit),
+               'data': data,
+               }
+    return render(request, template_name, context)
