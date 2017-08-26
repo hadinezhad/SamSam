@@ -30,9 +30,9 @@
                         <td>{{ d.date }}</td>
                         <td>{{ d.amount }}</td>
                     <td class="link">
-                          <button type="button" class="btn btn-danger">حذف</button>
-                            <button type="button" class="btn btn-info">تغییر</button>
-                            <button type="button" class="btn btn-success">مشاهده</button>
+                        <a href="{% url 'building:ddebt' building_id=building.id pk=d.id %}"><button type="button" class="btn btn-danger">حذف</button></a>
+                        <a href="{% url 'building:udebt' building_id=building.id pk=d.id %}"><button type="button" class="btn btn-info">تغییر</button></a>
+                        <a href="{% url 'building:rdebt' building_id=building.id pk=d.id %}"><button type="button" class="btn btn-success">مشاهده</button></a>
                         </td>
                     </tr>
                 {% endfor %}

@@ -22,7 +22,7 @@ class Debt(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
     amount = models.IntegerField()
     type = models.CharField(max_length=100)
-    date = models.DateTimeField(auto_now=True)
+    date = models.DateTimeField()
 
 
 class Building(models.Model):

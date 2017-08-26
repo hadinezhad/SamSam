@@ -200,6 +200,20 @@ class CreateNewsForm(forms.ModelForm):
             'text': 'متن',
         }
 
+
+class ShowDebtForm(forms.ModelForm):
+
+    class Meta:
+        model = Debt
+        fields = ['account', 'date', 'amount', 'type']
+        labels = {
+            'amount': 'مبلغ',
+               'account': 'بدهکار',
+               'type': 'نوع بدهی',
+            'date': 'تاریخ',
+        }
+
+
 class CreateDebtForm(forms.ModelForm):
 
     class Meta:

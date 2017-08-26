@@ -209,19 +209,6 @@ def transaction(request, building_id):
     return render(request, 'building/transaction.html', context)
 
 
-def cudebt(request, building_id):
-    context = {'all_debt': Debt.objects.filter(account=Account.objects.filter(building=building_id)),
-               'Listname2': 'بدهی ها',
-               'title1': 'مبلغ',
-               'title2': 'تاریخ',
-               'title4': 'نوع بدهی',
-               'building': Building.objects.get(pk=building_id),
-               'accountType': Account.objects.get(user=request.user).type,
-               'form': myForm.CreateDebtForm
-               }
-    return render(request, 'building/cudebt.html', context)
-
-
 def activities(request):
     context = {'all_activities': Activity.objects.filter(account=request.user.account),
                'Listname': 'فعالیت ها',
@@ -243,7 +230,6 @@ def news(request, building_id):
     return render(request, 'building/news.html', context)
 
 
-
 def failureReport(request, building_id):
     context = {'all_failureReport':FailureReport.objects.filter(building=building_id),
                'Listname': 'گزارش های خرابی',
@@ -254,8 +240,6 @@ def failureReport(request, building_id):
                'accountType': Account.objects.get(user=request.user).type
                }
     return render(request, 'building/failureReport.html', context)
-
-
 
 
 def poll(request, building_id):
@@ -779,4 +763,80 @@ def rpollm(request, building_id, pk):
     }
     return render(request, template_name, context)
 
+
+class Cdebt(View):
+    form_class = myForm.CreateDebtForm
+    template_name = 'building/cdebt.html'
+
+    def get(self, request, building_id):
+        context = {'all_debt': Debt.objects.filter(account=Account.objects.filter(building=building_id)),
+                   'Listname2': 'بدهی ها',
+                   'title1': 'مبلغ',
+                   'title2': 'تاریخ',
+                   'title4': 'نوع بدهی',
+                   'building': Building.objects.get(pk=building_id),
+                   'accountType': Account.objects.get(user=request.user).type,
+                   'form': self.form_class
+                   }
+        return render(request, self.template_name, context)
+
+    def post(self, request, building_id):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.date = timezone.now()
+            obj.save()
+            return HttpResponseRedirect(reverse('building:cdebt', kwargs={'building_id': building_id}))
+        # TODO agar form valid nashod che kone ... payini javab nist
+        for m in form.non_field_errors():
+            messages.info(request, m)
+        return HttpResponseRedirect(reverse('building:cdebt', kwargs={'building_id': building_id}))
+
+
+class Udebt(View):
+    form_class = myForm.CreateDebtForm
+    data = "ویرایش بدهی"
+    template_name = 'building/udebt.html'
+
+    def post(self, request, pk, building_id):
+        instance = Debt.objects.get(pk=pk)
+        form = self.form_class(request.POST, instance=instance)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.date = timezone.now()
+            obj.save()
+            return HttpResponseRedirect(reverse('building:cdebt', kwargs={'building_id': building_id}))
+        for m in form.non_field_errors():
+            messages.info(request, m)
+        return HttpResponseRedirect(reverse('building:udebt', kwargs={'building_id': building_id, 'pk': pk}))
+
+    def get(self, request, pk, building_id):
+        debt = Debt.objects.get(pk=pk)
+        context = {'debt': debt,
+                   'building': Building.objects.get(pk=building_id),
+                   'accountType': Account.objects.get(user=request.user).type,
+                   'form': self.form_class,
+                   'pk': pk,
+                   'data': self.data,
+                   }
+        return render(request, self.template_name, context)
+
+
+def ddebt(request, building_id, pk):
+    Debt.objects.get(pk=pk).delete()
+    return HttpResponseRedirect(reverse('building:cdebt', kwargs={'building_id': building_id}))
+
+
+def rdebt(request, building_id, pk):
+    template_name = 'building/rdebt.html'
+    data = 'مشاهده بدهی'
+    debt = Debt.objects.get(pk=pk)
+    form_class = myForm.ShowDebtForm
+    context = {
+               'building': Building.objects.get(pk=building_id),
+               'accountType': Account.objects.get(user=request.user).type,
+               'form': form_class(instance=debt),
+               'data': data,
+               }
+    return render(request, template_name, context)
 

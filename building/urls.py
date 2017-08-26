@@ -30,7 +30,11 @@ urlpatterns = [
 
 
     url(r'^(?P<building_id>[0-9]+)/transaction/$', views.transaction, name="transaction"),
-    url(r'^(?P<building_id>[0-9]+)/cudebt/$', views.cudebt, name="cudebt"),
+
+    url(r'^(?P<building_id>[0-9]+)/cdebt/$', views.Cdebt.as_view(), name="cdebt"),
+    url(r'^(?P<building_id>[0-9]+)/udebt/(?P<pk>[0-9]+)/$', views.Udebt.as_view(), name="udebt"),
+    url(r'^(?P<building_id>[0-9]+)/ddebt/(?P<pk>[0-9]+)/$', views.ddebt, name="ddebt"),
+    url(r'^(?P<building_id>[0-9]+)/rdebt/(?P<pk>[0-9]+)/$', views.rdebt, name="rdebt"),
 
     url(r'^(?P<building_id>[0-9]+)/news/$', views.news, name="news"),
 
