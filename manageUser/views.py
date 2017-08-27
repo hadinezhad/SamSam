@@ -46,7 +46,7 @@ class UserFormView(View):
 
             email_subject = 'SamSam account confirmation' #TODO
             email_body = "Hello, %s, and thanks for signing up for an \
-            example.com account!\n\nTo activate your account, click this link within 48 \
+            SamSam.com account!\n\nTo activate your account, click this link within 48 \
                 hours:\n\nhttp://127.0.0.1:8001/home/confirm/%s" % (
                 user.first_name,
                 activation_key)

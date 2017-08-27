@@ -1008,7 +1008,7 @@ def sneighbor(request, building_id, pk):
     account = Account.objects.get(pk=pk)
     email_subject = 'SamSam account confirmation'  # TODO
     email_body = "Hello, %s, and thanks for signing up for an \
-                example.com account!\n\nTo activate your account, click this link within 48 \
+                SamSam.com account!\n\nTo activate your account, click this link within 48 \
                     hours:\n\nhttp://127.0.0.1:8001/home/confirm/%s" % (
         account.user.first_name,
         account.activation_key)
