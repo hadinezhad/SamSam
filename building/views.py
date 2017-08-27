@@ -17,6 +17,7 @@ from django.utils import timezone
 import hashlib
 import random
 from manageUser.models import UserType
+from django.core.mail import send_mail
 # Create your views here.
 
 
@@ -240,6 +241,30 @@ class Sendmessage(View):
         for m in form.non_field_errors():
             messages.info(request, m)
         return HttpResponseRedirect(reverse('manageUser:sendmessage'))
+
+
+class Sendmessages(View):
+    form_class = myForm.CreateMessageSupportForm
+    template_name = 'building/sendmessage.html'
+    data = 'ارسال پیام جدید'
+
+    def get(self, request, pk):
+        form = self.form_class
+        #todo form.fields["receiver"].queryset = afwfhawi
+        return render(request, self.template_name, {'form': form, 'data': self.data})
+
+    def post(self, request, pk):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.sender = request.user.account
+            obj.receiver = Account.objects.get(pk=pk)
+            obj.save()
+            return HttpResponseRedirect(reverse('building:inbox'))
+        for m in form.non_field_errors():
+            messages.info(request, m)
+        return HttpResponseRedirect(reverse('manageUser:sendmessage'))
+
 
 
 class Support(View):
@@ -886,14 +911,15 @@ class Cneighbor(View):
         form = self.form_class(request.POST)
         if form.is_valid():#todo
             user = form.save()
-            password = hashlib.sha256(str(random.random()).encode('utf-8')).hexdigest()[:8]
-            print(password)
+            password = hashlib.sha256(str(random.random()).encode('utf-8')).hexdigest()[:8] #todo password
             user.is_active = False
-           # user.set_password('kirkirkir')
             user.save()
-            activation_key = hashlib.sha256(str(random.random()).encode('utf-8')).hexdigest()[:5]
+            #obj = User.objects.get(username=request.POST['username'])
+            #obj.set_password(str(password))
+            #obj.save()
+            #activation_key = hashlib.sha256(str(random.random()).encode('utf-8')).hexdigest()[:5]
 
-            Account.objects.create(user=user, type=UserType.NEIGHBOR, activation_key=activation_key)
+            Account.objects.create(user=user, type=UserType.NEIGHBOR, activation_key=password)
             user.account.save()
             return HttpResponseRedirect(reverse('building:cneighbor', kwargs={'building_id': building_id}))
         # TODO agar form valid nashod che kone ... payini javab nist
@@ -908,10 +934,11 @@ class Uneighbor(View):
     template_name = 'building/uneighbor.html'
 
     def post(self, request, pk, building_id):
-        instance = Unit.objects.get(pk=pk)#todo
-        form = self.form_class(request.POST, instance=instance)
+        instance = Account.objects.get(pk=pk)#todo
+        form = self.form_class(request.POST, instance=instance.user)
         if form.is_valid():
             obj = form.save(commit=False)
+            obj.email = obj.username
             obj.save()
             return HttpResponseRedirect(reverse('building:cneighbor', kwargs={'building_id': building_id}))
         for m in form.non_field_errors():
@@ -919,8 +946,8 @@ class Uneighbor(View):
         return HttpResponseRedirect(reverse('building:uneighbor', kwargs={'building_id': building_id, 'pk': pk}))
 
     def get(self, request, pk, building_id):
-        unit = Unit.objects.get(pk=pk)#todo
-        context = {'unit': unit,
+        account = Account.objects.get(pk=pk)#todo
+        context = {'account': account,
                    'building': Building.objects.get(pk=building_id),
                    'accountType': Account.objects.get(user=request.user).type,
                    'form': self.form_class,
@@ -931,19 +958,48 @@ class Uneighbor(View):
 
 
 def dneighbor(request, building_id, pk):
-    Unit.objects.get(pk=pk).delete()#todo
+    Account.objects.get(pk=pk).delete()#todo
     return HttpResponseRedirect(reverse('building:cneighbor', kwargs={'building_id': building_id}))
 
 
 def rneighbor(request, building_id, pk):
     template_name = 'building/rneighbor.html'
     data = 'مشاهده همسایه'
-    unit = Unit.objects.get(pk=pk)#todo
+    account = Account.objects.get(pk=pk)#todo
     form_class = myForm.CreateNeighborForm
     context = {
                'building': Building.objects.get(pk=building_id),
                'accountType': Account.objects.get(user=request.user).type,
-               'form': form_class(instance=unit),
+               'form': form_class(instance=account.user),
                'data': data,
+               }
+    return render(request, template_name, context)
+
+
+def sneighbor(request, building_id, pk):
+    account = Account.objects.get(pk=pk)
+    email_subject = 'SamSam account confirmation'  # TODO
+    email_body = "Hello, %s, and thanks for signing up for an \
+                example.com account!\n\nTo activate your account, click this link within 48 \
+                    hours:\n\nhttp://127.0.0.1:8001/home/confirm/%s" % (
+        account.user.first_name,
+        account.activation_key)
+    send_mail(email_subject,
+              email_body,
+              'samsamcompany2@gmail.com',
+              [account.user.email])
+
+    form_class = myForm.CreateNeighborForm
+    template_name = 'building/cneighbor.html'
+    getbuilding = Building.objects.get(pk=building_id)
+    neighbor_unit = {}
+    for unit in Unit.objects.filter(building=getbuilding):
+        if unit.account is not None:
+            neighbor_unit[unit.account] = Unit.objects.filter(account=unit.account)
+
+    context = {'building': getbuilding,
+               'accountType': Account.objects.get(user=request.user).type,
+               'neighbor_unit': neighbor_unit,
+               'createNeighborForm': form_class,
                }
     return render(request, template_name, context)

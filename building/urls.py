@@ -15,6 +15,7 @@ urlpatterns = [
     url(r'^activities/$', views.activities, name="activities"),
     url(r'^inbox/$', views.inbox, name="inbox"),
     url(r'^sendmessage/$', views.Sendmessage.as_view(), name="sendmessage"),
+    url(r'^sendmessage/(?P<pk>[0-9]+)/$', views.Sendmessages.as_view(), name="sendmessages"),
     url(r'^deletemessage/(?P<pk>[0-9]+)/$', views.dmessage, name="dmessage"),
     url(r'^retrivemessage/(?P<pk>[0-9]+)/$', views.rmessage, name="rmessage"),
     url(r'^support/$', views.Support.as_view(), name="support"),
@@ -32,6 +33,7 @@ urlpatterns = [
     url(r'^(?P<building_id>[0-9]+)/uneighbor/(?P<pk>[0-9]+)/$', views.Uneighbor.as_view(), name="uneighbor"),
     url(r'^(?P<building_id>[0-9]+)/dneighbor/(?P<pk>[0-9]+)/$', views.dneighbor, name="dneighbor"),
     url(r'^(?P<building_id>[0-9]+)/rneighbor/(?P<pk>[0-9]+)/$', views.rneighbor, name="rneighbor"),
+    url(r'^(?P<building_id>[0-9]+)/sneighbor/(?P<pk>[0-9]+)/$', views.sneighbor, name="sneighbor"),
 
 
 

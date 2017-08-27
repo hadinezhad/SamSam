@@ -52,7 +52,7 @@ class UserFormView(View):
                 activation_key)
             send_mail(email_subject,
                       email_body,
-                      'rpoursoleymani@gmail.com',
+                      'samsamcompany2@gmail.com',
                       [user.email])
 
             messages.info(request, "email khode ra check konid ") #TODO
@@ -80,7 +80,7 @@ class UserLoginFormView(View):
             if user.is_active:
                 login(request, user)
                 return HttpResponseRedirect(reverse('building:building'))
-        messages.info(request, 'namkarbari ya password eshteba')#TODO
+        messages.info(request, 'namkarbari ya password eshteba')#TODO ya inactive
         return HttpResponseRedirect(reverse('manageUser:login'))
 
 
