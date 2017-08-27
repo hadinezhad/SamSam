@@ -23,7 +23,7 @@
 
                     </div>
                     <div class='panel-footer container-fluid'>
-                        <a class='col-md-6 btn btn-default' href='{% url 'building:dunit' building_id=building.id pk=unit.id %}' data-toggle="tooltip" title="حذف واحد"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                        <a class='col-md-6 btn btn-default dalert' href='{% url 'building:dunit' building_id=building.id pk=unit.id %}' data-toggle="tooltip" title="حذف واحد"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                         <a class='col-md-6 btn btn-default' href='{% url 'building:uunit' building_id=building.id pk=unit.id %}' data-toggle="tooltip" title="تغییر مشخصات واحد"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                         <a class='col-md-6 btn btn-default' href='{% url 'building:runit' building_id=building.id pk=unit.id %}' data-toggle="tooltip" title="مشخصات واحد"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
                         <a class='col-md-6 btn btn-default' href='{% url 'building:uunit' building_id=building.id pk=unit.id %}' data-toggle="tooltip" title="تغییر ساکن"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>

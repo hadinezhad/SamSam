@@ -17,10 +17,8 @@
                             <p> نام مدیر :{{    building.manager.user.first_name }}  {{  building.manager.user.last_name}}</p>
                         </div>
                         <div class='panel-footer container-fluid'>
-                            <form action="{% url 'building:deleteBuilding' building.id %}" method="post">
-                                {% csrf_token %}
-                            <button class='col-md-4 col-lg-offset-4 btn btn-default' type="submit" data-toggle="tooltip" title="حذف ساختمان"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> </button>
-                            </form>
+                            <a class="dalert" href="{% url 'building:deleteBuilding' building.id %}"><button class='col-md-4 col-lg-offset-4 btn btn-default ' type="submit" data-toggle="tooltip" title="حذف ساختمان"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> </button></a>
+
                         </div>
                     </div>
                 </div>

@@ -31,7 +31,7 @@
                         <td>{{ f.date }}</td>
                         <td>{{ f.text|slice:"0:30" }}</td>
                     <td class="link">
-                        <a href="{% url 'building:dfailureReport' building_id=building.id pk=f.id %}"><button type="button" class="btn btn-danger">حذف</button></a>
+                        <a class="dalert" href="{% url 'building:dfailureReport' building_id=building.id pk=f.id %}"><button type="button" class="btn btn-danger">حذف</button></a>
                         <a href="{% url 'building:ufailureReport' building_id=building.id pk=f.id %}"><button type="button" class="btn btn-info">تغییر</button></a>
                         <a href="{% url 'building:rfailureReport' building_id=building.id pk=f.id %}"><button type="button" class="btn btn-success">مشاهده</button></a>
                         </td>

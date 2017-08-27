@@ -101,9 +101,9 @@ def showdash(request, building_id):
     return render(request, 'building/dashBoard.html', context)
 
 
-class DeleteBuilding(DeleteView):
-    model = Building
-    success_url = reverse_lazy('building:building')
+def deleteBuilding(request, pk):
+    Building.objects.get(pk=pk).delete()
+    return HttpResponseRedirect(reverse('building:building'))
 
 
 class CreateBuildingFormView(View):

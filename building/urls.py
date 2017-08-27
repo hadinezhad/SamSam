@@ -10,7 +10,7 @@ urlpatterns = [
 
     url(r'^create/$', views.CreateBuildingFormView.as_view(), name="createBuilding"),
     url(r'^(?P<building_id>[0-9]+)/update/$', views.UpdateBuildingFormView.as_view(), name="updateBuilding"),
-    url(r'^(?P<pk>[0-9]+)/delete/$', views.DeleteBuilding.as_view(), name="deleteBuilding"),
+    url(r'^(?P<pk>[0-9]+)/delete/$', views.deleteBuilding, name="deleteBuilding"),
 
     url(r'^activities/$', views.activities, name="activities"),
     url(r'^inbox/$', views.inbox, name="inbox"),
