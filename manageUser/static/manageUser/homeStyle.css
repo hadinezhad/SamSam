@@ -1,9 +1,6 @@
-@font-face {
-    font-family: "SamSamFont";
-    src: url(../fonts/vazir.ttf);
-}
+@import url(fontiran.css);
 *{
-    font-family: SamSamFont;
+    font-family: IRANSans !important;
 }
 body{
     direction: rtl;

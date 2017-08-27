@@ -1,3 +1,4 @@
+@import url(fontiran.css);
 .panel-default {
     border-color: dodgerblue;
 }
@@ -21,7 +22,7 @@ a{
     border-color: dodgerblue;
 }
 body{
-    font-family: SamSamFont;
+    font-family: IRANSans;
 }
 .btn-default:hover{
     background-color: dodgerblue;

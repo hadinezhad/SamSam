@@ -1,15 +1,12 @@
-@font-face {
-    font-family: "SamSamFont";
-    src: url(../fonts/vazir.ttf);
-}
+@import url(fontiran.css);
 .container{
-    font-family: SamSamFont;
+    font-family: IRANSans;
 }
 form{
     direction: rtl;
 }
 nav{
-    font-family: SamSamFont;
+    font-family: IRANSans;
     font-weight: bolder;
     font-size: medium;
 }
