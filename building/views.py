@@ -65,12 +65,14 @@ class Buildinglist(View):
             all_manager.append(u.building.manager)
         return render(request, 'building/buildingList.html', {'all_building': Building.objects.filter(manager__in=all_manager),
                                                               'createBuildingForm': myForm.CreateBuildingForm})
-    def post(self,request):
+
+    def post(self, request):
         form = myForm.CreateBuildingForm(request.POST)
         if form.is_valid():
             obj = form.save(commit=False)
             obj.manager = request.user.account
             obj.save()
+            Activity.objects.create(account=request.user.account, type='ایجاد ساختمان')
             return HttpResponseRedirect(reverse('building:building'))
         for m in form.non_field_errors():
             messages.info(request, m)
@@ -103,6 +105,7 @@ def showdash(request, building_id):
 
 def deleteBuilding(request, pk):
     Building.objects.get(pk=pk).delete()
+    Activity.objects.create(account=request.user.account, type='حذف ساختمان')
     return HttpResponseRedirect(reverse('building:building'))
 
 
@@ -137,12 +140,11 @@ class UpdateBuildingFormView(View):
         form = self.form_class(request.POST, instance=instance)
         if form.is_valid():
             form.save()
+            Activity.objects.create(account=request.user.account, type='ویرایش مشخصات ساختمان')
             return HttpResponseRedirect(reverse('building:showdash', kwargs={'building_id': building_id}))#todo
         for m in form.non_field_errors():
             messages.info(request, m)
         return HttpResponseRedirect(reverse('building:updateBuilding', kwargs={'building_id': building_id}))
-
-
 
 
 def transaction(request, building_id):
@@ -237,6 +239,7 @@ class Sendmessage(View):
             obj = form.save(commit=False)
             obj.sender = request.user.account
             obj.save()
+            Activity.objects.create(account=request.user.account, type='ارسال پیام')
             return HttpResponseRedirect(reverse('building:inbox'))
         for m in form.non_field_errors():
             messages.info(request, m)
@@ -259,12 +262,12 @@ class Sendmessages(View):
             obj = form.save(commit=False)
             obj.sender = request.user.account
             obj.receiver = Account.objects.get(pk=pk)
+            Activity.objects.create(account=request.user.account, type='ارسال پیام')
             obj.save()
             return HttpResponseRedirect(reverse('building:inbox'))
         for m in form.non_field_errors():
             messages.info(request, m)
         return HttpResponseRedirect(reverse('manageUser:sendmessage'))
-
 
 
 class Support(View):
@@ -282,6 +285,7 @@ class Support(View):
             obj = form.save(commit=False)
             obj.sender = request.user.account
             obj.receiver = Account.objects.get(user__is_staff=True)#bayad yeki bashad
+            Activity.objects.create(account=request.user.account, type='ارسال پیام پشتیبانی')
             obj.save()
             return HttpResponseRedirect(reverse('building:inbox'))
         for m in form.non_field_errors():
@@ -305,6 +309,7 @@ class UpdateUserProfileFormView(View):
         form = self.form_class(request.POST, instance=instance)
         if form.is_valid():
             form.save()
+            Activity.objects.create(account=request.user.account, type='ویرایش حساب کاربری')
             return HttpResponseRedirect(reverse('building:building'))
         for m in form.non_field_errors():
             messages.info(request, m)
@@ -327,6 +332,7 @@ class ChangePasswordFormView(View):
         if request.user.is_authenticated():
             if form.is_valid():
                 user = form.save()
+                Activity.objects.create(account=request.user.account, type='تغییر رمز عبور')
                 update_session_auth_hash(request, user)  # Important!
                 messages.success(request, 'Your password was successfully updated!')#todo
                 return HttpResponseRedirect(reverse('building:building'))
@@ -363,7 +369,7 @@ def changereservefeature(request, building_id, pk):
         ReservedFeature.objects.create(feature=Feature.objects.get(pk=pk), account=Account.objects.get(user=request.user))
     else:
         ReservedFeature.objects.get(feature=Feature.objects.get(pk=pk)).delete()
-
+    Activity.objects.create(account=request.user.account, type='ویرایش رزرو امکان')
     return HttpResponseRedirect(reverse('building:feature', kwargs={'building_id': building_id}))
 
 
@@ -393,6 +399,7 @@ class Cfeature(View):
             obj = form.save(commit=False)
             obj.building = Building.objects.get(pk=building_id)
             obj.save()
+            Activity.objects.create(account=request.user.account, type='ایجاد امکان')
             return HttpResponseRedirect(reverse('building:cfeature', kwargs={'building_id': building_id}))
         #TODO agar form valid nashod che kone ... payini javab nist
         for m in form.non_field_errors():
@@ -411,6 +418,7 @@ class Ufeature(View):
         form = self.form_class(request.POST, instance=instance)
         if form.is_valid():
             form.save()
+            Activity.objects.create(account=request.user.account, type='ویرایش امکان')
             return HttpResponseRedirect(reverse('building:cfeature', kwargs={'building_id': building_id}))
         for m in form.non_field_errors():
             messages.info(request, m)
@@ -431,6 +439,7 @@ class Ufeature(View):
 
 def dfeature(request, building_id, pk):
     Feature.objects.get(pk=pk).delete()
+    Activity.objects.create(account=request.user.account, type='حذف امکان')
     return HttpResponseRedirect(reverse('building:cfeature', kwargs={'building_id': building_id}))
 
 
@@ -449,6 +458,7 @@ def rfeature(request, building_id, pk):
 
 def dmessage(request, pk):
     Message.objects.get(pk=pk).delete()
+    Activity.objects.create(account=request.user.account, type='حذف پیام')
     return HttpResponseRedirect(reverse('building:inbox'))
 
 
@@ -488,6 +498,7 @@ class CfailureReport(View):
             obj.account = request.user.account
             obj.date = timezone.now()
             obj.save()
+            Activity.objects.create(account=request.user.account, type='ایجاد گزارش خرابی')
             return HttpResponseRedirect(reverse('building:cfailureReport', kwargs={'building_id': building_id}))
         # TODO agar form valid nashod che kone ... payini javab nist
         for m in form.non_field_errors():
@@ -507,6 +518,7 @@ class UfailureReport(View):
             obj = form.save(commit=False)
             obj.date = timezone.now()
             obj.save()
+            Activity.objects.create(account=request.user.account, type='ویرایش گزارش خرابی')
             return HttpResponseRedirect(reverse('building:cfailureReport', kwargs={'building_id': building_id}))
         for m in form.non_field_errors():
             messages.info(request, m)
@@ -526,6 +538,7 @@ class UfailureReport(View):
 
 def dfailureReport(request, building_id, pk):
     FailureReport.objects.get(pk=pk).delete()
+    Activity.objects.create(account=request.user.account, type='حذف گزارش خرابی')
     return HttpResponseRedirect(reverse('building:cfailureReport', kwargs={'building_id': building_id}))
 
 
@@ -580,6 +593,7 @@ class Cnews(View):
             obj.building = Building.objects.get(pk=building_id)
             obj.date = timezone.now()
             obj.save()
+            Activity.objects.create(account=request.user.account, type='ایجاد اطلاعیه')
             return HttpResponseRedirect(reverse('building:cnews', kwargs={'building_id': building_id}))
         # TODO agar form valid nashod che kone ... payini javab nist
         for m in form.non_field_errors():
@@ -599,6 +613,7 @@ class Unews(View):
             obj = form.save(commit=False)
             obj.date = timezone.now()
             obj.save()
+            Activity.objects.create(account=request.user.account, type='ویرایش اطلاعیه')
             return HttpResponseRedirect(reverse('building:cnews', kwargs={'building_id': building_id}))
         for m in form.non_field_errors():
             messages.info(request, m)
@@ -618,6 +633,7 @@ class Unews(View):
 
 def dnews(request, building_id, pk):
     News.objects.get(pk=pk).delete()
+    Activity.objects.create(account=request.user.account, type='حذف اطلاعیه')
     return HttpResponseRedirect(reverse('building:cnews', kwargs={'building_id': building_id}))
 
 
@@ -671,6 +687,7 @@ class Cpoll(View):
             obj = form.save(commit=False)
             obj.building = Building.objects.get(pk=building_id)
             obj.save()
+            Activity.objects.create(account=request.user.account, type='ایجاد نظرسنجی')
             return HttpResponseRedirect(reverse('building:cpoll', kwargs={'building_id': building_id}))
         # TODO agar form valid nashod che kone ... payini javab nist
         for m in form.non_field_errors():
@@ -689,6 +706,7 @@ class Upoll(View):
         if form.is_valid():
             obj = form.save(commit=False)
             obj.save()
+            Activity.objects.create(account=request.user.account, type='ویرایش نظرسنجی')
             return HttpResponseRedirect(reverse('building:cpoll', kwargs={'building_id': building_id}))
         for m in form.non_field_errors():
             messages.info(request, m)
@@ -708,6 +726,7 @@ class Upoll(View):
 
 def dpoll(request, building_id, pk):
     Poll.objects.get(pk=pk).delete()
+    Activity.objects.create(account=request.user.account, type='حذف نظرسنجی')
     return HttpResponseRedirect(reverse('building:cpoll', kwargs={'building_id': building_id}))
 
 
@@ -761,6 +780,7 @@ class Cdebt(View):
             obj = form.save(commit=False)
             obj.date = timezone.now()
             obj.save()
+            Activity.objects.create(account=request.user.account, type='ایجاد بدهی')
             return HttpResponseRedirect(reverse('building:cdebt', kwargs={'building_id': building_id}))
         # TODO agar form valid nashod che kone ... payini javab nist
         for m in form.non_field_errors():
@@ -780,6 +800,7 @@ class Udebt(View):
             obj = form.save(commit=False)
             obj.date = timezone.now()
             obj.save()
+            Activity.objects.create(account=request.user.account, type='ویرایش بدهی')
             return HttpResponseRedirect(reverse('building:cdebt', kwargs={'building_id': building_id}))
         for m in form.non_field_errors():
             messages.info(request, m)
@@ -799,6 +820,7 @@ class Udebt(View):
 
 def ddebt(request, building_id, pk):
     Debt.objects.get(pk=pk).delete()
+    Activity.objects.create(account=request.user.account, type='حذف بدهی')
     return HttpResponseRedirect(reverse('building:cdebt', kwargs={'building_id': building_id}))
 
 
@@ -835,6 +857,7 @@ class Cunit(View):
             obj = form.save(commit=False)
             obj.building = Building.objects.get(pk=building_id)
             obj.save()
+            Activity.objects.create(account=request.user.account, type='ایجاد واحد')
             return HttpResponseRedirect(reverse('building:cunit', kwargs={'building_id': building_id}))
         # TODO agar form valid nashod che kone ... payini javab nist
         for m in form.non_field_errors():
@@ -853,6 +876,7 @@ class Uunit(View):
         if form.is_valid():
             obj = form.save(commit=False)
             obj.save()
+            Activity.objects.create(account=request.user.account, type='ویرایش واحد')
             return HttpResponseRedirect(reverse('building:cunit', kwargs={'building_id': building_id}))
         for m in form.non_field_errors():
             messages.info(request, m)
@@ -872,6 +896,7 @@ class Uunit(View):
 
 def dunit(request, building_id, pk):
     Unit.objects.get(pk=pk).delete()
+    Activity.objects.create(account=request.user.account, type='حذف واحد')
     return HttpResponseRedirect(reverse('building:cunit', kwargs={'building_id': building_id}))
 
 
@@ -921,6 +946,7 @@ class Cneighbor(View):
 
             Account.objects.create(user=user, type=UserType.NEIGHBOR, activation_key=password)
             user.account.save()
+            Activity.objects.create(account=request.user.account, type='ایجاد همسایه')
             return HttpResponseRedirect(reverse('building:cneighbor', kwargs={'building_id': building_id}))
         # TODO agar form valid nashod che kone ... payini javab nist
         for m in form.non_field_errors():
@@ -940,6 +966,7 @@ class Uneighbor(View):
             obj = form.save(commit=False)
             obj.email = obj.username
             obj.save()
+            Activity.objects.create(account=request.user.account, type='ویرایش همسایه')
             return HttpResponseRedirect(reverse('building:cneighbor', kwargs={'building_id': building_id}))
         for m in form.non_field_errors():
             messages.info(request, m)
@@ -959,6 +986,7 @@ class Uneighbor(View):
 
 def dneighbor(request, building_id, pk):
     Account.objects.get(pk=pk).delete()#todo
+    Activity.objects.create(account=request.user.account, type='حذف همسایه')
     return HttpResponseRedirect(reverse('building:cneighbor', kwargs={'building_id': building_id}))
 
 
@@ -988,7 +1016,7 @@ def sneighbor(request, building_id, pk):
               email_body,
               'samsamcompany2@gmail.com',
               [account.user.email])
-
+    Activity.objects.create(account=request.user.account, type='ارسال ایمیل تاییدیه به همسایه')
     form_class = myForm.CreateNeighborForm
     template_name = 'building/cneighbor.html'
     getbuilding = Building.objects.get(pk=building_id)

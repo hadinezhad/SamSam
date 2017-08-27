@@ -12,7 +12,7 @@ from .form import UserRegisterForm, UserLoginForm
 from .models import Account
 from .models import UserType
 from django.core.mail import send_mail
-
+from building.models import Activity
 
 # Create your views here.
 
@@ -41,7 +41,7 @@ class UserFormView(View):
 
             activation_key = hashlib.sha256(str(random.random()).encode('utf-8')).hexdigest()[:5]
 
-            Account.objects.create(user=user, type=UserType.MANAGER, activation_key=activation_key)
+            account =Account.objects.create(user=user, type=UserType.MANAGER, activation_key=activation_key)
             user.account.save()
 
             email_subject = 'SamSam account confirmation' #TODO
@@ -54,7 +54,7 @@ class UserFormView(View):
                       email_body,
                       'samsamcompany2@gmail.com',
                       [user.email])
-
+            Activity.objects.create(account=account, type='ایجاد کاربر')
             messages.info(request, "email khode ra check konid ") #TODO
             return HttpResponseRedirect(reverse('manageUser:signup'))
         for m in form.non_field_errors():
@@ -79,6 +79,7 @@ class UserLoginFormView(View):
         if user is not None:
             if user.is_active:
                 login(request, user)
+                Activity.objects.create(account=user.account, type='ورود کاربر')
                 return HttpResponseRedirect(reverse('building:building'))
         messages.info(request, 'namkarbari ya password eshteba')#TODO ya inactive
         return HttpResponseRedirect(reverse('manageUser:login'))
@@ -96,6 +97,7 @@ def guide(request):
 
 class UserLogoutFormView(View):
     def get(self, request):
+        Activity.objects.create(account=request.user.account, type='خروج کاربر')
         logout(request)
         return HttpResponseRedirect(reverse('manageUser:home'))
 
@@ -109,5 +111,6 @@ def confirm(request, activation_key):
     user_account = user_profile.user
     user_account.is_active = True
     user_account.save()
+    Activity.objects.create(account=user_account.account, type='تایید ایمیل')
     login(request, user_profile.user)
     return HttpResponseRedirect(reverse('building:building'))
